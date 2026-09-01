@@ -45,6 +45,27 @@ Nothing on these pages is invented. Everything traceable:
   experience", no fabricated service-area list. If a number appears on the page,
   it is real.
 
+## Tiers
+
+The three directions are mapped onto the three packages. **The pages themselves
+are not tier-differentiated** — all three are one page at the same scope with
+the same motion. The tier names the package the client buys; the page on each
+card is that package's homepage, and Standard/Premium add the pages listed on
+the card.
+
+| tier | direction | why |
+|---|---|---|
+| **Basic** — get found | 01 Pressure | The most conventional of the three. Established-contractor look, phone number the size of a headline, nothing the visitor has to work for. |
+| **Standard** — look established | 03 Spec Sheet | Credibility through precision — part numbers, a spec schedule, a title block. Reads organised and professional, which is exactly what this tier sells. |
+| **Premium** — stand out | 02 Altitude | The most memorable: full-bleed photography, the edge-to-edge masthead and the squeegee wipe. Literally the "stand out" brief. |
+
+Worth re-reading before changing this: pairing look to price means choosing a
+design also chooses a scope, and the cheap tier has to look plainer on purpose.
+That trade-off was raised and accepted deliberately — it is not an oversight.
+
+Gallery card order is Basic → Standard → Premium, and the furniture matrix
+columns follow the same order.
+
 ## The three directions
 
 ### 01 — Pressure `direction-1-pressure.html`
