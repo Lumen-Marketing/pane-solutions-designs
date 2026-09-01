@@ -100,7 +100,15 @@ across two directions; any new direction fills in a column before it ships.
 
 ## Palette
 
-Taken from the logo — a blue→cyan gradient P on pure black.
+Taken from the logo — a blue-to-cyan P on pure black.
+
+**No gradients.** Not one colour ramp anywhere in the set: buttons, headline
+accents, underlines, play buttons and the contact band are all flat `--acc`.
+The photographic scrims went too — they are flat washes now, which suits the
+hard-edged look better than a fade. What still uses gradient *syntax* is only
+hard-stop patterning with no blend: the graph-paper rules, the equipment rack's
+ventilation slots, the two-tone palette swatches, and a couple of mask-images.
+If you add anything here, keep it flat.
 
 ```
 --bl  #567CD3   --az  #40A3D4   --cy  #2FD8DC

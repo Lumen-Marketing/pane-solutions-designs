@@ -15,7 +15,8 @@
   --steel-700:#212A32; --steel-600:#2E3941; --steel-400:#6E7C87; --steel-300:#97A4AE;
   --paper:#E9EFF3;
   --cy:#2FD8DC; --az:#40A3D4; --bl:#567CD3;
-  --grad:linear-gradient(135deg,var(--bl),var(--az) 50%,var(--cy));
+  /* flat accent: no ramps anywhere in this set */
+  --acc:var(--cy);
   --gut:clamp(18px,4vw,56px);
   --ease:cubic-bezier(.19,1,.22,1);
 }
@@ -42,7 +43,7 @@ header{padding-block:clamp(40px,7vw,92px) clamp(24px,4vw,48px);border-bottom:1px
 .hbar .t b{display:block;font-size:16px;font-weight:800;letter-spacing:-.02em;font-stretch:118%}
 h1{font-size:clamp(2.2rem,7.4vw,6.4rem);font-weight:800;line-height:.86;letter-spacing:-.038em;
   font-stretch:125%;text-transform:uppercase;max-width:16ch}
-h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 em{font-style:normal;color:var(--acc)}
 .lead{display:flex;gap:clamp(20px,4vw,60px);flex-wrap:wrap;align-items:flex-end;margin-top:clamp(20px,3vw,34px)}
 .lead p{max-width:56ch;color:var(--steel-300);font-size:15.5px}
 .lead p b{color:var(--paper);font-weight:600}
@@ -51,7 +52,7 @@ h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;back
 .seg button{background:0;border:0;color:var(--steel-300);font-family:'Space Mono',monospace;font-size:10.5px;
   letter-spacing:.16em;text-transform:uppercase;padding:10px 17px;cursor:pointer;transition:background .3s,color .3s}
 .seg button+button{border-left:1px solid var(--steel-700)}
-.seg button.on{background:var(--grad);color:var(--ink);font-weight:700}
+.seg button.on{background:var(--acc);color:var(--ink);font-weight:700}
 
 /* cards */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:clamp(18px,2.4vw,34px);
@@ -74,7 +75,7 @@ h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;back
 .holder{position:absolute;top:0;left:0;transform-origin:top left}
 .stage.mobile .holder{position:relative;transform-origin:top center}
 .holder iframe{border:0;display:block;background:var(--ink)}
-.veil{position:absolute;inset:0;z-index:5;background:linear-gradient(rgba(6,8,10,.05),rgba(6,8,10,.4));
+.veil{position:absolute;inset:0;z-index:5;background:rgba(6,8,10,.28);
   display:flex;align-items:flex-end;justify-content:center;padding-bottom:18px;cursor:pointer;
   transition:opacity .4s,backdrop-filter .4s}
 .veil span{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;

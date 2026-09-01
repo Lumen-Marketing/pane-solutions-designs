@@ -15,7 +15,8 @@
   --ink:#080B0E; --char:#12181D; --slate:#1D262E; --slate-2:#2B3742;
   --grey:#63727E; --mist:#AFBDC7; --paper:#EEF4F8;
   --cy:#2FD8DC; --az:#40A3D4; --bl:#567CD3; --deep:#0F3552;
-  --grad:linear-gradient(135deg,var(--bl),var(--az) 50%,var(--cy));
+  /* flat accent: no ramps anywhere in this set */
+  --acc:var(--cy);
   --gut:clamp(18px,4.2vw,72px);
   --ease:cubic-bezier(.16,1,.3,1);
 }
@@ -59,11 +60,11 @@ a{color:inherit;text-decoration:none}
   letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:10px 19px;
   background:var(--deep);color:#fff!important;position:relative;overflow:hidden;white-space:nowrap;border:0;cursor:pointer}
 .btn s{position:relative;z-index:2;text-decoration:none}
-.btn::before{content:'';position:absolute;inset:0;background:var(--grad);
+.btn::before{content:'';position:absolute;inset:0;background:var(--acc);
   translate:0 101%;transition:translate .45s var(--ease)}
 .btn:hover::before{translate:0 0}
 .btn:hover s{color:var(--ink)}
-.nav .btn{background:var(--grad);color:var(--ink)!important}
+.nav .btn{background:var(--acc);color:var(--ink)!important}
 .nav .btn::before{background:var(--paper)}
 .burger{display:none;background:0;border:1.5px solid currentColor;padding:8px 10px;cursor:pointer;font-size:14px}
 
@@ -83,9 +84,11 @@ a{color:inherit;text-decoration:none}
 @keyframes drift{to{scale:1.12;translate:-1.2% 0}}
 /* top scrim keeps the nav legible over the photograph; bottom scrim lands the
    masthead on something solid without turning the whole plate into a gradient */
-.hero-plate::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(8,11,14,.72) 0,rgba(8,11,14,.12) 22%,
-    rgba(8,11,14,0) 42%,rgba(8,11,14,.58) 72%,rgba(8,11,14,.93) 100%)}
+/* flat wash + two solid bands instead of a five-stop scrim. The bands give
+   the nav and the masthead something hard to sit on. */
+.hero-plate::after{content:'';position:absolute;inset:0;background:rgba(8,11,14,.34)}
+.hero-plate::before{content:'';position:absolute;left:0;right:0;top:0;height:78px;z-index:2;
+  background:rgba(8,11,14,.62)}
 /* grain — the single most effective antidote to a smooth synthetic surface */
 .hero-grain{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.16;
   mix-blend-mode:overlay;
@@ -96,8 +99,8 @@ a{color:inherit;text-decoration:none}
 .frost{position:absolute;top:-2px;bottom:-2px;left:-40%;width:170%;z-index:6;pointer-events:none;
   backdrop-filter:blur(15px) brightness(1.3) saturate(.4);
   -webkit-backdrop-filter:blur(15px) brightness(1.3) saturate(.4);
-  background:linear-gradient(101deg,rgba(206,228,240,.46) 0 84%,
-    rgba(255,255,255,.9) 90%,rgba(255,255,255,.22) 96%,rgba(255,255,255,0) 100%);
+  background:rgba(206,228,240,.46);
+  border-right:3px solid rgba(255,255,255,.92);
   clip-path:polygon(0 0,100% 0,89% 100%,0 100%);
   animation:squeegee 1.65s .25s cubic-bezier(.7,0,.28,1) forwards}
 @keyframes squeegee{to{translate:138% 0}}
@@ -143,7 +146,7 @@ a{color:inherit;text-decoration:none}
   font-size:11.5px;font-weight:600;color:var(--grey);display:block;margin-bottom:10px}
 .pcell .v{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:clamp(1.5rem,3.1vw,2.6rem);
   line-height:.9;display:block}
-.pcell .v.cy{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pcell .v.cy{color:var(--acc)}
 .pcell .n{font-family:'Barlow Condensed',sans-serif;font-size:12.5px;letter-spacing:.1em;color:var(--grey);
   display:block;margin-top:8px;text-transform:uppercase}
 
@@ -191,14 +194,14 @@ a{color:inherit;text-decoration:none}
   transition:scale .9s var(--ease),filter .5s;pointer-events:none}
 .frame:hover img{scale:1.06;filter:saturate(1)}
 .frame figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 15px;
-  background:linear-gradient(transparent,rgba(8,11,14,.94));
+  background:rgba(8,11,14,.92);
   font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:11.5px;
   font-weight:600;display:flex;justify-content:space-between;gap:8px}
 .frame figcaption em{font-style:normal;color:var(--az)}
 .frame.wide{flex-basis:clamp(300px,38vw,560px)}
 .frame.wide img{aspect-ratio:4/3}
 .strip-bar{height:2px;background:var(--slate);position:relative;margin-top:6px}
-.strip-bar i{position:absolute;left:0;top:0;bottom:0;background:var(--grad);width:22%}
+.strip-bar i{position:absolute;left:0;top:0;bottom:0;background:var(--acc);width:22%}
 .strip-hint{display:flex;justify-content:space-between;margin-top:12px}
 
 /* ── reels: sticky caption + phone stack ──────── */
@@ -230,7 +233,7 @@ a{color:inherit;text-decoration:none}
   filter:brightness(.66) saturate(.85);transition:scale .9s var(--ease),filter .5s}
 .fallback:hover img{scale:1.06;filter:brightness(.78)}
 .fb-in{position:relative;z-index:2;padding:18px;display:flex;align-items:center;gap:12px}
-.play{width:46px;height:46px;border-radius:50%;background:var(--grad);display:grid;place-items:center;
+.play{width:46px;height:46px;border-radius:50%;background:var(--acc);display:grid;place-items:center;
   flex-shrink:0;transition:scale .4s var(--ease)}
 .fallback:hover .play{scale:1.1}
 .play::after{content:'';border-left:13px solid var(--ink);border-block:8.5px solid transparent;margin-left:3px}
@@ -258,11 +261,12 @@ a{color:inherit;text-decoration:none}
 
 /* ── contact: split panel ─────────────────────── */
 .contact{margin-top:clamp(70px,10vw,140px);display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
-.c-sky{background:linear-gradient(168deg,var(--sky-2),var(--sky-3) 52%,var(--deep));
+.c-sky{background:var(--sky-3);
   color:var(--deep);padding:clamp(30px,5vw,72px);display:flex;flex-direction:column;justify-content:space-between;
   gap:36px;position:relative;overflow:hidden}
-.c-sky::after{content:'';position:absolute;right:-24%;bottom:-30%;width:70%;aspect-ratio:1;border-radius:50%;
-  background:radial-gradient(circle,rgba(255,255,255,.55),transparent 68%)}
+/* was a radial bloom; now a flat offset plane, hard-edged */
+.c-sky::after{content:'';position:absolute;right:-18%;bottom:-22%;width:58%;aspect-ratio:1;
+  background:var(--sky-2);opacity:.55}
 .c-sky .tag{color:rgba(15,53,82,.62)}
 .c-sky h2{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;
   font-size:clamp(2rem,5.2vw,4.4rem);line-height:.86;position:relative;z-index:2}
