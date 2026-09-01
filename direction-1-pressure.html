@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pane Solutions — Window Cleaning, Phoenix AZ</title>
+<meta name="description" content="Professional streak-free window cleaning, pressure washing and gutter cleaning for Phoenix, Arizona homes and businesses. Free estimates. 5.0 stars from 13 reviews.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#06080A; --steel-950:#0A0E11; --steel-900:#10151A; --steel-800:#171E24;
+  --steel-700:#212A32; --steel-600:#2E3941; --steel-400:#6E7C87; --steel-300:#97A4AE;
+  --paper:#E9EFF3;
+  --cy:#2FD8DC; --az:#40A3D4; --bl:#567CD3;
+  --grad:linear-gradient(135deg,var(--bl) 0%,var(--az) 48%,var(--cy) 100%);
+  --gut:clamp(18px,4vw,64px);
+  --shadow-deep:0 40px 80px -20px rgba(0,0,0,.9),0 2px 0 rgba(255,255,255,.04) inset;
+  --ease:cubic-bezier(.19,1,.22,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--ink);color:var(--paper);
+  font-family:'Archivo',system-ui,sans-serif;font-size:16px;line-height:1.55;
+  overflow-x:clip;-webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--cy);color:var(--ink)}
+
+/* ── shared type ─────────────────────────────── */
+.label{font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.2em;font-size:10.5px;color:var(--steel-400)}
+.label b{color:var(--cy);font-weight:700}
+h1,h2,h3{font-weight:800;line-height:.86;letter-spacing:-.035em;font-stretch:125%}
+.wrap{max-width:1560px;margin-inline:auto;padding-inline:var(--gut)}
+
+/* ── engineering grid backdrop ───────────────── */
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(47,216,220,.045) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(47,216,220,.045) 1px,transparent 1px);
+  background-size:88px 88px;
+  -webkit-mask-image:radial-gradient(120% 90% at 50% 0%,#000 20%,transparent 78%);
+  mask-image:radial-gradient(120% 90% at 50% 0%,#000 20%,transparent 78%)}
+.noise{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ── nav ─────────────────────────────────────── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:60;
+  display:flex;align-items:center;gap:clamp(12px,2vw,34px);
+  padding:12px var(--gut);
+  background:rgba(6,8,10,.72);backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid var(--steel-800);
+  transition:background .4s var(--ease),border-color .4s var(--ease)}
+.nav.stuck{background:rgba(6,8,10,.94);border-bottom-color:var(--steel-700)}
+.brand{display:flex;align-items:center;gap:11px;flex-shrink:0}
+.brand img{width:38px;height:38px;border-radius:50%;border:1px solid var(--steel-700)}
+.brand-tx{display:flex;flex-direction:column;line-height:1}
+.brand-tx b{font-size:14.5px;font-weight:800;letter-spacing:-.02em;font-stretch:118%}
+.brand-tx span{font-family:'Space Mono',monospace;font-size:8.5px;letter-spacing:.24em;color:var(--steel-400);margin-top:3px}
+.nav-links{display:flex;gap:26px;margin-left:auto}
+.nav-links a{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--steel-300);position:relative;padding:6px 0;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:0;height:1px;width:0;background:var(--cy);transition:width .4s var(--ease)}
+.nav-links a:hover{color:var(--paper)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.tel{font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.06em;color:var(--paper);white-space:nowrap;
+  padding:9px 14px;border:1px solid var(--steel-700);transition:border-color .3s,color .3s}
+.tel:hover{border-color:var(--cy);color:var(--cy)}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:'Space Mono',monospace;font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;padding:11px 20px;background:var(--grad);color:var(--ink);
+  font-weight:700;border:0;cursor:pointer;position:relative;overflow:hidden;white-space:nowrap}
+.btn span{position:relative;z-index:2;transition:color .35s var(--ease)}
+.btn::before{content:'';position:absolute;inset:0;background:var(--paper);
+  transform:translateY(101%);transition:transform .45s var(--ease)}
+.btn:hover::before{transform:translateY(0)}
+.btn:hover span{color:var(--ink)}
+.burger{display:none;background:0;border:1px solid var(--steel-700);color:var(--paper);padding:9px 11px;cursor:pointer}
+
+/* ── hero ────────────────────────────────────── */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;
+  padding:132px var(--gut) 0;overflow:hidden;z-index:2}
+.hero-photo{position:absolute;inset:0;z-index:0}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:62% 40%;
+  filter:saturate(.72) contrast(1.12) brightness(.72);
+  animation:kb 26s var(--ease) infinite alternate}
+@keyframes kb{from{scale:1.06;translate:0 0}to{scale:1.14;translate:-1.5% -1%}}
+.hero-scrim{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(100deg,var(--ink) 6%,rgba(6,8,10,.9) 32%,rgba(6,8,10,.42) 62%,rgba(6,8,10,.72) 100%),
+             linear-gradient(0deg,var(--ink) 2%,transparent 42%)}
+.rail{position:absolute;left:var(--gut);top:120px;bottom:0;width:1px;background:var(--steel-700);z-index:3}
+.rail::before{content:'';position:absolute;left:0;top:0;width:1px;height:38%;background:var(--grad)}
+.tick{position:absolute;left:0;width:13px;height:1px;background:var(--steel-600)}
+.tick.lg{width:26px;background:var(--cy)}
+/* Labels run DOWN the rail, not across it. Horizontal labels here were ~200px
+   wide and collided with the hero copy, which starts at gutter + 72px. */
+.tick i{position:absolute;left:9px;top:9px;writing-mode:vertical-rl;
+  font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;
+  color:var(--steel-400);font-style:normal;white-space:nowrap}
+.hero-in{position:relative;z-index:4;width:100%;padding-left:clamp(0px,5vw,72px);padding-bottom:clamp(28px,5vh,58px)}
+.eyebrow{display:inline-flex;align-items:center;gap:12px;margin-bottom:clamp(18px,3vh,30px)}
+.eyebrow .dot{width:7px;height:7px;background:var(--cy);border-radius:50%;
+  box-shadow:0 0 0 0 rgba(47,216,220,.6);animation:pulse 2.6s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 13px rgba(47,216,220,0)}100%{box-shadow:0 0 0 0 rgba(47,216,220,0)}}
+.eyebrow span{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--steel-300)}
+h1{font-size:clamp(3.1rem,12.4vw,12.4rem);text-transform:uppercase}
+h1 .ln{display:block;overflow:hidden}
+h1 .ln>i{display:block;font-style:normal;translate:0 105%;transition:translate 1.05s var(--ease)}
+h1 .gr{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-foot{display:flex;flex-wrap:wrap;align-items:flex-end;gap:clamp(20px,4vw,58px);
+  margin-top:clamp(24px,4vh,44px);padding-top:26px;border-top:1px solid var(--steel-800)}
+.hero-copy{max-width:44ch;color:var(--steel-300);font-size:clamp(14px,1.12vw,16.5px);line-height:1.62}
+.hero-copy b{color:var(--paper);font-weight:600}
+.hero-acts{display:flex;gap:12px;flex-wrap:wrap;margin-left:auto}
+.btn-ghost{display:inline-flex;align-items:center;gap:9px;font-family:'Space Mono',monospace;font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;padding:11px 20px;border:1px solid var(--steel-600);color:var(--paper);
+  transition:border-color .35s,background .35s}
+.btn-ghost:hover{border-color:var(--cy);background:rgba(47,216,220,.08)}
+.scroll-cue{position:absolute;right:var(--gut);bottom:34px;z-index:5;writing-mode:vertical-rl;
+  font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--steel-400);
+  display:flex;align-items:center;gap:14px}
+.scroll-cue::after{content:'';width:1px;height:52px;background:linear-gradient(var(--cy),transparent);animation:drop 2.2s infinite var(--ease)}
+@keyframes drop{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ── proof marquee ───────────────────────────── */
+.proof{position:relative;z-index:2;background:var(--steel-950);border-block:1px solid var(--steel-800);
+  padding:15px 0;overflow:hidden;display:flex}
+.mq{display:flex;flex-shrink:0;animation:slide 42s linear infinite;will-change:transform}
+.proof:hover .mq{animation-play-state:paused}
+@keyframes slide{to{transform:translateX(-100%)}}
+.mq i{font-style:normal;font-family:'Space Mono',monospace;font-size:11.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--steel-300);padding:0 30px;display:flex;align-items:center;white-space:nowrap}
+.mq i::after{content:'';width:5px;height:5px;background:var(--steel-600);rotate:45deg;margin-left:26px}
+.mq i.hot{color:var(--cy)}
+.mq i.hot::after{background:var(--cy)}
+
+/* ── section furniture ───────────────────────── */
+section{position:relative;z-index:2}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;
+  padding-block:clamp(64px,9vw,124px) clamp(28px,4vw,48px)}
+.sec-head h2{font-size:clamp(2.1rem,6.4vw,5.6rem);text-transform:uppercase}
+.sec-head .num{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--cy);display:block;margin-bottom:16px}
+.sec-note{max-width:38ch;color:var(--steel-400);font-size:14px;line-height:1.62}
+
+/* ── services: numbered rows ─────────────────── */
+.svc{border-top:1px solid var(--steel-800)}
+.svc-row{display:grid;grid-template-columns:88px 1fr auto;align-items:center;gap:clamp(14px,3vw,44px);
+  padding:clamp(24px,3.4vw,42px) 0;border-bottom:1px solid var(--steel-800);
+  position:relative;cursor:pointer;transition:padding-left .5s var(--ease)}
+/* full-bleed hover glow. Bleeds by exactly the wrap's own gutter — using
+   -100vw here pushed the document to 2822px wide and the page scrolled
+   sideways, because a pseudo-element is not clipped by body's overflow-x:clip
+   (body's overflow propagates to the viewport, so body stops clipping itself). */
+.svc-row::before{content:'';position:absolute;left:calc(var(--gut) * -1);right:calc(var(--gut) * -1);top:0;bottom:0;z-index:-1;
+  background:linear-gradient(90deg,transparent,rgba(47,216,220,.05) 40%,transparent);
+  opacity:0;transition:opacity .5s var(--ease)}
+.svc-row:hover{padding-left:clamp(10px,2vw,32px)}
+.svc-row:hover::before{opacity:1}
+.svc-n{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;color:var(--steel-400);transition:color .4s}
+.svc-row:hover .svc-n{color:var(--cy)}
+.svc-t{display:block;font-size:clamp(1.5rem,4.2vw,3.5rem);font-weight:800;text-transform:uppercase;letter-spacing:-.03em;
+  font-stretch:118%;line-height:.95}
+.svc-d{display:block;color:var(--steel-400);font-size:13.5px;max-width:52ch;margin-top:9px;line-height:1.6}
+.svc-thumb{display:block;width:clamp(78px,11vw,168px);aspect-ratio:4/3;overflow:hidden;position:relative;
+  filter:grayscale(1) brightness(.78);transition:filter .55s var(--ease)}
+.svc-row:hover .svc-thumb{filter:grayscale(0) brightness(.95)}
+.svc-thumb img{width:100%;height:100%;object-fit:cover;scale:1.02;transition:scale .8s var(--ease)}
+.svc-row:hover .svc-thumb img{scale:1.12}
+
+/* ── work mosaic ─────────────────────────────── */
+/* Fixed row height, tiles span rows. Sizing each tile by its own aspect-ratio
+   instead left every row with a ragged bottom edge, because a 1/1.12 tile and a
+   1/1.3 tile in the same row resolve to different heights. */
+.mosaic{display:grid;grid-template-columns:repeat(6,1fr);
+  grid-auto-rows:clamp(104px,12.4vw,178px);gap:10px}
+.tile{position:relative;overflow:hidden;background:var(--steel-900);border:1px solid var(--steel-800)}
+.tile img{width:100%;height:100%;object-fit:cover;filter:saturate(.82) contrast(1.05);
+  transition:scale 1s var(--ease),filter .6s}
+.tile:hover img{scale:1.07;filter:saturate(1) contrast(1.1)}
+.tile::after{content:attr(data-cap);position:absolute;left:0;bottom:0;right:0;padding:14px;
+  font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  background:linear-gradient(transparent,rgba(6,8,10,.94));color:var(--paper);
+  translate:0 100%;opacity:0;transition:translate .5s var(--ease),opacity .4s}
+.tile:hover::after{translate:0 0;opacity:1}
+.t-a{grid-column:span 3;grid-row:span 2}
+.t-b{grid-column:span 3;grid-row:span 1}
+.t-c{grid-column:span 3;grid-row:span 1}
+.t-d,.t-e,.t-f{grid-column:span 2;grid-row:span 2}
+.t-g{grid-column:span 6;grid-row:span 2}
+
+/* ── reels: equipment rack ───────────────────── */
+.rack{background:var(--steel-950);border:1px solid var(--steel-800);padding:clamp(16px,2.6vw,34px);position:relative;
+  box-shadow:var(--shadow-deep)}
+.rack::before,.rack::after{content:'';position:absolute;top:0;bottom:0;width:22px;
+  background:repeating-linear-gradient(180deg,var(--steel-800) 0 1px,transparent 1px 34px)}
+.rack::before{left:0;border-right:1px solid var(--steel-800)}
+.rack::after{right:0;border-left:1px solid var(--steel-800)}
+.rack-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(292px,1fr));gap:clamp(14px,2vw,26px);
+  padding-inline:clamp(0px,2vw,28px)}
+.bay{border:1px solid var(--steel-700);background:var(--steel-900);display:flex;flex-direction:column}
+.bay-hd{display:flex;align-items:center;gap:9px;padding:10px 13px;border-bottom:1px solid var(--steel-800);
+  background:linear-gradient(var(--steel-800),var(--steel-900))}
+.led{width:6px;height:6px;border-radius:50%;background:var(--cy);box-shadow:0 0 9px var(--cy);flex-shrink:0;
+  animation:blink 3.4s infinite}
+@keyframes blink{0%,92%,100%{opacity:1}94%,98%{opacity:.28}}
+.bay-hd b{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+.bay-hd em{margin-left:auto;font-style:normal;font-family:'Space Mono',monospace;font-size:9px;
+  letter-spacing:.16em;color:var(--steel-400)}
+/* flex:1 so a short embed doesn't leave the bay footer floating mid-panel —
+   grid stretches the bays to equal height but the screen would not grow. */
+.screen{position:relative;background:var(--ink);min-height:420px;flex:1;display:flex;align-items:center;justify-content:center;padding:8px}
+.screen .instagram-media{margin:0 auto!important;min-width:0!important;width:100%!important;max-width:326px!important;
+  border-radius:0!important;box-shadow:none!important;border:0!important}
+.fallback{position:absolute;inset:8px;display:flex;flex-direction:column;justify-content:flex-end;
+  overflow:hidden;background:var(--steel-900)}
+.fallback img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.62) saturate(.8);
+  transition:scale .9s var(--ease),filter .5s}
+.fallback:hover img{scale:1.06;filter:brightness(.74) saturate(.95)}
+.fallback .fb-in{position:relative;z-index:2;padding:18px;display:flex;align-items:center;gap:12px}
+.play{width:44px;height:44px;border-radius:50%;background:var(--grad);display:grid;place-items:center;flex-shrink:0;
+  transition:scale .4s var(--ease)}
+.fallback:hover .play{scale:1.1}
+.play::after{content:'';border-left:12px solid var(--ink);border-block:8px solid transparent;margin-left:3px}
+.fb-in span{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--paper)}
+.screen.live .fallback{display:none}
+.bay-ft{padding:9px 13px;border-top:1px solid var(--steel-800);display:flex;justify-content:space-between;
+  font-family:'Space Mono',monospace;font-size:8.5px;letter-spacing:.18em;color:var(--steel-400);text-transform:uppercase}
+
+/* ── reviews ─────────────────────────────────── */
+.quote-big{border-block:1px solid var(--steel-800);padding-block:clamp(44px,7vw,92px);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.72fr);gap:clamp(26px,5vw,72px);align-items:center}
+.quote-big blockquote{font-size:clamp(1.5rem,3.5vw,2.9rem);font-weight:500;line-height:1.24;letter-spacing:-.022em}
+.quote-big blockquote b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800}
+.qmeta{display:flex;flex-direction:column;gap:14px}
+.stars{display:flex;gap:5px;color:var(--cy);font-size:17px;letter-spacing:.1em}
+.qmeta .who{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.qmeta .src{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--steel-400)}
+.rev-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:1px;background:var(--steel-800);
+  border:1px solid var(--steel-800);margin-top:clamp(30px,5vw,58px)}
+.rev{background:var(--ink);padding:clamp(20px,2.4vw,30px);display:flex;flex-direction:column;gap:13px;
+  transition:background .45s var(--ease)}
+.rev:hover{background:var(--steel-950)}
+.rev p{font-size:14px;color:var(--steel-300);line-height:1.66}
+.rev .who{margin-top:auto;font-size:13px;font-weight:700}
+.rev .src{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;color:var(--steel-400);text-transform:uppercase}
+
+/* ── contact band ────────────────────────────── */
+.contact{margin-top:clamp(70px,10vw,140px);background:var(--steel-950);border-top:1px solid var(--steel-800);
+  position:relative;overflow:hidden}
+.contact::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(80% 130% at 12% 110%,rgba(47,216,220,.14),transparent 62%)}
+.contact-in{position:relative;z-index:2;padding-block:clamp(52px,8vw,110px)}
+.contact .label{margin-bottom:20px;display:block}
+.bignum{display:block;font-size:clamp(2.3rem,10.5vw,9.4rem);font-weight:800;letter-spacing:-.045em;
+  font-stretch:125%;line-height:.88;white-space:nowrap;transition:opacity .4s}
+.bignum:hover{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.contact-rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(212px,1fr));gap:1px;background:var(--steel-800);
+  border:1px solid var(--steel-800);margin-top:clamp(32px,5vw,58px)}
+.crow{background:var(--steel-950);padding:22px;display:flex;flex-direction:column;gap:7px;transition:background .4s}
+.crow:hover{background:var(--steel-900)}
+.crow .label{margin:0}
+.crow b{font-size:15px;font-weight:600;letter-spacing:-.01em;word-break:break-word}
+.crow b.cy{color:var(--cy)}
+
+/* ── footer ──────────────────────────────────── */
+footer{border-top:1px solid var(--steel-800);padding-block:34px;
+  display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+.fl{display:flex;gap:22px;flex-wrap:wrap}
+
+/* ── reveal ──────────────────────────────────── */
+.rv{opacity:0;translate:0 34px;transition:opacity .9s var(--ease),translate .9s var(--ease)}
+.rv.is-in{opacity:1;translate:0 0}
+.rv[data-d="1"]{transition-delay:.09s}.rv[data-d="2"]{transition-delay:.18s}
+.rv[data-d="3"]{transition-delay:.27s}
+body.ready h1 .ln>i{translate:0 0}
+h1 .ln:nth-child(2)>i{transition-delay:.1s}h1 .ln:nth-child(3)>i{transition-delay:.2s}
+
+/* ── responsive ──────────────────────────────── */
+@media(max-width:1080px){
+  .nav-links{display:none}.burger{display:block;margin-left:auto}
+  .nav-cta .tel{display:none}
+  .quote-big{grid-template-columns:1fr}
+  .mosaic{grid-template-columns:repeat(4,1fr)}
+  .t-a{grid-column:span 4;grid-row:span 2}
+  .t-b,.t-c{grid-column:span 4;grid-row:span 1}
+  .t-d,.t-e{grid-column:span 2;grid-row:span 2}
+  .t-f{grid-column:span 4;grid-row:span 2}
+  .t-g{grid-column:span 4;grid-row:span 2}
+  .rail{display:none}
+}
+@media(max-width:720px){
+  .svc-row{grid-template-columns:1fr auto;gap:14px}
+  .svc-n{display:none}
+  .svc-thumb{width:88px}
+  .mosaic{grid-template-columns:repeat(2,1fr);gap:7px}
+  .t-a{grid-column:span 2;grid-row:span 2}
+  .t-b,.t-c{grid-column:span 2;grid-row:span 1}
+  .t-g{grid-column:span 2;grid-row:span 2}
+  .t-d,.t-e{grid-column:span 1;grid-row:span 2}
+  .t-f{grid-column:span 2;grid-row:span 2}
+  /* The nav's "Free Estimate" button pushed the burger to x=405 on a 390px
+     phone — clipped off-screen, so the menu could not be opened at all.
+     The drawer and the contact band both carry the CTA, so drop it here. */
+  .nav .nav-cta .btn{display:none}
+  .brand-tx b{font-size:13px}
+  /* .btn is nowrap, so two side-by-side buttons overflowed their own boxes */
+  .hero-acts{margin-left:0;width:100%;flex-direction:column;align-items:stretch}
+  .btn,.btn-ghost{justify-content:center}
+  .scroll-cue{display:none}
+  .rack::before,.rack::after{display:none}
+  .rack-in{padding-inline:0}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .hero-photo img{animation:none}
+}
+.drawer{position:fixed;inset:0;z-index:70;background:var(--ink);display:flex;flex-direction:column;
+  justify-content:center;gap:8px;padding:var(--gut);translate:0 -100%;transition:translate .6s var(--ease)}
+.drawer.open{translate:0 0}
+.drawer a{font-size:clamp(2rem,9vw,3.4rem);font-weight:800;text-transform:uppercase;letter-spacing:-.03em;font-stretch:118%}
+.drawer a:hover{color:var(--cy)}
+.drawer .x{position:absolute;top:18px;right:var(--gut);background:0;border:1px solid var(--steel-700);
+  color:var(--paper);padding:10px 13px;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div><div class="noise"></div>
+
+<nav class="nav" id="nav">
+  <a class="brand" href="#top">
+    <img src="assets/logo.png" alt="Pane Solutions logo">
+    <span class="brand-tx"><b>PANE SOLUTIONS</b><span>LLC · EST. 2023</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#services">Services</a><a href="#work">Work</a>
+    <a href="#reels">Reels</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a>
+  </div>
+  <div class="nav-cta">
+    <a class="tel" href="tel:+15155254127">+1 515-525-4127</a>
+    <a class="btn" href="#contact"><span>Free Estimate</span></a>
+    <button class="burger" id="burger" aria-label="Open menu">☰</button>
+  </div>
+</nav>
+
+<div class="drawer" id="drawer">
+  <button class="x" id="close">CLOSE</button>
+  <a href="#services">Services</a><a href="#work">Work</a><a href="#reels">Reels</a>
+  <a href="#reviews">Reviews</a><a href="#contact">Contact</a>
+  <a href="tel:+15155254127" style="color:var(--cy);font-size:1.4rem;margin-top:20px">+1 515-525-4127</a>
+</div>
+
+<header class="hero" id="top">
+  <div class="hero-photo"><img src="assets/photos/pole-entry.webp" alt="Pane Solutions technician cleaning a Phoenix home entry window with a water-fed pole"></div>
+  <div class="hero-scrim"></div>
+  <div class="rail">
+    <div class="tick lg" style="top:6%"><i>PHOENIX · AZ</i></div>
+    <div class="tick" style="top:20%"></div>
+    <div class="tick lg" style="top:34%"><i>5.0 ★ · 13 REVIEWS</i></div>
+    <div class="tick" style="top:52%"></div>
+    <div class="tick lg" style="top:64%"><i>EST. 2023</i></div>
+    <div class="tick" style="top:80%"></div>
+    <div class="tick" style="top:92%"></div>
+  </div>
+  <div class="hero-in">
+    <div class="eyebrow"><i class="dot"></i><span>Window Cleaning · Pressure Washing · Gutters</span></div>
+    <h1>
+      <span class="ln"><i>Glass</i></span>
+      <span class="ln"><i>you can't</i></span>
+      <span class="ln"><i class="gr">see.</i></span>
+    </h1>
+    <div class="hero-foot">
+      <p class="hero-copy">Streak-free window cleaning for Phoenix homes and businesses. <b>One-time or on a maintenance plan</b> — either way you get the same crew, the same standard, and a walkthrough before we leave.</p>
+      <div class="hero-acts">
+        <a class="btn" href="#contact"><span>Get a free estimate</span></a>
+        <a class="btn-ghost" href="#work">See the work</a>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll</div>
+</header>
+
+<div class="proof"><div class="mq"></div><div class="mq" aria-hidden="true"></div></div>
+
+<main class="wrap">
+
+  <section id="services">
+    <div class="sec-head">
+      <div>
+        <span class="num">01 / SERVICES</span>
+        <h2 class="rv">What we<br>clean</h2>
+      </div>
+      <p class="sec-note rv" data-d="2">Three services, one crew. Residential and commercial, one-time or scheduled. Free estimate on every job — no charge to have us come out and look.</p>
+    </div>
+    <div class="svc">
+      <a class="svc-row rv" href="#contact">
+        <span class="svc-n">01</span>
+        <span><span class="svc-t">Window Cleaning</span><span class="svc-d">Interior and exterior glass, tracks, sills and screens. Purified water-fed poles for second-storey and hard-to-reach panes — no ladder marks, no spotting when it dries.</span></span>
+        <span class="svc-thumb"><img src="assets/photos/arch-reflect@sm.webp" alt="Cleaning an arched window in Phoenix" loading="lazy"></span>
+      </a>
+      <a class="svc-row rv" data-d="1" href="#contact">
+        <span class="svc-n">02</span>
+        <span><span class="svc-t">Pressure Washing</span><span class="svc-d">Driveways, walkways, patios, pool decks and block walls. Desert dust, hard-water staining and sun-baked grime lifted off without chewing up the surface underneath.</span></span>
+        <span class="svc-thumb"><img src="assets/photos/lawn-side@sm.webp" alt="Exterior of a Phoenix home after pressure washing" loading="lazy"></span>
+      </a>
+      <a class="svc-row rv" data-d="2" href="#contact">
+        <span class="svc-n">03</span>
+        <span><span class="svc-t">Gutter Cleaning</span><span class="svc-d">Debris cleared, downspouts flushed, and the run checked for sag and separation while we're up there. Monsoon season is not the time to find out a gutter is packed.</span></span>
+        <span class="svc-thumb"><img src="assets/photos/adobe-sky@sm.webp" alt="Roofline and gutters on an Arizona home" loading="lazy"></span>
+      </a>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="sec-head">
+      <div><span class="num">02 / RECENT WORK</span><h2 class="rv">On the<br>job</h2></div>
+      <p class="sec-note rv" data-d="2">Every photo here is our own work on real Phoenix-area properties. No stock, no staging.</p>
+    </div>
+    <div class="mosaic">
+      <figure class="tile t-a rv" data-cap="Water-fed pole · entry glass"><img src="assets/photos/pole-entry.webp" alt="Technician cleaning entryway glass with a water-fed pole" loading="lazy"></figure>
+      <figure class="tile t-b rv" data-d="1" data-cap="Patio slider run"><img src="assets/photos/glass-patio.webp" alt="Wide patio sliding glass doors after cleaning" loading="lazy"></figure>
+      <figure class="tile t-c rv" data-d="2" data-cap="Glazed corner · courtyard"><img src="assets/photos/glass-corner.webp" alt="Modern home glazed corner after cleaning" loading="lazy"></figure>
+      <figure class="tile t-d rv" data-d="3" data-cap="Second storey · squeegee"><img src="assets/photos/interior-ladder@sm.webp" alt="Technician on a ladder squeegeeing a tall interior window" loading="lazy"></figure>
+      <figure class="tile t-e rv" data-cap="French doors"><img src="assets/photos/french-doors@sm.webp" alt="Cleaned black-framed French doors" loading="lazy"></figure>
+      <figure class="tile t-f rv" data-d="1" data-cap="Arched glass · reflection"><img src="assets/photos/arch-reflect@sm.webp" alt="Arched window reflecting the pool and sky" loading="lazy"></figure>
+      <figure class="tile t-g rv" data-d="2" data-cap="Bay window · poolside interior"><img src="assets/photos/bay-pool.webp" alt="Interior bay window overlooking a pool after cleaning" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <section id="reels">
+    <div class="sec-head">
+      <div><span class="num">03 / FROM INSTAGRAM</span><h2 class="rv">Watch<br>us work</h2></div>
+      <p class="sec-note rv" data-d="2">Straight from <a href="https://www.instagram.com/pane_solutions_llc/" target="_blank" rel="noopener" style="color:var(--cy)">@pane_solutions_llc</a>. Tap any panel to play the reel.</p>
+    </div>
+    <div class="rack rv">
+      <div class="rack-in">
+        <div class="bay">
+          <div class="bay-hd"><i class="led"></i><b>REEL 01</b><em>HIGH REACH</em></div>
+          <div class="screen" data-reel="https://www.instagram.com/reel/DC4osCWRL3L/">
+            <a class="fallback" href="https://www.instagram.com/reel/DC4osCWRL3L/" target="_blank" rel="noopener">
+              <img src="assets/reels/reel-pole-highrise.webp" alt="Water-fed pole reaching a second-storey arched window">
+              <span class="fb-in"><span class="play"></span><span>Play on Instagram</span></span>
+            </a>
+          </div>
+          <div class="bay-ft"><span>NOV 2024</span><span>@PANE_SOLUTIONS_LLC</span></div>
+        </div>
+        <div class="bay">
+          <div class="bay-hd"><i class="led" style="animation-delay:.9s"></i><b>REEL 02</b><em>ESTATE JOB</em></div>
+          <div class="screen" data-reel="https://www.instagram.com/reel/DC4oAoixUgB/">
+            <a class="fallback" href="https://www.instagram.com/reel/DC4oAoixUgB/" target="_blank" rel="noopener">
+              <img src="assets/reels/reel-estate.webp" alt="Large estate property serviced by Pane Solutions">
+              <span class="fb-in"><span class="play"></span><span>Play on Instagram</span></span>
+            </a>
+          </div>
+          <div class="bay-ft"><span>NOV 2024</span><span>@PANE_SOLUTIONS_LLC</span></div>
+        </div>
+        <div class="bay">
+          <div class="bay-hd"><i class="led" style="animation-delay:1.8s"></i><b>REEL 03</b><em>DETAIL PASS</em></div>
+          <div class="screen" data-reel="https://www.instagram.com/reel/DC4nlEkxyKP/">
+            <a class="fallback" href="https://www.instagram.com/reel/DC4nlEkxyKP/" target="_blank" rel="noopener">
+              <img src="assets/reels/reel-squeegee.webp" alt="Technician squeegeeing a French door">
+              <span class="fb-in"><span class="play"></span><span>Play on Instagram</span></span>
+            </a>
+          </div>
+          <div class="bay-ft"><span>NOV 2024</span><span>@PANE_SOLUTIONS_LLC</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="sec-head">
+      <div><span class="num">04 / REVIEWS</span><h2 class="rv">5.0 from<br>13 reviews</h2></div>
+      <p class="sec-note rv" data-d="2">Every review below is a real one, quoted as written.</p>
+    </div>
+    <div class="quote-big rv">
+      <blockquote>&ldquo;From start to finish their professionalism and attention to detail were <b>outstanding.</b>&rdquo;</blockquote>
+      <div class="qmeta">
+        <div class="stars">★★★★★</div>
+        <span class="who">Aminata TC Demaih</span>
+        <span class="src">Google Review</span>
+      </div>
+    </div>
+    <div class="rev-grid">
+      <article class="rev rv"><div class="stars">★★★★★</div><p>&ldquo;The team was punctual, professional, and incredibly thorough. They took the time to ensure every window…&rdquo;</p><span class="who">Marcus Baye</span><span class="src">Google</span></article>
+      <article class="rev rv" data-d="1"><div class="stars">★★★★★</div><p>&ldquo;My windows have never looked better — completely streak-free and crystal clear!&rdquo;</p><span class="who">Chris</span><span class="src">Google</span></article>
+      <article class="rev rv" data-d="2"><div class="stars">★★★★★</div><p>&ldquo;Answer and his team did a wonderful job doing my windows! Very well spoken and a great group of guys! Will be using Pane Solutions yearly!&rdquo;</p><span class="who">Gee Nayou</span><span class="src">Google</span></article>
+      <article class="rev rv" data-d="3"><div class="stars">★★★★★</div><p>&ldquo;They met with me before and after to ensure I was pleased with their work.&rdquo;</p><span class="who">Katherine Sarbacker</span><span class="src">Google</span></article>
+      <article class="rev rv"><div class="stars">★★★★★</div><p>&ldquo;I took a chance and they did an incredible job, on the spot. Great work, quality service, solid price.&rdquo;</p><span class="who">Michael Morford</span><span class="src">Google</span></article>
+      <article class="rev rv" data-d="1"><div class="stars">★★★★★</div><p>&ldquo;All of my demands were addressed with attention to detail by the staff.&rdquo;</p><span class="who">Promise Boley</span><span class="src">Google</span></article>
+    </div>
+  </section>
+</main>
+
+<section class="contact" id="contact">
+  <div class="wrap contact-in">
+    <span class="label">Free estimate · <b>No charge to look</b></span>
+    <a class="bignum" href="tel:+15155254127">515·525·4127</a>
+    <div class="contact-rows">
+      <div class="crow"><span class="label">Call or text</span><b class="cy">+1 515-525-4127</b></div>
+      <div class="crow"><span class="label">Email</span><b>answergaye22@gmail.com</b></div>
+      <div class="crow"><span class="label">Service area</span><b>Phoenix, Arizona</b></div>
+      <div class="crow"><span class="label">Instagram</span><b>@pane_solutions_llc</b></div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span class="label">© <span id="yr"></span> Pane Solutions LLC · Phoenix, AZ · Est. 2023</span>
+  <div class="fl">
+    <a class="label" href="https://www.instagram.com/pane_solutions_llc/" target="_blank" rel="noopener">Instagram</a>
+    <a class="label" href="https://nextdoor.com/pages/pane-solutions-phoenix-az/" target="_blank" rel="noopener">Nextdoor</a>
+    <a class="label" href="tel:+15155254127">Call</a>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+document.body.classList.add('ready');
+
+/* marquee — one item list, rendered into both tracks for a seamless loop */
+(function(){
+  const items=[['5.0 ★ GOOGLE RATING',1],['13 REVIEWS',0],['CRYSTAL CLEAR WINDOWS',0],['PUNCTUAL TEAM',0],
+    ['PROFESSIONAL TEAM',1],['DEDICATED STAFF',0],['FREE ESTIMATES',1],['PHOENIX · ARIZONA',0],['LLC EST. 2023',0]];
+  const html=items.map(function(p){return '<i class="'+(p[1]?'hot':'')+'">'+p[0]+'</i>'}).join('');
+  document.querySelectorAll('.mq').forEach(function(m){m.innerHTML=html});
+})();
+
+/* nav state + drawer */
+var nav=document.getElementById('nav');
+addEventListener('scroll',function(){nav.classList.toggle('stuck',scrollY>40)},{passive:true});
+var dr=document.getElementById('drawer');
+document.getElementById('burger').onclick=function(){dr.classList.add('open')};
+document.getElementById('close').onclick=function(){dr.classList.remove('open')};
+dr.querySelectorAll('a').forEach(function(a){a.onclick=function(){dr.classList.remove('open')}});
+
+/* scroll reveal */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(e.isIntersecting){e.target.classList.add('is-in');io.unobserve(e.target)}
+})},{rootMargin:'0px 0px -8% 0px',threshold:.06});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+
+/* Instagram embeds — loaded only once the rack scrolls near the viewport.
+   The poster fallback stays put until Instagram's iframe actually renders, so a
+   blocked script, an offline visitor or a private account degrades to a real
+   cover frame plus a link rather than an empty box. */
+(function(){
+  var screens=[].slice.call(document.querySelectorAll('.screen[data-reel]'));
+  if(!screens.length)return;
+  var started=false;
+  function start(){
+    if(started)return; started=true;
+    screens.forEach(function(s){
+      var bq=document.createElement('blockquote');
+      bq.className='instagram-media';
+      bq.setAttribute('data-instgrm-permalink',s.dataset.reel);
+      bq.setAttribute('data-instgrm-version','14');
+      s.appendChild(bq);
+    });
+    var sc=document.createElement('script');
+    sc.async=true; sc.src='https://www.instagram.com/embed.js';
+    sc.onload=function(){window.instgrm&&window.instgrm.Embeds.process()};
+    document.body.appendChild(sc);
+    /* embed.js inserts its iframe IMMEDIATELY but only sizes it once the
+       Instagram content posts its height back. Treating mere presence as
+       "rendered" pulled the poster away and left three empty bays, so require
+       real height before hiding the fallback. */
+    var check=setInterval(function(){
+      var all=true;
+      screens.forEach(function(s){
+        var f=s.querySelector('iframe');
+        if(f && f.getBoundingClientRect().height > 300) s.classList.add('live');
+        else all=false;
+      });
+      if(all) clearInterval(check);
+    },400);
+    setTimeout(function(){clearInterval(check)},20000);
+  }
+  new IntersectionObserver(function(es,o){
+    if(es.some(function(e){return e.isIntersecting})){start();o.disconnect()}
+  },{rootMargin:'400px'}).observe(screens[0]);
+})();
+</script>
+</body>
+</html>

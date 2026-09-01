@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pane Solutions — Homepage Directions</title>
+<meta name="description" content="Three homepage design directions for Pane Solutions Window Cleaning, Phoenix AZ.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#06080A; --steel-950:#0A0E11; --steel-900:#10151A; --steel-800:#171E24;
+  --steel-700:#212A32; --steel-600:#2E3941; --steel-400:#6E7C87; --steel-300:#97A4AE;
+  --paper:#E9EFF3;
+  --cy:#2FD8DC; --az:#40A3D4; --bl:#567CD3;
+  --grad:linear-gradient(135deg,var(--bl),var(--az) 50%,var(--cy));
+  --gut:clamp(18px,4vw,56px);
+  --ease:cubic-bezier(.19,1,.22,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--ink);color:var(--paper);font-family:'Archivo',system-ui,sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+::selection{background:var(--cy);color:var(--ink)}
+.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(47,216,220,.05) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(47,216,220,.05) 1px,transparent 1px);
+  background-size:80px 80px;
+  -webkit-mask-image:radial-gradient(130% 80% at 50% 0%,#000 15%,transparent 72%);
+  mask-image:radial-gradient(130% 80% at 50% 0%,#000 15%,transparent 72%)}
+.wrap{max-width:1680px;margin-inline:auto;padding-inline:var(--gut);position:relative;z-index:2}
+.mono{font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.18em;font-size:10.5px;color:var(--steel-400)}
+.mono b{color:var(--cy);font-weight:700}
+
+/* header */
+header{padding-block:clamp(40px,7vw,92px) clamp(24px,4vw,48px);border-bottom:1px solid var(--steel-800)}
+.hbar{display:flex;align-items:center;gap:13px;margin-bottom:clamp(22px,4vw,42px)}
+.hbar img{width:52px;height:52px;border-radius:50%;border:1px solid var(--steel-700)}
+.hbar .t b{display:block;font-size:16px;font-weight:800;letter-spacing:-.02em;font-stretch:118%}
+h1{font-size:clamp(2.2rem,7.4vw,6.4rem);font-weight:800;line-height:.86;letter-spacing:-.038em;
+  font-stretch:125%;text-transform:uppercase;max-width:16ch}
+h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{display:flex;gap:clamp(20px,4vw,60px);flex-wrap:wrap;align-items:flex-end;margin-top:clamp(20px,3vw,34px)}
+.lead p{max-width:56ch;color:var(--steel-300);font-size:15.5px}
+.lead p b{color:var(--paper);font-weight:600}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto;align-items:center}
+.seg{display:flex;border:1px solid var(--steel-700)}
+.seg button{background:0;border:0;color:var(--steel-300);font-family:'Space Mono',monospace;font-size:10.5px;
+  letter-spacing:.16em;text-transform:uppercase;padding:10px 17px;cursor:pointer;transition:background .3s,color .3s}
+.seg button+button{border-left:1px solid var(--steel-700)}
+.seg button.on{background:var(--grad);color:var(--ink);font-weight:700}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:clamp(18px,2.4vw,34px);
+  padding-block:clamp(30px,5vw,64px)}
+.card{border:1px solid var(--steel-800);background:var(--steel-950);display:flex;flex-direction:column;
+  opacity:0;translate:0 30px;transition:opacity .8s var(--ease),translate .8s var(--ease),border-color .4s}
+.card.is-in{opacity:1;translate:0 0}
+.card:nth-child(2){transition-delay:.1s}.card:nth-child(3){transition-delay:.2s}
+.card:hover{border-color:var(--steel-600)}
+.card-hd{display:flex;align-items:center;gap:11px;padding:14px 17px;border-bottom:1px solid var(--steel-800)}
+.card-hd .no{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--cy);font-weight:700}
+.card-hd h2{font-size:19px;font-weight:800;letter-spacing:-.02em;font-stretch:118%;text-transform:uppercase}
+.card-hd .open{margin-left:auto;font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;border:1px solid var(--steel-700);padding:8px 12px;transition:border-color .3s,color .3s;white-space:nowrap}
+.card-hd .open:hover{border-color:var(--cy);color:var(--cy)}
+
+.stage{position:relative;background:var(--ink);border-bottom:1px solid var(--steel-800);overflow:hidden}
+.stage.desktop{aspect-ratio:16/11}
+.stage.mobile{aspect-ratio:16/11;display:flex;align-items:flex-start;justify-content:center;padding-top:14px}
+.holder{position:absolute;top:0;left:0;transform-origin:top left}
+.stage.mobile .holder{position:relative;transform-origin:top center}
+.holder iframe{border:0;display:block;background:var(--ink)}
+.veil{position:absolute;inset:0;z-index:5;background:linear-gradient(rgba(6,8,10,.05),rgba(6,8,10,.4));
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:18px;cursor:pointer;
+  transition:opacity .4s,backdrop-filter .4s}
+.veil span{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--ink);border:1px solid var(--steel-700);padding:9px 15px;color:var(--paper)}
+.veil:hover span{border-color:var(--cy);color:var(--cy)}
+.stage.live .veil{opacity:0;pointer-events:none}
+.loading{position:absolute;inset:0;display:grid;place-items:center;z-index:2}
+.loading span{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--steel-600);text-transform:uppercase}
+
+.card-bd{padding:17px;display:flex;flex-direction:column;gap:13px;flex:1}
+.card-bd p{font-size:14.5px;color:var(--steel-300);line-height:1.62}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:4px}
+.chip{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--steel-700);padding:6px 10px;color:var(--steel-400)}
+.chip.cy{border-color:rgba(47,216,220,.45);color:var(--cy)}
+
+/* matrix */
+.matrix{padding-block:clamp(34px,5vw,70px);border-top:1px solid var(--steel-800)}
+.matrix h3{font-size:clamp(1.3rem,3vw,2.1rem);font-weight:800;text-transform:uppercase;letter-spacing:-.03em;
+  font-stretch:118%;margin-bottom:8px}
+.matrix .mono{display:block;margin-bottom:22px}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th,.tbl td{border:1px solid var(--steel-800);padding:11px 13px;text-align:left;vertical-align:top}
+.tbl th{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--steel-400);font-weight:400;background:var(--steel-950)}
+.tbl td:first-child{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cy);white-space:nowrap}
+.tbl tbody tr:hover td{background:var(--steel-950)}
+.scrollx{overflow-x:auto}
+
+/* note */
+.note{border:1px solid var(--steel-800);background:var(--steel-950);padding:clamp(18px,2.4vw,30px);
+  margin-bottom:clamp(30px,5vw,60px);display:grid;gap:12px}
+.note h4{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--cy)}
+.note p{font-size:14.5px;color:var(--steel-300);max-width:82ch}
+.note p b{color:var(--paper);font-weight:600}
+
+footer{border-top:1px solid var(--steel-800);padding-block:30px;display:flex;flex-wrap:wrap;gap:16px;
+  align-items:center;justify-content:space-between}
+.fl{display:flex;gap:20px;flex-wrap:wrap}
+
+@media(max-width:900px){
+  .cards{grid-template-columns:1fr}
+  .toolbar{margin-left:0;width:100%}
+}
+@media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<div class="wrap">
+<header>
+  <div class="hbar">
+    <img src="assets/logo.png" alt="Pane Solutions logo">
+    <div class="t"><b>PANE SOLUTIONS LLC</b><span class="mono">Window Cleaning · Phoenix, AZ · Est. 2023</span></div>
+  </div>
+  <h1>Three homepage <em>directions.</em></h1>
+  <div class="lead">
+    <p>All three use the <b>same section order</b> and the <b>same real content</b> — Pane Solutions' own Instagram photos, the three real reels, and the 5.0★ Google reviews quoted as written. What changes is the art direction. Pick the one that feels like the business.</p>
+    <div class="toolbar">
+      <div class="seg" id="seg">
+        <button class="on" data-mode="desktop">Desktop</button>
+        <button data-mode="mobile">Mobile</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="cards" id="cards">
+
+  <article class="card">
+    <div class="card-hd">
+      <span class="no">01</span><h2>Pressure</h2>
+      <a class="open" href="direction-1-pressure.html" target="_blank" rel="noopener">Open full screen ↗</a>
+    </div>
+    <div class="stage desktop" data-src="direction-1-pressure.html">
+      <div class="loading"><span>Loading preview…</span></div>
+      <div class="holder"></div>
+      <div class="veil"><span>Click to interact</span></div>
+    </div>
+    <div class="card-bd">
+      <p><b>The safe, premium one.</b> Near-black throughout, a strict engineering grid, and a full-bleed hero photo under enormous expanded type. Services are numbered full-width rows; the reels sit in a rack of monitors. Reads like an established contractor.</p>
+      <div class="chips">
+        <span class="chip cy">Dark</span><span class="chip">Archivo + Space Mono</span>
+        <span class="chip">Full-bleed hero</span><span class="chip">Photo mosaic</span><span class="chip">Equipment rack</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="card-hd">
+      <span class="no">02</span><h2>Altitude</h2>
+      <a class="open" href="direction-2-altitude.html" target="_blank" rel="noopener">Open full screen ↗</a>
+    </div>
+    <div class="stage desktop" data-src="direction-2-altitude.html">
+      <div class="loading"><span>Loading preview…</span></div>
+      <div class="holder"></div>
+      <div class="veil"><span>Click to interact</span></div>
+    </div>
+    <div class="card-bd">
+      <p><b>The one people will remember.</b> Starts in a bright Arizona sky and descends into black as you scroll — built around the shot of the pole reaching a second-storey window. Tall Anton headlines, a drag-to-pan filmstrip, and reels stacked in phone frames.</p>
+      <div class="chips">
+        <span class="chip cy">Light → dark</span><span class="chip">Anton + Barlow</span>
+        <span class="chip">Split hero</span><span class="chip">Drag filmstrip</span><span class="chip">Phone stack</span>
+      </div>
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="card-hd">
+      <span class="no">03</span><h2>Spec Sheet</h2>
+      <a class="open" href="direction-3-spec-sheet.html" target="_blank" rel="noopener">Open full screen ↗</a>
+    </div>
+    <div class="stage desktop" data-src="direction-3-spec-sheet.html">
+      <div class="loading"><span>Loading preview…</span></div>
+      <div class="holder"></div>
+      <div class="veil"><span>Click to interact</span></div>
+    </div>
+    <div class="card-bd">
+      <p><b>The most distinctive.</b> The whole page is an engineering drawing — graph-paper stock, a bordered sheet with corner marks, dimension lines, part numbers on each service, and a real title block at the bottom. Jobs are an index you hover to preview.</p>
+      <div class="chips">
+        <span class="chip cy">Light</span><span class="chip">IBM Plex Mono + Condensed</span>
+        <span class="chip">Drawing sheet</span><span class="chip">Accordion</span><span class="chip">Cursor peek</span>
+      </div>
+    </div>
+  </article>
+
+</div>
+
+<section class="note">
+  <h4>About the Instagram reels</h4>
+  <p>All three pages embed the three real reels from <b>@pane_solutions_llc</b> using Instagram's official embed widget. Instagram's player <b>does not auto-play</b> — it shows the cover frame with a play button and the viewer taps to watch. Until the widget loads, each panel shows the real cover frame with a link straight to the reel, so nothing ever renders as an empty box.</p>
+  <p>If you want the clips genuinely auto-playing and looping with no Instagram branding, send the three MP4 files (save them from the Instagram app — your own reel → ⋯ → Save) and they can be swapped in.</p>
+</section>
+
+<section class="matrix">
+  <h3>Section-by-section</h3>
+  <span class="mono">Same order in all three · <b>no component reused between directions</b></span>
+  <div class="scrollx">
+  <table class="tbl">
+    <thead><tr><th>Section</th><th>01 — Pressure</th><th>02 — Altitude</th><th>03 — Spec Sheet</th></tr></thead>
+    <tbody>
+      <tr><td>Hero</td><td>Full-bleed photo, type overlay, measure rail</td><td>Split: sky panel + tall photo column</td><td>12-col drawing sheet, type cell + photo cell</td></tr>
+      <tr><td>Proof</td><td>Scrolling marquee strip</td><td>Four-cell data table</td><td>Rotated stamped seals</td></tr>
+      <tr><td>Services</td><td>Numbered full-width rows</td><td>Three diagonal-cut columns</td><td>Accordion with part numbers</td></tr>
+      <tr><td>Work</td><td>Asymmetric photo mosaic</td><td>Drag-to-pan filmstrip</td><td>Index table + cursor photo peek</td></tr>
+      <tr><td>Reels</td><td>Rack of three monitors</td><td>Sticky caption + phone stack</td><td>Three staggered tiles</td></tr>
+      <tr><td>Reviews</td><td>Big pull-quote + card grid</td><td>Two drifting columns</td><td>Note callout + ticker</td></tr>
+      <tr><td>Contact</td><td>Giant phone number band</td><td>Sky panel + row list</td><td>Engineering title block</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<footer>
+  <span class="mono">Pane Solutions LLC · +1 515-525-4127 · Phoenix, AZ</span>
+  <div class="fl">
+    <a class="mono" href="https://www.instagram.com/pane_solutions_llc/" target="_blank" rel="noopener">Instagram</a>
+    <a class="mono" href="tel:+15155254127">Call</a>
+  </div>
+</footer>
+</div>
+
+<script>
+/* Live previews.
+   Each stage holds a full-size iframe scaled down with a transform, so what you
+   see is the real page at a real viewport width — not a screenshot. The veil
+   swallows the first click so scrolling the gallery never scrolls a preview. */
+var DESKTOP=1440, MOBILE=390;
+var stages=[].slice.call(document.querySelectorAll('.stage'));
+var mode='desktop';
+
+function build(st){
+  var holder=st.querySelector('.holder');
+  var w=mode==='mobile'?MOBILE:DESKTOP;
+  var h=mode==='mobile'?Math.round(w*16/9):Math.round(w*11/16);
+  var f=holder.querySelector('iframe');
+  if(!f){
+    f=document.createElement('iframe');
+    f.setAttribute('loading','lazy');
+    f.setAttribute('title','Preview');
+    f.src=st.dataset.src;
+    f.addEventListener('load',function(){var l=st.querySelector('.loading');if(l)l.style.display='none'});
+    holder.appendChild(f);
+  }
+  f.style.width=w+'px';
+  f.style.height=h+'px';
+  fit(st);
+}
+function fit(st){
+  var holder=st.querySelector('.holder');
+  var f=holder.querySelector('iframe');
+  if(!f)return;
+  var w=parseInt(f.style.width,10);
+  var scale=st.clientWidth/w;
+  if(mode==='mobile'){
+    /* fit by height so the phone-width frame sits centred in the stage */
+    scale=Math.min(st.clientHeight/parseInt(f.style.height,10),st.clientWidth/w);
+  }
+  holder.style.transform='scale('+scale+')';
+  holder.style.width=w+'px';
+  holder.style.height=parseInt(f.style.height,10)+'px';
+}
+
+stages.forEach(function(st){
+  st.querySelector('.veil').addEventListener('click',function(){st.classList.add('live')});
+});
+
+/* only build a preview once its card is near the viewport — three full pages
+   loading at once on a cold cache makes the gallery itself feel broken */
+var pio=new IntersectionObserver(function(es,o){
+  es.forEach(function(e){if(e.isIntersecting){build(e.target);o.unobserve(e.target)}});
+},{rootMargin:'300px'});
+stages.forEach(function(st){pio.observe(st)});
+
+document.getElementById('seg').addEventListener('click',function(e){
+  var b=e.target.closest('button');if(!b)return;
+  mode=b.dataset.mode;
+  this.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});
+  stages.forEach(function(st){
+    st.classList.remove('live');
+    st.classList.toggle('mobile',mode==='mobile');
+    st.classList.toggle('desktop',mode==='desktop');
+    if(st.querySelector('iframe'))build(st);
+  });
+});
+
+addEventListener('resize',function(){stages.forEach(fit)});
+
+var cio=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(e.isIntersecting){e.target.classList.add('is-in');cio.unobserve(e.target)}
+})},{threshold:.05});
+document.querySelectorAll('.card').forEach(function(c){cio.observe(c)});
+</script>
+</body>
+</html>

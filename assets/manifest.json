@@ -1,0 +1,200 @@
+[
+ {
+  "file": "assets/photos/entry-ladder.webp",
+  "w": 1400,
+  "h": 1750,
+  "kb": 354
+ },
+ {
+  "file": "assets/photos/entry-ladder@sm.webp",
+  "w": 760,
+  "h": 950,
+  "kb": 131
+ },
+ {
+  "file": "assets/photos/interior-ladder.webp",
+  "w": 1400,
+  "h": 1750,
+  "kb": 340
+ },
+ {
+  "file": "assets/photos/interior-ladder@sm.webp",
+  "w": 760,
+  "h": 950,
+  "kb": 132
+ },
+ {
+  "file": "assets/photos/french-doors.webp",
+  "w": 1400,
+  "h": 1750,
+  "kb": 77
+ },
+ {
+  "file": "assets/photos/french-doors@sm.webp",
+  "w": 760,
+  "h": 950,
+  "kb": 37
+ },
+ {
+  "file": "assets/photos/arch-reflect.webp",
+  "w": 1400,
+  "h": 1750,
+  "kb": 298
+ },
+ {
+  "file": "assets/photos/arch-reflect@sm.webp",
+  "w": 760,
+  "h": 950,
+  "kb": 117
+ },
+ {
+  "file": "assets/photos/adobe-sky.webp",
+  "w": 1400,
+  "h": 1750,
+  "kb": 232
+ },
+ {
+  "file": "assets/photos/adobe-sky@sm.webp",
+  "w": 760,
+  "h": 950,
+  "kb": 70
+ },
+ {
+  "file": "assets/photos/patio-row.webp",
+  "w": 1400,
+  "h": 1750,
+  "kb": 199
+ },
+ {
+  "file": "assets/photos/patio-row@sm.webp",
+  "w": 760,
+  "h": 950,
+  "kb": 73
+ },
+ {
+  "file": "assets/photos/patio-covered.webp",
+  "w": 1400,
+  "h": 1750,
+  "kb": 155
+ },
+ {
+  "file": "assets/photos/patio-covered@sm.webp",
+  "w": 760,
+  "h": 950,
+  "kb": 53
+ },
+ {
+  "file": "assets/photos/lawn-side.webp",
+  "w": 1400,
+  "h": 1750,
+  "kb": 336
+ },
+ {
+  "file": "assets/photos/lawn-side@sm.webp",
+  "w": 760,
+  "h": 950,
+  "kb": 108
+ },
+ {
+  "file": "assets/photos/glass-patio.webp",
+  "w": 1400,
+  "h": 1053,
+  "kb": 169
+ },
+ {
+  "file": "assets/photos/glass-patio@sm.webp",
+  "w": 760,
+  "h": 572,
+  "kb": 58
+ },
+ {
+  "file": "assets/photos/glass-corner.webp",
+  "w": 1400,
+  "h": 1053,
+  "kb": 153
+ },
+ {
+  "file": "assets/photos/glass-corner@sm.webp",
+  "w": 760,
+  "h": 572,
+  "kb": 51
+ },
+ {
+  "file": "assets/photos/midcentury.webp",
+  "w": 1400,
+  "h": 1750,
+  "kb": 400
+ },
+ {
+  "file": "assets/photos/midcentury@sm.webp",
+  "w": 760,
+  "h": 950,
+  "kb": 143
+ },
+ {
+  "file": "assets/photos/modern-gray.webp",
+  "w": 1400,
+  "h": 1741,
+  "kb": 298
+ },
+ {
+  "file": "assets/photos/modern-gray@sm.webp",
+  "w": 760,
+  "h": 945,
+  "kb": 99
+ },
+ {
+  "file": "assets/photos/pole-entry.webp",
+  "w": 1400,
+  "h": 1750,
+  "kb": 269
+ },
+ {
+  "file": "assets/photos/pole-entry@sm.webp",
+  "w": 760,
+  "h": 950,
+  "kb": 93
+ },
+ {
+  "file": "assets/photos/bay-pool.webp",
+  "w": 1400,
+  "h": 1053,
+  "kb": 181
+ },
+ {
+  "file": "assets/photos/bay-pool@sm.webp",
+  "w": 760,
+  "h": 572,
+  "kb": 55
+ },
+ {
+  "file": "assets/photos/slider-interior.webp",
+  "w": 1400,
+  "h": 1053,
+  "kb": 126
+ },
+ {
+  "file": "assets/photos/slider-interior@sm.webp",
+  "w": 760,
+  "h": 572,
+  "kb": 46
+ },
+ {
+  "file": "assets/reels/reel-pole-highrise.webp",
+  "w": 360,
+  "h": 640,
+  "kind": "reel-poster"
+ },
+ {
+  "file": "assets/reels/reel-estate.webp",
+  "w": 640,
+  "h": 360,
+  "kind": "reel-poster"
+ },
+ {
+  "file": "assets/reels/reel-squeegee.webp",
+  "w": 360,
+  "h": 640,
+  "kind": "reel-poster"
+ }
+]

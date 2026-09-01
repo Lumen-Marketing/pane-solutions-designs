@@ -1,0 +1,9 @@
+shots/*.png
+scrape/raw/
+scrape/*.png
+scrape/*.html
+scrape/*.txt
+scrape/*.json
+node_modules/
+.DS_Store
+Thumbs.db
