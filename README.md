@@ -95,7 +95,18 @@ dimensioned window elevation that the squeegee strokes draw themselves onto,
 with the photograph demoted to a pinned `FIG. 1` reference.
 **Type:** IBM Plex Mono + IBM Plex Sans Condensed.
 
-**Three sheet stocks**, switchable from the dots in the title strip and
+**Built around windows and glass.** The window is the structural system, not
+a motif: the sheet is a frame with jambs and a **sill** deeper than its head,
+the hero's two halves are divided by a real **mullion** with a bead highlight,
+each service is a **lite** with glazing-bead corner marks, and the work section
+is a **divided-light sash** of eight panes that are grimy until you hover one
+clean — the interaction the whole business is about. The grime is a blur and
+desaturation on the photograph plus an SVG speckle, never a translucent card or
+a light bloom, so it stays inside the no-gradients rule. Panes ship clean under
+`@media(hover:none)` and the wording swaps with the pointer, because "hover" is
+a lie on a phone.
+
+**Three sheet stocks**, switchable from the dots in the sill and
 deep-linkable with `?theme=`: **blueprint** (default, cyanotype), **drafting**
 (white stock) and **vellum** (warm). Every surface colour is a token — the
 first pass hard-coded `.nav` and `.sheet` backgrounds and they painted a milky
@@ -114,7 +125,7 @@ across two directions; any new direction fills in a column before it ships.
 | hero | full-bleed photo, type overlay, measure rail | photo plate, edge-to-edge masthead, squeegee wipe | dimensioned window elevation + pinned photo ref |
 | proof | scrolling marquee strip | four-cell data table | rotated stamped seals |
 | services | numbered full-width rows | three diagonal-cut columns | accordion with part numbers |
-| work | asymmetric photo mosaic | drag-to-pan filmstrip | index table + cursor photo peek |
+| work | asymmetric photo mosaic | drag-to-pan filmstrip | divided-light sash, hover a pane clean |
 | reels | rack of three monitors | sticky caption + phone stack | three staggered tiles |
 | reviews | big pull-quote + card grid | two drifting columns | note callout + ticker |
 | contact | giant phone number band | sky panel + row list | engineering title block |

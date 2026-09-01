@@ -106,14 +106,23 @@ h1,h2,h3{font-weight:700;letter-spacing:-.022em;line-height:.94;text-transform:u
 .btn:hover s{color:var(--on-acc)}
 .burger{display:none;background:0;border:0;border-left:1px solid var(--rule);padding:0 15px;cursor:pointer;font-size:15px}
 
-/* ── drawing sheet frame ──────────────────────── */
-.sheet{position:relative;border:1.5px solid var(--ink);background:var(--sheet-bg);margin-top:60px}
-.sheet::before{content:'';position:absolute;inset:7px;border:1px solid var(--rule-2);pointer-events:none}
+/* ── the sheet is a window: head, jambs, sill ───
+   A frame is not a uniform box. The foot is deeper than the head, the way a
+   sill is deeper than a head jamb, and that alone stops it reading as a plain
+   rectangle. */
+.sheet{position:relative;border:1.5px solid var(--ink);border-bottom-width:0;
+  background:var(--sheet-bg);margin-top:60px}
+.sheet::before{content:'';position:absolute;inset:7px;bottom:7px;border:1px solid var(--rule-2);
+  pointer-events:none}
+/* the sill: a deeper bar along the foot, with a bead line proud of it */
+.sill{display:flex;align-items:center;gap:clamp(10px,1.6vw,22px);flex-wrap:wrap;
+  padding:clamp(9px,1.2vw,15px) clamp(14px,1.9vw,26px);
+  border:1.5px solid var(--ink);border-top:3px solid var(--ink);background:var(--paper-2)}
+.sill .lbl{white-space:nowrap}
 .cmark{position:absolute;width:16px;height:16px;border:1.5px solid var(--ink);z-index:3}
 .cmark.tl{top:-1px;left:-1px;border-right:0;border-bottom:0}
 .cmark.tr{top:-1px;right:-1px;border-left:0;border-bottom:0}
-.cmark.bl{bottom:-1px;left:-1px;border-right:0;border-top:0}
-.cmark.br{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.cmark.bl,.cmark.br{display:none}
 
 /* ── hero: an actual drawing sheet ───────────────
    The first version was type-left / photo-right with a solid button beside an
@@ -123,9 +132,13 @@ h1,h2,h3{font-weight:700;letter-spacing:-.022em;line-height:.94;text-transform:u
 .hero{position:relative;display:grid;grid-template-columns:repeat(12,1fr);
   grid-template-areas:'d d d d d d d d n n n n';
   min-height:clamp(430px,62vh,640px)}
+/* MULLION, not a hairline. The bar carries a bead highlight down its face the
+   way a glazing bar does, so the two halves read as separate lites. */
 .h-draw{grid-area:d;position:relative;padding:clamp(20px,3vw,46px);
-  border-right:1px solid var(--rule);display:flex;flex-direction:column;justify-content:center;
+  border-right:9px solid var(--rule);display:flex;flex-direction:column;justify-content:center;
   overflow:hidden}
+.h-draw::after{content:'';position:absolute;top:0;bottom:0;right:-5px;width:1px;
+  background:var(--paper);opacity:.55}
 .docref{display:inline-flex;align-items:center;gap:9px;margin-bottom:clamp(12px,1.8vw,22px)}
 .docref .sq{width:9px;height:9px;background:var(--cy);border:1px solid var(--ink)}
 h1{font-size:clamp(2.2rem,6.6vw,5.9rem);letter-spacing:-.035em;position:relative;z-index:3}
@@ -206,7 +219,7 @@ h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07
 .sw-vellum{background:linear-gradient(135deg,#F3EDE1 50%,#9A3B1E 50%)}
 
 /* ── proof: stamped seals ─────────────────────── */
-.seals{display:flex;flex-wrap:wrap;gap:clamp(10px,1.6vw,20px);align-items:center;
+.seals-unused{display:flex;flex-wrap:wrap;gap:clamp(10px,1.6vw,20px);align-items:center;
   padding:clamp(18px,2.4vw,30px);border-top:1px solid var(--rule)}
 .seal{display:flex;align-items:center;gap:11px;border:1.5px solid var(--ink-2);padding:9px 15px;
   transform:rotate(-.7deg);transition:transform .4s var(--ease),border-color .4s}
@@ -226,9 +239,17 @@ h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07
 .shead p{max-width:36ch;color:var(--ink-2);font-size:14.5px}
 
 /* ── services: accordion ──────────────────────── */
-.acc{border-top:1.5px solid var(--ink);background:var(--card)}
-.item{border-bottom:1px solid var(--rule)}
-.item.open{background:rgba(41,201,204,.05)}
+/* each service is a LITE: a pane set into the sash, with glazing-bead corner
+   marks at its top-left and bottom-right */
+.acc{border:1.5px solid var(--ink);background:var(--card);padding:7px}
+.item{border:1px solid var(--rule);position:relative}
+.item+.item{margin-top:7px}
+.item.open{background:rgba(41,201,204,.05);border-color:var(--cy-ink)}
+.item::before,.item::after{content:'';position:absolute;width:9px;height:9px;
+  border:1px solid var(--rule-2);pointer-events:none;z-index:2}
+.item::before{top:5px;left:5px;border-right:0;border-bottom:0}
+.item::after{bottom:5px;right:5px;border-left:0;border-top:0}
+.item.open::before,.item.open::after{border-color:var(--cy)}
 .hd{width:100%;background:0;border:0;cursor:pointer;text-align:left;color:inherit;font:inherit;
   display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:clamp(12px,2.4vw,32px);
   padding:clamp(16px,2.2vw,28px) clamp(14px,2vw,26px);transition:background .35s}
@@ -254,21 +275,55 @@ h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07
 .bd-in figure{position:relative;overflow:hidden;border:1px solid var(--rule);aspect-ratio:4/3}
 .bd-in figure img{width:100%;height:100%;object-fit:cover}
 
-/* ── work: index table + cursor peek ──────────── */
-.idx{border-top:1.5px solid var(--ink);position:relative}
-.irow{display:grid;grid-template-columns:60px 1fr 150px 90px;align-items:center;gap:clamp(10px,2vw,26px);
-  padding:clamp(13px,1.7vw,21px) clamp(10px,1.6vw,20px);border-bottom:1px solid var(--rule);
-  transition:background .3s,padding-left .45s var(--ease);position:relative}
-.irow:hover{background:var(--ink);color:var(--paper);padding-left:clamp(18px,2.6vw,38px)}
-.irow .n,.irow .ty,.irow .dt{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink-3);transition:color .3s}
-.irow:hover .n,.irow:hover .ty,.irow:hover .dt{color:var(--cy)}
-.irow .ti{font-size:clamp(15px,1.9vw,23px);font-weight:600;text-transform:uppercase;letter-spacing:-.018em}
-.peek{position:fixed;width:270px;aspect-ratio:4/3;border:1.5px solid var(--ink);overflow:hidden;
-  pointer-events:none;z-index:50;opacity:0;scale:.9;transition:opacity .3s,scale .4s var(--ease);
-  box-shadow:0 24px 48px -18px var(--shadow);background:var(--card)}
-.peek.on{opacity:1;scale:1}
-.peek img{width:100%;height:100%;object-fit:cover}
+/* ── work: a divided-light sash ─────────────────
+   Eight panes behind muntins. Every pane is grimy until you hover it clean —
+   the interaction the entire business is about, and the reason this section is
+   a sash rather than another photo grid.
+
+   The grime is a blur + desaturate on the photograph itself plus an SVG
+   speckle. No translucent card, no light bloom, no gradient. */
+.sash{border:1.5px solid var(--ink);background:var(--ink);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:6px}
+.lite{position:relative;overflow:hidden;aspect-ratio:4/5;background:var(--paper-2);
+  cursor:pointer;isolation:isolate}
+/* Dirty, not destroyed. blur(7px) turned all eight panes into unreadable mush,
+   which reads as broken images rather than glass that needs cleaning — you
+   have to be able to tell what you are looking at. */
+.lite img{width:100%;height:100%;object-fit:cover;
+  filter:blur(2.4px) saturate(.55) contrast(.92) brightness(1.06);
+  scale:1.06;transition:filter .55s var(--ease),scale .9s var(--ease)}
+.lite:hover img,.lite:focus-visible img{filter:none;scale:1.02}
+/* the grime itself: a speckle that lifts as the pane clears */
+.lite::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.3;
+  transition:opacity .55s var(--ease);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23g)' opacity='.55'/%3E%3C/svg%3E")}
+.lite:hover::before,.lite:focus-visible::before{opacity:0}
+.lite figcaption{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:9px 10px;
+  background:var(--ink);color:var(--paper);
+  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+  display:flex;justify-content:space-between;gap:8px;
+  translate:0 100%;transition:translate .45s var(--ease)}
+.lite:hover figcaption,.lite:focus-visible figcaption{translate:0 0}
+.lite figcaption em{font-style:normal;color:var(--cy)}
+/* pane number, etched top-left, fades out as the pane clears */
+.lite .no{position:absolute;top:8px;left:9px;z-index:3;
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;
+  color:var(--ink);background:var(--paper);padding:3px 6px;
+  transition:opacity .4s var(--ease)}
+.lite:hover .no,.lite:focus-visible .no{opacity:0}
+.sash-note{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:11px}
+/* "hover" is a lie on a phone; swap the wording with the pointer */
+.on-touch{display:none}
+@media(hover:none){.on-hover{display:none}.on-touch{display:inline}}
+/* No hover on a phone, so the panes would stay dirty forever. Ship them clean
+   there and let the caption stand. */
+@media(hover:none){
+  .lite img{filter:none;scale:1.02}
+  .lite::before{opacity:0}
+  .lite figcaption{translate:0 0}
+  .lite .no{opacity:0}
+}
+@media(max-width:900px){.sash{grid-template-columns:repeat(2,1fr)}}
 
 /* ── reels: staggered tiles ───────────────────── */
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,28px);align-items:start}
@@ -460,7 +515,7 @@ footer{padding-block:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:cente
       </div>
     </div>
   </div>
-  <div class="seals">
+  <div class="sill">
     <div class="seal"><span class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="sm">Google<br>5.0 / 13 reviews</span></div>
     <div class="seal"><span class="big cy">FREE</span><span class="sm">Estimates<br>No charge to look</span></div>
     <div class="seal"><span class="big">LLC</span><span class="sm">Registered<br>Est. 2023</span></div>
@@ -479,7 +534,7 @@ footer{padding-block:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:cente
 
   <section id="services">
     <div class="shead">
-      <div><span class="lbl">SHEET 01 — SERVICE SCHEDULE</span><h2 class="rv">Scope of<br>work</h2></div>
+      <div><span class="lbl">SHEET 01 — SCOPE OF GLAZING</span><h2 class="rv">Scope of<br>work</h2></div>
       <p class="rv" data-d="2">Three line items. Expand any one for what's actually included.</p>
     </div>
     <div class="acc" id="acc">
@@ -533,20 +588,55 @@ footer{padding-block:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:cente
 
   <section id="work">
     <div class="shead">
-      <div><span class="lbl">SHEET 02 — JOB INDEX</span><h2 class="rv">Recent<br>jobs</h2></div>
-      <p class="rv" data-d="2">Hover a line to see the photo. Every one is our own work in the Phoenix area.</p>
+      <div><span class="lbl">SHEET 02 — GLAZING SCHEDULE</span><h2 class="rv">Recent<br>glazing</h2></div>
+      <p class="rv" data-d="2">Eight lites, every one of them our own work in the Phoenix area.<span class="on-hover"> They start dirty — hover one to clean it.</span></p>
     </div>
-    <div class="idx" id="idx">
-      <div class="irow" data-img="assets/photos/pole-entry@sm.webp"><span class="n">001</span><span class="ti">Entry glazing · water-fed pole</span><span class="ty">Window cleaning</span><span class="dt">Feb 2025</span></div>
-      <div class="irow" data-img="assets/photos/bay-pool.webp"><span class="n">002</span><span class="ti">Bay window · poolside interior</span><span class="ty">Window cleaning</span><span class="dt">Feb 2025</span></div>
-      <div class="irow" data-img="assets/photos/interior-ladder@sm.webp"><span class="n">003</span><span class="ti">Tall interior pane · ladder work</span><span class="ty">Window cleaning</span><span class="dt">Nov 2024</span></div>
-      <div class="irow" data-img="assets/photos/french-doors@sm.webp"><span class="n">004</span><span class="ti">French doors · black frame</span><span class="ty">Window cleaning</span><span class="dt">Nov 2024</span></div>
-      <div class="irow" data-img="assets/photos/glass-patio.webp"><span class="n">005</span><span class="ti">Patio slider run</span><span class="ty">Window cleaning</span><span class="dt">Feb 2025</span></div>
-      <div class="irow" data-img="assets/photos/modern-gray@sm.webp"><span class="n">006</span><span class="ti">Mid-century glazing</span><span class="ty">Exterior</span><span class="dt">Feb 2025</span></div>
-      <div class="irow" data-img="assets/photos/lawn-side@sm.webp"><span class="n">007</span><span class="ti">Side elevation · full run</span><span class="ty">Exterior</span><span class="dt">Feb 2025</span></div>
-      <div class="irow" data-img="assets/photos/glass-corner.webp"><span class="n">008</span><span class="ti">Glazed corner · courtyard</span><span class="ty">Window cleaning</span><span class="dt">Feb 2025</span></div>
+    <div class="sash">
+      <figure class="lite" tabindex="0">
+        <img src="assets/photos/pole-entry@sm.webp" alt="Entry glazing cleaned by Pane Solutions in Phoenix" loading="lazy">
+        <span class="no">01</span>
+        <figcaption><span>Entry glazing</span><em>Water-fed pole</em></figcaption>
+      </figure>
+      <figure class="lite" tabindex="0">
+        <img src="assets/photos/bay-pool@sm.webp" alt="Bay window cleaned by Pane Solutions in Phoenix" loading="lazy">
+        <span class="no">02</span>
+        <figcaption><span>Bay window</span><em>Poolside interior</em></figcaption>
+      </figure>
+      <figure class="lite" tabindex="0">
+        <img src="assets/photos/interior-ladder@sm.webp" alt="Tall interior pane cleaned by Pane Solutions in Phoenix" loading="lazy">
+        <span class="no">03</span>
+        <figcaption><span>Tall interior pane</span><em>Ladder work</em></figcaption>
+      </figure>
+      <figure class="lite" tabindex="0">
+        <img src="assets/photos/french-doors@sm.webp" alt="French doors cleaned by Pane Solutions in Phoenix" loading="lazy">
+        <span class="no">04</span>
+        <figcaption><span>French doors</span><em>Black frame</em></figcaption>
+      </figure>
+      <figure class="lite" tabindex="0">
+        <img src="assets/photos/glass-patio@sm.webp" alt="Patio slider run cleaned by Pane Solutions in Phoenix" loading="lazy">
+        <span class="no">05</span>
+        <figcaption><span>Patio slider run</span><em>Full elevation</em></figcaption>
+      </figure>
+      <figure class="lite" tabindex="0">
+        <img src="assets/photos/modern-gray@sm.webp" alt="Mid-century glazing cleaned by Pane Solutions in Phoenix" loading="lazy">
+        <span class="no">06</span>
+        <figcaption><span>Mid-century glazing</span><em>Exterior</em></figcaption>
+      </figure>
+      <figure class="lite" tabindex="0">
+        <img src="assets/photos/lawn-side@sm.webp" alt="Side elevation cleaned by Pane Solutions in Phoenix" loading="lazy">
+        <span class="no">07</span>
+        <figcaption><span>Side elevation</span><em>Full run</em></figcaption>
+      </figure>
+      <figure class="lite" tabindex="0">
+        <img src="assets/photos/glass-corner@sm.webp" alt="Glazed corner cleaned by Pane Solutions in Phoenix" loading="lazy">
+        <span class="no">08</span>
+        <figcaption><span>Glazed corner</span><em>Courtyard</em></figcaption>
+      </figure>
     </div>
-    <div class="peek" id="peek"><img id="peekimg" src="assets/photos/pole-entry@sm.webp" alt=""></div>
+    <div class="sash-note">
+      <span class="lbl">8 lites &middot; <b class="on-hover">hover to clean</b><b class="on-touch">all our own work</b></span>
+      <span class="lbl">All glazing our own work &middot; Phoenix, AZ</span>
+    </div>
   </section>
 
   <section id="reels">
@@ -699,23 +789,7 @@ document.querySelectorAll('#acc .hd').forEach(function(h){
   document.querySelectorAll('.tk').forEach(function(t){t.innerHTML=html});
 })();
 
-/* job index — a photo that tracks the cursor.
-   Positioned with fixed coords and clamped so it never pushes the page wider. */
-(function(){
-  var idx=document.getElementById('idx'),peek=document.getElementById('peek'),img=document.getElementById('peekimg');
-  if(!idx||!peek)return;
-  var W=270,H=270*3/4;
-  idx.addEventListener('pointermove',function(e){
-    var r=e.target.closest('.irow');
-    if(!r){peek.classList.remove('on');return}
-    if(img.getAttribute('src')!==r.dataset.img)img.src=r.dataset.img;
-    peek.classList.add('on');
-    var x=Math.min(e.clientX+26,innerWidth-W-14);
-    var y=Math.min(Math.max(e.clientY-H/2,14),innerHeight-H-14);
-    peek.style.left=x+'px';peek.style.top=y+'px';
-  });
-  idx.addEventListener('pointerleave',function(){peek.classList.remove('on')});
-})();
+/* the job index is a sash now — panes clear on hover in CSS, no script. */
 
 /* scroll reveal */
 var io=new IntersectionObserver(function(es){es.forEach(function(e){

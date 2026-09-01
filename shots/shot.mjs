@@ -98,6 +98,14 @@ async function run(file, { width, height, out, slices = 0, wait = 2400 }) {
     await send('Page.enable'); await send('Runtime.enable');
     await send('Emulation.setDeviceMetricsOverride',
       { width, height, deviceScaleFactor: 1, mobile: width < 500 });
+    // setDeviceMetricsOverride alone does NOT change the pointer, so hover:none
+    // rules never applied and touch fallbacks looked broken in every mobile
+    // capture. Emulate the coarse pointer explicitly.
+    if (width < 500) {
+      await send('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
+      await send('Emulation.setEmulatedMedia',
+        { features: [{ name: 'hover', value: 'none' }, { name: 'pointer', value: 'coarse' }] });
+    }
     await send('Page.navigate', { url });
     await sleep(wait);
 
