@@ -126,7 +126,7 @@ across two directions; any new direction fills in a column before it ships.
 | proof | scrolling marquee strip | four-cell data table | rotated stamped seals |
 | services | numbered full-width rows | three diagonal-cut columns | accordion with part numbers |
 | work | asymmetric photo mosaic | drag-to-pan filmstrip | divided-light sash, hover a pane clean |
-| reels | rack of three monitors | sticky caption + phone stack | three staggered tiles |
+| reels | rack of three monitors | sticky caption + phone stack | three equal panes, tops aligned |
 | reviews | big pull-quote + card grid | two drifting columns | note callout + ticker |
 | contact | giant phone number band | sky panel + row list | engineering title block |
 
@@ -177,6 +177,14 @@ Implementation notes:
 - The white Instagram player is framed deliberately — as a rack-mounted monitor
   (01), a phone (02), or a bordered panel (03) — so it reads as designed rather
   than pasted on.
+- **Instagram sizes every embed to its own video aspect.** Two of these three
+  reels are portrait and one is landscape, so their natural heights are 616px
+  and 392px. Left alone that makes a row of three panels visibly ragged. Where
+  they sit side by side (01 and 03) the row is stretched, the screen is pinned
+  to 642px and the embeds are top-aligned, so the three Instagram headers line
+  up. The short one keeps empty frame beneath it — the panel is identical even
+  though the card inside is not, and the card cannot be restyled from outside
+  its iframe.
 
 **To swap in self-hosted auto-playing video later:** drop `reel-1.mp4`,
 `reel-2.mp4`, `reel-3.mp4` into `assets/reels/`, then in each page replace the

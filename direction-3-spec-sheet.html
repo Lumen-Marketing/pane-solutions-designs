@@ -326,11 +326,13 @@ h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07
 @media(max-width:900px){.sash{grid-template-columns:repeat(2,1fr)}}
 
 /* ── reels: staggered tiles ───────────────────── */
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,28px);align-items:start}
+/* Three equal panes, tops aligned. They were staggered and each one hugged its
+   embed, and Instagram sizes an embed to its own video aspect — two of these
+   reels are portrait and one is landscape, so the middle pane came out ~220px
+   shorter than its neighbours. Stretch the row and pin one screen height. */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,2vw,28px);align-items:stretch}
 .tile{border:1.5px solid var(--ink);background:var(--card);display:flex;flex-direction:column;
   transition:translate .5s var(--ease),box-shadow .5s var(--ease)}
-.tiles .tile:nth-child(2){margin-top:clamp(20px,4.4vw,64px)}
-.tiles .tile:nth-child(3){margin-top:clamp(40px,8.8vw,128px)}
 .tile:hover{translate:0 -7px;box-shadow:0 22px 44px -20px var(--shadow)}
 .tile-hd{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--rule)}
 .tile-hd .sq{width:8px;height:8px;background:var(--cy);border:1px solid var(--ink);flex-shrink:0}
@@ -338,7 +340,10 @@ h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07
 .tile-hd em{margin-left:auto;font-style:normal;font-family:'IBM Plex Mono',monospace;font-size:9px;
   letter-spacing:.14em;color:var(--ink-3)}
 /* flex:1 so a short embed doesn't leave the tile footer floating mid-panel. */
-.screen{position:relative;background:var(--paper-2);min-height:420px;flex:1;display:flex;align-items:center;
+/* top-aligned, not centred: the short landscape embed floated mid-pane while
+   its neighbours started at the top. Aligning to the top lines the three
+   Instagram headers up with each other, which is what reads as symmetrical. */
+.screen{position:relative;background:var(--paper-2);min-height:642px;flex:1;display:flex;align-items:flex-start;
   justify-content:center;padding:6px}
 .screen .instagram-media{margin:0 auto!important;min-width:0!important;width:100%!important;
   max-width:326px!important;border-radius:0!important;box-shadow:none!important;border:0!important}

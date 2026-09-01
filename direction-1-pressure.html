@@ -212,8 +212,11 @@ section{position:relative;z-index:2}
 .bay-hd em{margin-left:auto;font-style:normal;font-family:'Space Mono',monospace;font-size:9px;
   letter-spacing:.16em;color:var(--steel-400)}
 /* flex:1 so a short embed doesn't leave the bay footer floating mid-panel —
-   grid stretches the bays to equal height but the screen would not grow. */
-.screen{position:relative;background:var(--ink);min-height:420px;flex:1;display:flex;align-items:center;justify-content:center;padding:8px}
+   grid stretches the bays to equal height but the screen would not grow. The
+   min-height clears the tallest embed so all three bays match: Instagram sizes
+   each embed to its own video aspect and one of these reels is landscape. */
+/* top-aligned so the three embed headers line up across the rack */
+.screen{position:relative;background:var(--ink);min-height:642px;flex:1;display:flex;align-items:flex-start;justify-content:center;padding:8px}
 .screen .instagram-media{margin:0 auto!important;min-width:0!important;width:100%!important;max-width:326px!important;
   border-radius:0!important;box-shadow:none!important;border:0!important}
 .fallback{position:absolute;inset:8px;display:flex;flex-direction:column;justify-content:flex-end;
