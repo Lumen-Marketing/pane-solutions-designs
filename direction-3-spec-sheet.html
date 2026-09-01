@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="blueprint">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,13 +11,45 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#EFF1EF; --paper-2:#E4E8E7; --card:#FBFCFB;
-  --ink:#0C1013; --ink-2:#39434A; --ink-3:#6B767D;
-  --rule:#C6CFD2; --rule-2:#9BA8AE;
-  --cy:#29C9CC; --cy-ink:#0A6E78; --az:#2A6F9E; --bl:#3F5FA8;
+  /* DRAFTING (default) — clean white stock, true black ink, logo cyan.
+     Replaces the original pale green-grey paper + petrol teal, which read
+     dingy and institutional rather than precise. */
+  --paper:#F7F7F4; --paper-2:#EBEBE6; --card:#FFFFFE;
+  --ink:#0B0C0C; --ink-2:#3D4244; --ink-3:#767B7C;
+  --rule:#CFCFC8; --rule-2:#A3A39B;
+  --grid-1:rgba(11,12,12,.055); --grid-2:rgba(11,12,12,.11);
+  --cy:#12B8C4; --cy-ink:#0B7C86; --az:#2A6F9E; --bl:#3F5FA8;
+  --stamp:#0B7C86;
+  /* translucent surfaces and text-on-accent must be per-theme too: hard-coding
+     them painted a milky slab over the blueprint ground and put pale text on a
+     pale nav. */
+  --nav-bg:rgba(247,247,244,.93); --sheet-bg:rgba(255,255,254,.62);
+  --on-acc:#06232A; --shadow:rgba(11,12,12,.42);
   --grad:linear-gradient(135deg,var(--bl),var(--az) 50%,var(--cy));
   --gut:clamp(14px,3.4vw,52px);
   --ease:cubic-bezier(.2,1,.28,1);
+}
+/* BLUEPRINT — cyanotype. Prussian ground, white line work, cyan accent. */
+:root[data-theme="blueprint"]{
+  --paper:#0C2337; --paper-2:#123049; --card:#102B41;
+  --ink:#EAF3F8; --ink-2:#A9C4D6; --ink-3:#6F90A6;
+  --rule:#28506E; --rule-2:#3D6C8E;
+  --grid-1:rgba(174,214,238,.075); --grid-2:rgba(174,214,238,.15);
+  --cy:#4FE3E8; --cy-ink:#6FEDF1; --az:#5AB0E0; --bl:#7E9BE8;
+  --stamp:#6FEDF1;
+  --nav-bg:rgba(9,27,43,.94); --sheet-bg:rgba(18,48,73,.5);
+  --on-acc:#062430; --shadow:rgba(0,0,0,.55);
+}
+/* VELLUM — warm drawing-office stock, sepia rules, cyan kept as the one accent */
+:root[data-theme="vellum"]{
+  --paper:#F3EDE1; --paper-2:#E7DFCE; --card:#FBF7EF;
+  --ink:#1A1611; --ink-2:#4A423A; --ink-3:#857B6D;
+  --rule:#CFC3AC; --rule-2:#A89B83;
+  --grid-1:rgba(90,70,40,.07); --grid-2:rgba(90,70,40,.13);
+  --cy:#0F9AA6; --cy-ink:#0A6E78; --az:#2A6F9E; --bl:#3F5FA8;
+  --stamp:#9A3B1E;
+  --nav-bg:rgba(243,237,225,.94); --sheet-bg:rgba(251,247,239,.6);
+  --on-acc:#FFFFFF; --shadow:rgba(60,45,25,.38);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -25,12 +57,14 @@ body{
   background:var(--paper);color:var(--ink);
   font-family:'IBM Plex Sans Condensed',system-ui,sans-serif;font-size:16.5px;line-height:1.6;
   overflow-x:clip;-webkit-font-smoothing:antialiased;
+  /* tokenised so the graph paper repaints with the palette */
   background-image:
-    linear-gradient(rgba(43,90,110,.055) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(43,90,110,.055) 1px,transparent 1px),
-    linear-gradient(rgba(43,90,110,.10) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(43,90,110,.10) 1px,transparent 1px);
+    linear-gradient(var(--grid-1) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-1) 1px,transparent 1px),
+    linear-gradient(var(--grid-2) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid-2) 1px,transparent 1px);
   background-size:9px 9px,9px 9px,90px 90px,90px 90px;
+  transition:background-color .5s var(--ease),color .5s var(--ease);
 }
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
@@ -46,9 +80,9 @@ h1,h2,h3{font-weight:700;letter-spacing:-.022em;line-height:.94;text-transform:u
 
 /* ── nav ──────────────────────────────────────── */
 .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:stretch;
-  background:rgba(239,241,239,.93);backdrop-filter:blur(14px);border-bottom:1.5px solid var(--ink)}
+  background:var(--nav-bg);backdrop-filter:blur(14px);border-bottom:1.5px solid var(--ink)}
 .brand{display:flex;align-items:center;gap:10px;padding:9px var(--gut);border-right:1px solid var(--rule);flex-shrink:0}
-.brand img{width:34px;height:34px;border-radius:50%;background:#000}
+.brand img{width:34px;height:34px;border-radius:50%;background:#000;flex-shrink:0}
 .brand-tx{line-height:1.05}
 .brand-tx b{display:block;font-size:15px;font-weight:700;letter-spacing:-.01em;text-transform:uppercase}
 .brand-tx span{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;color:var(--ink-3)}
@@ -68,11 +102,11 @@ h1,h2,h3{font-weight:700;letter-spacing:-.022em;line-height:.94;text-transform:u
 .btn::before{content:'';position:absolute;inset:0;background:var(--grad);translate:0 101%;
   transition:translate .42s var(--ease)}
 .btn:hover::before{translate:0 0}
-.btn:hover s{color:var(--ink)}
+.btn:hover s{color:var(--on-acc)}
 .burger{display:none;background:0;border:0;border-left:1px solid var(--rule);padding:0 15px;cursor:pointer;font-size:15px}
 
 /* ── drawing sheet frame ──────────────────────── */
-.sheet{position:relative;border:1.5px solid var(--ink);background:rgba(251,252,251,.62);margin-top:60px}
+.sheet{position:relative;border:1.5px solid var(--ink);background:var(--sheet-bg);margin-top:60px}
 .sheet::before{content:'';position:absolute;inset:7px;border:1px solid var(--rule-2);pointer-events:none}
 .cmark{position:absolute;width:16px;height:16px;border:1.5px solid var(--ink);z-index:3}
 .cmark.tl{top:-1px;left:-1px;border-right:0;border-bottom:0}
@@ -80,46 +114,82 @@ h1,h2,h3{font-weight:700;letter-spacing:-.022em;line-height:.94;text-transform:u
 .cmark.bl{bottom:-1px;left:-1px;border-right:0;border-top:0}
 .cmark.br{bottom:-1px;right:-1px;border-left:0;border-top:0}
 
-/* ── hero: modular grid ───────────────────────── */
-.hero{display:grid;grid-template-columns:repeat(12,1fr);gap:0;position:relative}
-.h-type{grid-column:span 7;padding:clamp(24px,3.6vw,58px);border-right:1px solid var(--rule);
-  display:flex;flex-direction:column;justify-content:center;min-height:clamp(340px,46vw,560px)}
-.h-rev{grid-column:span 5;display:grid;grid-template-rows:auto 1fr}
-.h-photo{position:relative;overflow:hidden;border-bottom:1px solid var(--rule)}
-.h-photo img{width:100%;height:100%;min-height:clamp(180px,22vw,290px);object-fit:cover;
-  filter:saturate(.9) contrast(1.04);scale:1.02;transition:scale 1.1s var(--ease)}
+/* ── hero: an actual drawing sheet ───────────────
+   The first version was type-left / photo-right with a solid button beside an
+   outlined one — a landing-page split wearing a drawing-sheet costume. A real
+   sheet is a drawing, dimensioned, with the photograph demoted to a pinned
+   reference and a title block along the foot. That is what this is now. */
+.hero{position:relative;display:grid;grid-template-columns:repeat(12,1fr);
+  grid-template-areas:'d d d d d d d d n n n n';
+  min-height:clamp(430px,62vh,640px)}
+.h-draw{grid-area:d;position:relative;padding:clamp(20px,3vw,46px);
+  border-right:1px solid var(--rule);display:flex;flex-direction:column;justify-content:center;
+  overflow:hidden}
+.docref{display:inline-flex;align-items:center;gap:9px;margin-bottom:clamp(12px,1.8vw,22px)}
+.docref .sq{width:9px;height:9px;background:var(--cy);border:1px solid var(--ink)}
+h1{font-size:clamp(2.2rem,6.6vw,5.9rem);letter-spacing:-.035em;position:relative;z-index:3}
+h1 .u{position:relative;display:inline-block}
+h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07em;background:var(--grad)}
+/* the line-art window elevation the headline is dimensioned against */
+.elev{position:absolute;right:clamp(-30px,-2vw,0px);top:50%;translate:0 -50%;
+  width:min(46%,340px);opacity:.9;z-index:1;pointer-events:none;color:var(--rule-2)}
+.elev .pane{fill:var(--cy);opacity:.07}
+.elev .wipe{stroke:var(--cy);stroke-width:2.5;fill:none;opacity:.85;
+  stroke-dasharray:420;stroke-dashoffset:420;animation:draw 2.4s .5s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.h-sub{max-width:46ch;margin-top:clamp(12px,1.8vw,20px);color:var(--ink-2);
+  font-size:clamp(14.5px,1.05vw,16.5px);position:relative;z-index:3}
+.h-sub b{color:var(--ink);font-weight:600}
+/* dimension line: the scope of work, drawn the way a drawing states a span */
+.dim{display:flex;align-items:center;gap:8px;margin-top:clamp(14px,2vw,24px);color:var(--cy-ink);
+  position:relative;z-index:3;max-width:640px}
+.dim .ln{flex:1;height:1px;background:currentColor;position:relative}
+.dim .ln::before,.dim .ln::after{content:'';position:absolute;top:-3px;width:0;height:0;
+  border-block:3.5px solid transparent}
+.dim .ln::before{left:0;border-right:6px solid currentColor}
+.dim .ln::after{right:0;border-left:6px solid currentColor}
+.dim span{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;
+  text-transform:uppercase;white-space:nowrap}
+/* ONE call to action. A solid button next to an outlined button is the tell. */
+.h-acts{display:flex;align-items:center;gap:clamp(14px,2.4vw,30px);flex-wrap:wrap;
+  margin-top:clamp(16px,2.4vw,28px);position:relative;z-index:3}
+.btn-line{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  color:var(--ink-2);border-bottom:1px solid var(--rule-2);padding-bottom:4px;
+  transition:color .35s,border-color .35s}
+.btn-line:hover{color:var(--cy-ink);border-color:var(--cy-ink)}
+
+/* right column: pinned photo reference over the spec cells */
+.h-ref{grid-area:n;display:grid;grid-template-rows:1fr auto}
+.h-photo{position:relative;overflow:hidden;border-bottom:1px solid var(--rule);min-height:210px}
+.h-photo img{width:100%;height:100%;object-fit:cover;object-position:56% 42%;
+  filter:saturate(.95) contrast(1.04);scale:1.02;transition:scale 1.1s var(--ease)}
 .h-photo:hover img{scale:1.08}
-.h-photo .cap{position:absolute;left:10px;bottom:10px;background:var(--ink);color:var(--paper);
-  padding:5px 9px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+.h-photo .cap{position:absolute;left:9px;bottom:9px;background:var(--ink);color:var(--paper);
+  padding:5px 9px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase}
 .h-spec{display:grid;grid-template-columns:1fr 1fr}
-.h-spec div{padding:clamp(12px,1.5vw,20px);border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.h-spec div{padding:clamp(11px,1.4vw,18px);border-right:1px solid var(--rule);
+  border-bottom:1px solid var(--rule)}
 .h-spec div:nth-child(2n){border-right:0}
 .h-spec div:nth-last-child(-n+2){border-bottom:0}
 .h-spec .k{display:block;font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
-.h-spec .v{display:block;font-size:clamp(15px,1.5vw,20px);font-weight:700;text-transform:uppercase;line-height:1.05}
+.h-spec .v{display:block;font-size:clamp(15px,1.5vw,20px);font-weight:700;text-transform:uppercase;
+  line-height:1.05}
 .h-spec .v.cy{color:var(--cy-ink)}
-.docref{display:inline-flex;align-items:center;gap:9px;margin-bottom:clamp(14px,2vw,24px)}
-.docref .sq{width:9px;height:9px;background:var(--cy);border:1px solid var(--ink)}
-h1{font-size:clamp(2.5rem,7.4vw,6.6rem);letter-spacing:-.035em}
-h1 .u{position:relative;display:inline-block}
-h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07em;background:var(--grad)}
-.h-sub{max-width:44ch;margin-top:clamp(14px,2vw,24px);color:var(--ink-2);font-size:clamp(14.5px,1.1vw,17px)}
-.h-sub b{color:var(--ink);font-weight:600}
-.h-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:clamp(18px,2.6vw,30px)}
-.btn-line{display:inline-flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
-  letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:12px 18px;border:1.5px solid var(--ink);
-  transition:background .35s,color .35s}
-.btn-line:hover{background:var(--ink);color:var(--paper)}
-/* dimension line under the headline */
-.dim{display:flex;align-items:center;gap:8px;margin-top:clamp(16px,2.2vw,26px);color:var(--cy-ink)}
-.dim .ln{flex:1;height:1px;background:var(--cy-ink);position:relative}
-.dim .ln::before,.dim .ln::after{content:'';position:absolute;top:-3px;width:0;height:0;
-  border-block:3.5px solid transparent}
-.dim .ln::before{left:0;border-right:6px solid var(--cy-ink)}
-.dim .ln::after{right:0;border-left:6px solid var(--cy-ink)}
-.dim span{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
-  white-space:nowrap}
+
+/* palette switcher, sat in the sheet's own title strip */
+.swatches{display:flex;align-items:center;gap:7px;margin-left:auto}
+.swatches b{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:500;margin-right:3px}
+.sw{width:17px;height:17px;border:1.5px solid var(--rule-2);cursor:pointer;padding:0;
+  transition:border-color .3s,transform .3s var(--ease)}
+.sw:hover{transform:translateY(-2px)}
+.sw[aria-pressed="true"]{border-color:var(--cy-ink);box-shadow:0 0 0 2px var(--paper),0 0 0 3px var(--cy-ink)}
+.sw-drafting{background:linear-gradient(135deg,#F7F7F4 50%,#12B8C4 50%)}
+.sw-blueprint{background:linear-gradient(135deg,#0C2337 50%,#4FE3E8 50%)}
+.sw-vellum{background:linear-gradient(135deg,#F3EDE1 50%,#9A3B1E 50%)}
 
 /* ── proof: stamped seals ─────────────────────── */
 .seals{display:flex;flex-wrap:wrap;gap:clamp(10px,1.6vw,20px);align-items:center;
@@ -182,7 +252,7 @@ h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07
 .irow .ti{font-size:clamp(15px,1.9vw,23px);font-weight:600;text-transform:uppercase;letter-spacing:-.018em}
 .peek{position:fixed;width:270px;aspect-ratio:4/3;border:1.5px solid var(--ink);overflow:hidden;
   pointer-events:none;z-index:50;opacity:0;scale:.9;transition:opacity .3s,scale .4s var(--ease);
-  box-shadow:0 24px 48px -18px rgba(12,16,19,.5);background:var(--card)}
+  box-shadow:0 24px 48px -18px var(--shadow);background:var(--card)}
 .peek.on{opacity:1;scale:1}
 .peek img{width:100%;height:100%;object-fit:cover}
 
@@ -192,7 +262,7 @@ h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07
   transition:translate .5s var(--ease),box-shadow .5s var(--ease)}
 .tiles .tile:nth-child(2){margin-top:clamp(20px,4.4vw,64px)}
 .tiles .tile:nth-child(3){margin-top:clamp(40px,8.8vw,128px)}
-.tile:hover{translate:0 -7px;box-shadow:0 22px 44px -20px rgba(12,16,19,.4)}
+.tile:hover{translate:0 -7px;box-shadow:0 22px 44px -20px var(--shadow)}
 .tile-hd{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--rule)}
 .tile-hd .sq{width:8px;height:8px;background:var(--cy);border:1px solid var(--ink);flex-shrink:0}
 .tile-hd b{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase}
@@ -211,7 +281,7 @@ h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07
 .play{width:42px;height:42px;border-radius:50%;background:var(--grad);display:grid;place-items:center;
   flex-shrink:0;border:1.5px solid var(--paper);transition:scale .4s var(--ease)}
 .fallback:hover .play{scale:1.1}
-.play::after{content:'';border-left:12px solid var(--ink);border-block:8px solid transparent;margin-left:3px}
+.play::after{content:'';border-left:12px solid var(--on-acc);border-block:8px solid transparent;margin-left:3px}
 .fb-in span{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#fff}
 .screen.live .fallback{display:none}
 .tile-ft{padding:8px 12px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;
@@ -252,7 +322,7 @@ h1 .u::after{content:'';position:absolute;left:0;right:0;bottom:.07em;height:.07
 .tb-num{grid-column:span 5;border-bottom:1px solid var(--rule);border-left:1px solid var(--rule);
   padding:clamp(22px,3.4vw,52px);display:flex;flex-direction:column;justify-content:center;gap:10px;
   background:var(--ink);color:var(--paper)}
-.tb-num .k{color:rgba(239,241,239,.6)}
+.tb-num .k{color:color-mix(in srgb,var(--paper) 62%,transparent)}
 .tb-num a{font-size:clamp(1.5rem,3.8vw,3rem);font-weight:700;letter-spacing:-.03em;line-height:1;
   transition:color .35s}
 .tb-num a:hover{color:var(--cy)}
@@ -273,9 +343,9 @@ footer{padding-block:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:cente
 @media(max-width:1080px){
   .nav-links{display:none}.burger{display:block}
   .nav-cta .tel{display:none}
-  .hero{grid-template-columns:1fr}
-  .h-type{grid-column:1/-1;border-right:0;border-bottom:1px solid var(--rule);min-height:0}
-  .h-rev{grid-column:1/-1}
+  .hero{grid-template-columns:1fr;grid-template-areas:'d' 'n';min-height:0}
+  .h-draw{border-right:0;border-bottom:1px solid var(--rule)}
+  .elev{width:min(38%,220px);opacity:.5}
   .tiles{grid-template-columns:1fr}
   .tiles .tile:nth-child(2),.tiles .tile:nth-child(3){margin-top:0}
   .tb-main,.tb-num{grid-column:span 12;border-left:0}
@@ -289,8 +359,9 @@ footer{padding-block:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:cente
   .hd .pn,.hd .qt{display:none}
   .irow{grid-template-columns:40px 1fr;gap:12px}
   .irow .ty,.irow .dt{display:none}
-  .h-spec{grid-template-columns:1fr}
-  .h-spec div{border-right:0}
+  .h-spec{grid-template-columns:1fr 1fr}
+  .elev{display:none}
+  .swatches{width:100%;margin-left:0;padding-top:4px}
   .h-acts .btn,.h-acts .btn-line{flex:1;justify-content:center}
   .tb-a,.tb-b,.tb-c,.tb-d{grid-column:span 12;border-right:0}
 }
@@ -335,23 +406,36 @@ footer{padding-block:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:cente
 <header class="sheet" id="top">
   <i class="cmark tl"></i><i class="cmark tr"></i><i class="cmark bl"></i><i class="cmark br"></i>
   <div class="hero">
-    <div class="h-type">
-      <span class="docref"><i class="sq"></i><span class="lbl">DOC. PS-2023 / REV. A — <b>PHOENIX, AZ</b></span></span>
+    <div class="h-draw">
+      <span class="docref"><i class="sq"></i><span class="lbl">DOC. PS-2023 / REV. A &mdash; <b>PHOENIX, AZ</b></span></span>
       <h1>Clean glass,<br><span class="u">to spec.</span></h1>
-      <p class="h-sub">Window cleaning, pressure washing and gutter care for Phoenix homes and businesses. <b>Purified water, no streaking, a walkthrough before we leave</b> — and a free estimate before any of it starts.</p>
+      <p class="h-sub">Window cleaning, pressure washing and gutter care for Phoenix homes and businesses. <b>Purified water, no streaking, a walkthrough before we leave</b> &mdash; and a free estimate before any of it starts.</p>
       <div class="dim"><span>SCOPE</span><i class="ln"></i><span>RESIDENTIAL + COMMERCIAL</span></div>
       <div class="h-acts">
         <a class="btn" href="#contact"><s>Request estimate</s></a>
-        <a class="btn-line" href="#work">View job index</a>
+        <a class="btn-line" href="#work">View job index &rarr;</a>
       </div>
+      <!-- window elevation, dimensioned. The squeegee stroke draws itself in. -->
+      <svg class="elev" viewBox="0 0 240 300" fill="none" aria-hidden="true">
+        <rect class="pane" x="34" y="34" width="172" height="212"/>
+        <rect x="34" y="34" width="172" height="212" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="41" y="41" width="158" height="198" stroke="currentColor" stroke-width="1"/>
+        <path d="M120 41V239M41 140h158" stroke="currentColor" stroke-width="1"/>
+        <path d="M34 20h172M34 15v10M206 15v10" stroke="currentColor" stroke-width="1"/>
+        <path d="M222 34v212M217 34h10M217 246h10" stroke="currentColor" stroke-width="1"/>
+        <path class="wipe" d="M48 62c34 0 34 26 68 26s34-26 68-26"/>
+        <path class="wipe" d="M48 104c34 0 34 26 68 26s34-26 68-26" style="animation-delay:.85s"/>
+        <circle cx="34" cy="34" r="3" fill="currentColor"/>
+        <circle cx="206" cy="246" r="3" fill="currentColor"/>
+      </svg>
     </div>
-    <div class="h-rev">
+    <div class="h-ref">
       <figure class="h-photo">
         <img src="assets/photos/pole-entry.webp" alt="Pane Solutions technician cleaning entry glass with a water-fed pole in Phoenix">
-        <figcaption class="cap">FIG. 1 — WATER-FED POLE, ENTRY GLAZING</figcaption>
+        <figcaption class="cap">FIG. 1 &mdash; WATER-FED POLE, ENTRY GLAZING</figcaption>
       </figure>
       <div class="h-spec">
-        <div><span class="k">Rating</span><span class="v cy">5.0 ★</span></div>
+        <div><span class="k">Rating</span><span class="v cy">5.0 &#9733;</span></div>
         <div><span class="k">Reviews</span><span class="v">13</span></div>
         <div><span class="k">Established</span><span class="v">2023</span></div>
         <div><span class="k">Estimate</span><span class="v">Free</span></div>
@@ -359,10 +443,16 @@ footer{padding-block:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:cente
     </div>
   </div>
   <div class="seals">
-    <div class="seal"><span class="st">★★★★★</span><span class="sm">Google<br>5.0 / 13 reviews</span></div>
+    <div class="seal"><span class="st">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span class="sm">Google<br>5.0 / 13 reviews</span></div>
     <div class="seal"><span class="big cy">FREE</span><span class="sm">Estimates<br>No charge to look</span></div>
     <div class="seal"><span class="big">LLC</span><span class="sm">Registered<br>Est. 2023</span></div>
     <div class="seal"><span class="big">AZ</span><span class="sm">Phoenix<br>&amp; surrounds</span></div>
+    <div class="swatches">
+      <b>Sheet stock</b>
+      <button class="sw sw-blueprint" data-theme="blueprint" aria-pressed="true" title="Blueprint — cyanotype"></button>
+      <button class="sw sw-drafting" data-theme="drafting" aria-pressed="false" title="Drafting — white stock"></button>
+      <button class="sw sw-vellum" data-theme="vellum" aria-pressed="false" title="Vellum — warm stock"></button>
+    </div>
   </div>
 </header>
 </div>
@@ -537,6 +627,27 @@ footer{padding-block:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:cente
 
 <script>
 document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* palette switcher. Reads ?theme= first so the gallery can deep-link a stock,
+   then remembers the choice for this viewer only. */
+(function(){
+  var VALID={drafting:1,blueprint:1,vellum:1};
+  function apply(t){
+    if(!VALID[t])t='drafting';
+    if(t==='drafting')document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme',t);
+    document.querySelectorAll('.sw').forEach(function(b){
+      b.setAttribute('aria-pressed',String(b.dataset.theme===t));
+    });
+    try{localStorage.setItem('ps-sheet-stock',t)}catch(e){}
+  }
+  var q=new URLSearchParams(location.search).get('theme');
+  var saved=null; try{saved=localStorage.getItem('ps-sheet-stock')}catch(e){}
+  apply(q||saved||'blueprint');
+  document.querySelectorAll('.sw').forEach(function(b){
+    b.addEventListener('click',function(){apply(b.dataset.theme)});
+  });
+})();
 
 var dr=document.getElementById('drawer');
 document.getElementById('burger').onclick=function(){dr.classList.add('open')};

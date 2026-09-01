@@ -20,8 +20,8 @@ pressure washing and gutter cleaning business in Phoenix, Arizona.
 ```
 index.html                     gallery chooser — live scaled iframe previews
 direction-1-pressure.html      dark industrial editorial
-direction-2-altitude.html      sky-to-black descent poster
-direction-3-spec-sheet.html    engineering drawing on paper stock
+direction-2-altitude.html      full-bleed photo plate + squeegee wipe
+direction-3-spec-sheet.html    engineering drawing, 3 switchable stocks
 assets/photos/                 15 real job photos (1400w + 760w WebP)
 assets/reels/                  3 real reel cover frames
 assets/logo.png                logo, keyed to transparent
@@ -54,16 +54,32 @@ down the left edge. Reads like an established contractor.
 **Type:** Archivo (expanded 125%) + Space Mono.
 
 ### 02 — Altitude `direction-2-altitude.html`
-The memorable one. Opens in a bright Arizona sky and descends into black as you
-scroll, built around the shot of the water-fed pole reaching a second-storey
-window. The nav inverts from light to dark at the fold.
+The memorable one. The photograph is the surface rather than a card floating on
+one: a full-bleed plate with the masthead running edge to edge across it and
+cropped by the viewport, straddling the boundary between plate and black. The
+page arrives behind frosted glass that a squeegee wipes clear on load — the one
+transition that means something for a window cleaner. One call to action.
 **Type:** Anton + Barlow / Barlow Condensed.
 
+The first version of this hero was the default template arrangement (rating
+chip → headline → paragraph → solid button beside outlined button → photo card
+on a smooth gradient) and was rejected on sight. Swapping the photo inside that
+layout did not help; the layout was the problem.
+
 ### 03 — Spec Sheet `direction-3-spec-sheet.html`
-The most distinctive. The whole page is an engineering drawing — graph-paper
-stock, a bordered sheet with corner registration marks, dimension lines with
-arrowheads, part numbers on each service, and a real title block at the bottom.
+The most distinctive. The whole page is an engineering drawing — a bordered
+sheet with corner registration marks, dimension lines with arrowheads, part
+numbers on each service, and a real title block. The hero is a drawing: a
+dimensioned window elevation that the squeegee strokes draw themselves onto,
+with the photograph demoted to a pinned `FIG. 1` reference.
 **Type:** IBM Plex Mono + IBM Plex Sans Condensed.
+
+**Three sheet stocks**, switchable from the dots in the title strip and
+deep-linkable with `?theme=`: **blueprint** (default, cyanotype), **drafting**
+(white stock) and **vellum** (warm). Every surface colour is a token — the
+first pass hard-coded `.nav` and `.sheet` backgrounds and they painted a milky
+slab over the blueprint ground. `--on-acc` carries text that sits on the accent
+gradient, which inverts between stocks.
 
 ## Furniture matrix
 
@@ -74,7 +90,7 @@ across two directions; any new direction fills in a column before it ships.
 
 | section | 01 Pressure | 02 Altitude | 03 Spec Sheet |
 |---|---|---|---|
-| hero | full-bleed photo, type overlay, measure rail | split: sky panel + tall photo column | 12-col drawing sheet, type cell + photo cell |
+| hero | full-bleed photo, type overlay, measure rail | photo plate, edge-to-edge masthead, squeegee wipe | dimensioned window elevation + pinned photo ref |
 | proof | scrolling marquee strip | four-cell data table | rotated stamped seals |
 | services | numbered full-width rows | three diagonal-cut columns | accordion with part numbers |
 | work | asymmetric photo mosaic | drag-to-pan filmstrip | index table + cursor photo peek |
@@ -90,9 +106,12 @@ Taken from the logo — a blue→cyan gradient P on pure black.
 --bl  #567CD3   --az  #40A3D4   --cy  #2FD8DC
 ```
 
-`--cy` is only used as a fill or rule on dark surfaces. On the light Spec Sheet
-page, cyan-as-text uses a darkened `--cy-ink #0A6E78` — the bright cyan fails
-contrast on paper.
+`--cy` is only used as a fill or rule on dark surfaces. Wherever cyan carries
+text on a light stock it drops to a darkened `--cy-ink` — the bright cyan fails
+contrast on paper. Spec Sheet redefines the whole set per stock; run
+`node shots/themes.mjs` to re-check every one (it computes real contrast ratios
+against the actual painted background, walking up for the first opaque
+ancestor).
 
 ## The Instagram reels
 
