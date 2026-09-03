@@ -1,157 +1,190 @@
-# Pane Solutions — Homepage Directions
+# Pane Solutions, homepage directions
 
 Three homepage design directions for **Pane Solutions LLC**, a window cleaning,
 pressure washing and gutter cleaning business in Phoenix, Arizona.
 
 **Live gallery:** https://lumen-marketing.github.io/pane-solutions-designs/
 
-| | | |
-|---|---|---|
-| **Client** | Pane Solutions LLC · Answer Gaye | |
-| **Phone** | +1 515-525-4127 | |
-| **Email** | answergaye22@gmail.com | |
-| **Instagram** | [@pane_solutions_llc](https://www.instagram.com/pane_solutions_llc/) | |
-| **Nextdoor** | [pane-solutions-phoenix-az](https://nextdoor.com/pages/pane-solutions-phoenix-az/) | |
-| **Rating** | 5.0 ★ from 13 Google reviews | |
-| **Established** | 2023 | |
+| | |
+|---|---|
+| **Client** | Pane Solutions LLC, Answer Gaye |
+| **Phone** | +1 515-525-4127 |
+| **Email** | answergaye22@gmail.com |
+| **Instagram** | [@pane_solutions_llc](https://www.instagram.com/pane_solutions_llc/) |
+| **Nextdoor** | [pane-solutions-phoenix-az](https://nextdoor.com/pages/pane-solutions-phoenix-az/) |
+| **Rating** | 5.0 ★ from 13 Google reviews |
+| **Established** | 2023 |
+
+## The rebuild, and why
+
+The first set of three was rejected for reading as machine-made. The audit found
+every one of the standing tells across all three pages, so they were rebuilt
+from scratch rather than patched. What was wrong, concretely:
+
+| what was on the page | why it had to go |
+|---|---|
+| `01 / SERVICES`, `02 / RECENT WORK`, `SHEET 01`, `SHEET 05 OF 05` | a numbered eyebrow above every section. Budget is `ceil(sections / 3)`; the pages ran one per section. All three now use **zero**. |
+| an equipment rack with `REEL 01` headers and pulsing LEDs | fake UI chrome, and the LEDs claimed live status on things that are not live |
+| phone mockups with notches and a glowing status dot | same class of tell, and it is an app-marketing device on a trade site |
+| `DOC. PS-2023 / REV. A`, `SCALE`, `DRAWN BY`, a title block | a fake engineering document. That concept belongs to a drafting firm. |
+| 48 visible em-dashes, 27 middle-dot chains | zero em-dashes now, zero middle dots |
+| `Scroll` cue with an animated line | the viewer knows what scrolling is |
+| service thumbnails at 200px, tiles labelled `01`&ndash;`08` | photographs shrunk into cards, plus pagination on things the eye can count |
+
+The deeper problem was not the checklist. **All three concepts were borrowed
+from other briefs**: a devtool dashboard, an app landing page and a drafting
+sheet. None of them came from window cleaning. Removing the glows would not have
+saved any of them.
+
+The three rebuilds all start from what the business actually sells: daylight
+through clean glass, reaching panes nobody else can, and painted-steel trade
+work.
 
 ## Files
 
 ```
-index.html                     gallery chooser — live scaled iframe previews
-direction-1-pressure.html      dark industrial editorial
-direction-2-altitude.html      full-bleed photo plate + squeegee wipe
-direction-3-spec-sheet.html    engineering drawing, 3 switchable stocks
+index.html                     gallery chooser, live scaled iframe previews
+direction-1-pressure.html      DAYLIGHT   light poster, sparse
+direction-2-altitude.html      REACH      dark cinematic, sticky stack
+direction-3-spec-sheet.html    STEEL      industrial, dense, machined plates
 assets/photos/                 15 real job photos (1400w + 760w WebP)
 assets/reels/                  3 real reel cover frames
 assets/logo.png                logo, keyed to transparent
-scrape/                        the Instagram extraction scripts (not deployed)
-shots/                         headless verification harness (gitignored output)
+scrape/                        Instagram extraction + rewrite scripts (not deployed)
+shots/                         headless verification harness (output gitignored)
+.old/                          the rejected first set, kept for reference only
 ```
 
-Every page is **standalone** — no build step, no framework, no CDN CSS. Open any
+The filenames are unchanged so existing links keep working; the direction
+**names** changed with the rebuild.
+
+Every page is **standalone**. No build step, no framework, no CDN CSS. Open any
 HTML file directly.
 
-## Content policy — verified facts only
+## Content policy, verified facts only
 
-Nothing on these pages is invented. Everything traceable:
+Nothing on these pages is invented. Everything is traceable:
 
-- **5.0 ★ / 13 reviews**, **LLC est. 2023**, **Phoenix AZ**, and the three
+- **5.0 ★ / 13 reviews**, **LLC est. 2023**, **Phoenix AZ** and the three
   services come from the client's own Google and Nextdoor listings.
 - **Every review is quoted as written**, attributed to the real reviewer name.
 - **Every photo is the client's own**, pulled from their Instagram grid at the
   highest resolution Instagram serves (1440px). No stock photography.
-- There are **no invented statistics** — no "500+ homes", no "10 years
+- There are **no invented statistics**. No "500+ homes", no "10 years
   experience", no fabricated service-area list. If a number appears on the page,
   it is real.
+
+## The three directions
+
+### Basic, DAYLIGHT `direction-1-pressure.html`
+
+Light off-white paper, ink type, one saturated blue used on big surfaces.
+Bricolage Grotesque over Instrument Sans. Density 2: this is a poster, not a
+website. The hero sets type on bare paper against a photograph that runs off the
+right edge of the viewport, and a paper plate laps across the boundary between
+them. Services are three full-width bands, not a row of cards.
+
+**Depth device: offset colour planes.** A flat blue plane sits behind each major
+object, shifted down and right, so things stack. No blur, no glass, no glow.
+
+### Standard, STEEL `direction-3-spec-sheet.html`
+
+Painted steel, off-black, safety orange. Archivo Expanded over IBM Plex Sans.
+Density 7: heavy rules, tight grids, everything lines up. The services are a
+horizontal accordion of full-height photographs where one opens at a time. The
+job index is a deliberately uniform eight-cell grid, which is the opposite of
+Daylight's asymmetric mosaic.
+
+**Depth device: machined plates.** Every object has a lit top edge, a dark foot
+and a hard accent offset with no blur, so it reads as metal standing off the
+panel behind it. Review quotes sit in cores recessed below the plate face.
+
+**On the orange:** the accent is safety orange rather than the logo blue. That
+is a deliberate option. It is the complementary colour to the mark, it is what
+makes this direction read as different rather than as a recolour of the others,
+and the logo itself still carries the brand blue. One word and it becomes blue.
+
+### Premium, REACH `direction-2-altitude.html`
+
+Near-black, photography carries everything, brand blue is the single accent.
+Big Shoulders Display over Sora. Density 5. Built vertically because the
+business is about height: the three services are full-screen panels that pin and
+stack on top of one another as you scroll, in pure CSS `position: sticky`.
+
+**Depth device: three physical planes.** A photograph at the back, one flat
+atmospheric wash over it, and a plate lifted above both and hung across the
+hero's bottom edge so it occludes what is under it. Reviews sit behind glass
+panes with a lit top edge, a dark foot and one reflection that sweeps on hover,
+which on a page about glass is the material the page is already made of.
 
 ## Tiers
 
 The three directions are mapped onto the three packages. **The pages themselves
-are not tier-differentiated** — all three are one page at the same scope with
-the same motion. The tier names the package the client buys; the page on each
-card is that package's homepage, and Standard/Premium add the pages listed on
-the card.
+are not tier-differentiated**: all three are one page at the same scope. The
+tier names the package the client buys, the page on each card is that package's
+homepage, and Standard/Premium add the pages listed on the card.
 
 | tier | direction | why |
 |---|---|---|
-| **Basic** — get found | 01 Pressure | The most conventional of the three. Established-contractor look, phone number the size of a headline, nothing the visitor has to work for. |
-| **Standard** — look established | 03 Spec Sheet | Credibility through precision — part numbers, a spec schedule, a title block. Reads organised and professional, which is exactly what this tier sells. |
-| **Premium** — stand out | 02 Altitude | The most memorable: full-bleed photography, the edge-to-edge masthead and the squeegee wipe. Literally the "stand out" brief. |
+| **Basic**, get found | Daylight | The plainest and the calmest. Sparse, legible, nothing to work out. |
+| **Standard**, look established | Steel | Reads like a working trade with real equipment behind it. Dense and organised, which is what this tier sells. |
+| **Premium**, stand out | Reach | The most memorable: full-bleed photography, a sticky stack, glass panes. Literally the "stand out" brief. |
 
 Worth re-reading before changing this: pairing look to price means choosing a
 design also chooses a scope, and the cheap tier has to look plainer on purpose.
-That trade-off was raised and accepted deliberately — it is not an oversight.
+That trade-off was raised and accepted deliberately, it is not an oversight.
 
-Gallery card order is Basic → Standard → Premium, and the furniture matrix
-columns follow the same order.
-
-## The three directions
-
-### 01 — Pressure `direction-1-pressure.html`
-The safe, premium one. Near-black throughout, strict engineering grid backdrop,
-full-bleed hero photo under enormous expanded Archivo type with a measure rail
-down the left edge. Reads like an established contractor.
-**Type:** Archivo (expanded 125%) + Space Mono.
-
-### 02 — Altitude `direction-2-altitude.html`
-The memorable one. The photograph is the surface rather than a card floating on
-one: a full-bleed plate with the masthead running edge to edge across it and
-cropped by the viewport, straddling the boundary between plate and black. The
-page arrives behind frosted glass that a squeegee wipes clear on load — the one
-transition that means something for a window cleaner. One call to action.
-**Type:** Anton + Barlow / Barlow Condensed.
-
-The first version of this hero was the default template arrangement (rating
-chip → headline → paragraph → solid button beside outlined button → photo card
-on a smooth gradient) and was rejected on sight. Swapping the photo inside that
-layout did not help; the layout was the problem.
-
-### 03 — Spec Sheet `direction-3-spec-sheet.html`
-The most distinctive. The whole page is an engineering drawing — a bordered
-sheet with corner registration marks, dimension lines with arrowheads, part
-numbers on each service, and a real title block. The hero is a drawing: a
-dimensioned window elevation that the squeegee strokes draw themselves onto,
-with the photograph demoted to a pinned `FIG. 1` reference.
-**Type:** IBM Plex Mono + IBM Plex Sans Condensed.
-
-**Built around windows and glass.** The window is the structural system, not
-a motif: the sheet is a frame with jambs and a **sill** deeper than its head,
-the hero's two halves are divided by a real **mullion** with a bead highlight,
-each service is a **lite** with glazing-bead corner marks, and the work section
-is a **divided-light sash** of eight panes that are grimy until you hover one
-clean — the interaction the whole business is about. The grime is a blur and
-desaturation on the photograph plus an SVG speckle, never a translucent card or
-a light bloom, so it stays inside the no-gradients rule. Panes ship clean under
-`@media(hover:none)` and the wording swaps with the pointer, because "hover" is
-a lie on a phone.
-
-**Three sheet stocks**, switchable from the dots in the sill and
-deep-linkable with `?theme=`: **blueprint** (default, cyanotype), **drafting**
-(white stock) and **vellum** (warm). Every surface colour is a token — the
-first pass hard-coded `.nav` and `.sheet` backgrounds and they painted a milky
-slab over the blueprint ground. `--on-acc` carries text that sits on the accent
-gradient, which inverts between stocks.
+Gallery card order is Basic, Standard, Premium, and the matrix columns follow.
 
 ## Furniture matrix
 
-All three share **one section order** — nav → hero → proof → services → work →
-reels → reviews → contact → footer — so the client compares the *look*, not the
-layout. **Share the order, never the components.** No cell below is reused
-across two directions; any new direction fills in a column before it ships.
+All three share **one section order**: nav, hero, services, work, reels,
+reviews, contact, footer. So the client compares the *look*, not the layout.
+**Share the order, never the components.** No cell below is reused across two
+directions; any new direction fills in a column before it ships.
 
-| section | 01 Pressure | 02 Altitude | 03 Spec Sheet |
+| section | Basic, Daylight | Standard, Steel | Premium, Reach |
 |---|---|---|---|
-| hero | full-bleed photo, type overlay, measure rail | photo plate, edge-to-edge masthead, squeegee wipe | dimensioned window elevation + pinned photo ref |
-| proof | scrolling marquee strip | four-cell data table | rotated stamped seals |
-| services | numbered full-width rows | three diagonal-cut columns | accordion with part numbers |
-| work | asymmetric photo mosaic | drag-to-pan filmstrip | divided-light sash, hover a pane clean |
-| reels | rack of three monitors | sticky caption + phone stack | three equal panes, tops aligned |
-| reviews | big pull-quote + card grid | two drifting columns | note callout + ticker |
-| contact | giant phone number band | sky panel + row list | engineering title block |
+| theme | light paper | painted steel | near black |
+| depth device | offset colour planes | machined plates, lit edge, hard offset | three planes, foreground occlusion |
+| hero | type left, photo bled off the right edge | dense split with a plate photo | full bleed photo, plate hung over the edge |
+| services | three full-width bands | photo accordion, one opens at a time | full-screen sticky stack |
+| work | asymmetric mosaic | uniform index grid, eight cells | drag-to-pan filmstrip |
+| reels | three equal blue plates | three equal steel plates | three equal ink plates |
+| reviews | paper plates over a blue plane | plate with a recessed core | glass panes with a reflection sweep |
+| contact | solid blue block | ink block with an orange rule | photograph with the number over it |
 
-## Palette
+## Standing rules for this set
 
-Taken from the logo — a blue-to-cyan P on pure black.
+These are constraints the client set, not preferences. Breaking one is a
+regression.
 
-**No gradients.** Not one colour ramp anywhere in the set: buttons, headline
-accents, underlines, play buttons and the contact band are all flat `--acc`.
-The photographic scrims went too — they are flat washes now, which suits the
-hard-edged look better than a fade. What still uses gradient *syntax* is only
-hard-stop patterning with no blend: the graph-paper rules, the equipment rack's
-ventilation slots, the two-tone palette swatches, and a couple of mask-images.
-If you add anything here, keep it flat.
+- **No gradients.** Not one colour ramp anywhere. Buttons, headline accents,
+  underlines, play buttons, contact bands and every photographic scrim are flat.
+  A scrim under a caption is exactly the kind of ramp that got binned; use a
+  flat plane with a hard rule instead.
+- **Zero em-dashes and zero middle dots** in anything visible, including alt
+  text, titles and meta descriptions. `grep -c` before shipping.
+- **No numbered section eyebrows**, no mono micro-labels above headings, no
+  scroll cues, no decorative status dots, no fake device or document chrome.
+- **Photographs run at scale.** Never shrunk into small cards.
+- **Captions live inside the enclosure**, as part of the object, never as a pill
+  floating on top of a photograph.
+- **Each direction gets its own depth device.** Never apply one treatment across
+  the set, and after a depth pass walk every section so nothing is left flat.
+- **Symmetry within a set of peers**, variety between sections. An unanchored
+  stagger reads as a rendering fault.
+
+### Palettes
+
+One accent per page, locked across every section, and one radius system per page
+(all three are zero).
 
 ```
---bl  #567CD3   --az  #40A3D4   --cy  #2FD8DC
+Daylight   paper #EDEEF0   ink #14181C   accent #1B54C8  (brand blue)
+Reach      ink   #0B0E11   paper #F4F6F8 accent #2E6FE0  (brand blue)
+Steel      steel #D3D5D2   ink #121413   accent #E24E12  (safety orange)
 ```
-
-`--cy` is only used as a fill or rule on dark surfaces. Wherever cyan carries
-text on a light stock it drops to a darkened `--cy-ink` — the bright cyan fails
-contrast on paper. Spec Sheet redefines the whole set per stock; run
-`node shots/themes.mjs` to re-check every one (it computes real contrast ratios
-against the actual painted background, walking up for the first opaque
-ancestor).
 
 ## The Instagram reels
 
@@ -159,38 +192,36 @@ All three pages embed the client's three real reels using **Instagram's official
 embed widget** (`embed.js`), which is what the client chose.
 
 **Instagram's player does not auto-play.** It renders a cover frame with a play
-button and the viewer taps to watch. This was verified before building, three
-ways: the reel pages serve no `og:video`, expose no `<video>` element, and issue
-zero video network requests without a login. Reel MP4s are not obtainable
-unauthenticated, so a self-hosted auto-playing version needs the client to
-export the three files from the Instagram app.
+button and the viewer taps to watch. This was verified three ways: the reel
+pages serve no `og:video`, expose no `<video>` element, and issue zero video
+network requests without a login. Reel MP4s are not obtainable unauthenticated,
+so a self-hosted auto-playing version needs the client to export the three files
+from the Instagram app.
 
 Implementation notes:
 
-- `embed.js` is loaded **only when the reel section scrolls near the viewport**
-  (`IntersectionObserver`, 400px margin) — it is a slow third-party script and
+- `embed.js` loads **only when the reel section scrolls near the viewport**
+  (`IntersectionObserver`, 400px margin). It is a slow third-party script and
   should not block the rest of the page.
 - Each panel shows the **real cover frame plus a direct link** underneath the
-  embed slot. The fallback is only hidden once Instagram's iframe has actually
-  rendered, so a blocked script, an offline visitor, or the account going
-  private degrades to a real photo and a working link rather than an empty box.
-- The white Instagram player is framed deliberately — as a rack-mounted monitor
-  (01), a phone (02), or a bordered panel (03) — so it reads as designed rather
-  than pasted on.
-- **Instagram sizes every embed to its own video aspect.** Two of these three
-  reels are portrait and one is landscape, so their natural heights are 616px
-  and 392px. Left alone that makes a row of three panels visibly ragged. Where
-  they sit side by side (01 and 03) the row is stretched, the screen is pinned
-  to 642px and the embeds are top-aligned, so the three Instagram headers line
-  up. The short one keeps empty frame beneath it — the panel is identical even
-  though the card inside is not, and the card cannot be restyled from outside
-  its iframe.
+  embed slot. The fallback is hidden only once Instagram's iframe has actually
+  reported a height, so a blocked script, an offline visitor or the account
+  going private degrades to a real photo and a working link rather than an
+  empty box. Treating mere iframe *presence* as rendered leaves three empty
+  bays; require `getBoundingClientRect().height > 300`.
+- **Instagram sizes every embed to its own video aspect.** Two of these reels
+  are portrait and one is landscape, so their natural heights are 616px and
+  392px. Left alone the row of three is visibly ragged. Every direction stretches
+  the row, pins the plate to 642px and top-aligns the embeds, so the three
+  Instagram headers line up. The short one keeps empty plate beneath it. That
+  leftover is painted in the plate colour so it reads as plate rather than as a
+  hole, because the white card inside cannot be restyled from outside its
+  iframe.
 
 **To swap in self-hosted auto-playing video later:** drop `reel-1.mp4`,
 `reel-2.mp4`, `reel-3.mp4` into `assets/reels/`, then in each page replace the
 `.screen` contents with `<video src="…" autoplay muted loop playsinline
-poster="…">` and delete the `embed.js` block. Roughly a ten-line change per
-page.
+poster="…">` and delete the `embed.js` block. Roughly a ten-line change per page.
 
 ## How the assets were obtained
 
@@ -201,10 +232,10 @@ live DOM (`scrape/grid.mjs`, `scrape/posts.mjs`, `scrape/dl.mjs`).
 Gotchas worth keeping:
 
 - The **profile grid only serves 640px** thumbnails. Rendering each **post
-  permalink** individually yields the **1440px** original — worth the extra
+  permalink** individually yields the **1440px** original, worth the extra
   twelve page loads.
 - Signed CDN URLs **403 if you rebuild them**. The `oh=`/`oe=`/`_nc_ohc` params
-  are a signature; take the URL verbatim from the DOM. Bumping `s150x150` →
+  are a signature; take the URL verbatim from the DOM. Bumping `s150x150` to
   `s640x640` inside an otherwise-untouched URL does still work.
 - The three reel posts expose **only their cover frame**, never the video.
 - Sorting a post page's images by area picks up *other* posts' thumbnails from
@@ -218,7 +249,17 @@ overflow, broken images, any element past the right edge, and the fonts that
 actually resolved.
 
 ```
-node shots/shot.mjs
+node shots/shot.mjs                    # all four pages at 1440
+W=390 SLICES=3 node shots/shot.mjs     # phone
+node shots/reels.mjs                   # asserts no reel plate is empty
+node shots/hover.mjs                   # real pointer hover, TOUCH=1 for coarse
+node shots/live.mjs                    # renders the deployed URL
 ```
+
+Two harness notes that cost time: a single tall `captureScreenshot` hangs on
+pages with `position: fixed` grain and `backdrop-filter`, so it captures
+viewport slices instead; and `setDeviceMetricsOverride` alone does **not** change
+the pointer, so `hover: none` fallbacks look broken in every mobile capture
+until `Emulation.setEmulatedMedia` is set explicitly.
 
 Screenshot output in `shots/*.png` is gitignored.
