@@ -93,11 +93,15 @@ Instrument Sans, brand blue, panes at 26px with pill buttons. Layout archetypes:
 **full-screen** hero and contact, **zig-zag** for the three services, and an
 **asymmetric bento** for the job index.
 
-**Depth device: light glass in a tray, plus a Z-axis cascade.** Every pane is an
-outer tray holding an inner core whose radius is the tray's minus its padding,
-so the curves stay concentric. Two photo plates lap the hero pane's lower corner
+**Depth device: one glass slab, plus a Z-axis cascade.** Two photo plates lap
+the hero pane's lower corner
 at opposing rotations, mirrored about the pane so the pair reads as composition
 rather than as one thing knocked askew.
+
+**One hairline, never two.** Both glass directions used to be a tray holding a
+core, each with its own 1px rim, six or seven pixels apart. It got called out on
+sight: it reads as a rendering fault, not as machining. The fill and the rim now
+live on the pane and the core carries nothing but its padding.
 
 ### Standard, FACADE `direction-3-spec-sheet.html`
 
@@ -105,19 +109,25 @@ A glazed building at dusk. Deep slate-teal, warm amber, smoked glass. Syne over
 Outfit, panes at 18px. This is the **dense** one of the three. Layout
 archetypes: **split-screen** for the hero and the contact, **sticky split** for
 the services where the left photograph swaps as you scroll the right column
-(which makes it an **interactive** layout too), and **magazine masonry** for the
-job index, twelve photographs packed at their own heights.
+(which makes it an **interactive** layout too), and a **pane gallery** for the
+job index.
 
-**Depth device: smoked glass in a tray.** Same concentric tray-and-core
-construction as Daylight, inverted for a dark ground, in the nav island's exact
-material: dark translucent fill, heavy blur, a bright hairline rim, one lit top
-edge.
+**The pane gallery.** Twelve jobs held as twelve upright panes in a row. Point
+at one, tab to one or tap one and it opens to roughly three quarters of the
+width while the other eleven stay stacked at the edge carrying their labels
+turned on their sides. One photograph is always large and all twelve are always
+on screen, which a grid of captioned rectangles cannot do. It is a `flex-grow`
+transition, nothing heavier. Below 900px a 36px slat is not a touch target, so
+it becomes a scroll-snap strip with the next pane peeking.
+
+**Depth device: one smoked glass slab.** The nav island's exact material: dark
+translucent fill, heavy blur, one bright hairline rim, one lit top edge.
 
 **A pane needs something behind it.** The first version of this page put glass
 on a flat dark section and it read as a bordered rectangle, because blurring a
 flat colour returns that same flat colour. The page now carries a **fixed
-photographic ground**: one real photograph, blurred to 46px, saturated up and
-pushed to half brightness, sitting behind everything. Every pane on the page has
+photographic ground**: one real photograph, blurred to 22px, saturated up and
+pushed to just under half brightness, sitting behind everything. Every pane on the page has
 real hue and luminance variation to refract. It is a photograph, not a gradient,
 so the no-ramps rule still holds. Two traps that cost time:
 
@@ -126,6 +136,9 @@ so the no-ramps rule still holds. Two traps that cost time:
 - The first ground was too dark and too heavily blurred, and collapsed to a flat
   brown, which is the same problem again with extra steps. Pick a frame with
   sky in it and keep brightness around .5.
+- Blur is a budget, not a dial to max out. At 46px the photograph stopped being
+  a photograph and the page read as a brown wash. 22px keeps it recognisable,
+  which is the whole point of putting it there.
 
 ### Premium, REACH `direction-2-altitude.html`
 
@@ -170,10 +183,10 @@ directions; any new direction fills in a column before it ships.
 |---|---|---|---|
 | theme | light, warm neutral | deep slate-teal | near black |
 | glass | light frosted panes over photos | smoked panes over a fixed photographic ground | none, this one stays opaque |
-| depth device | tray and core, plus a Z-axis photo cascade | tray and core inverted, over a fixed blurred ground | three planes, foreground occlusion |
+| depth device | one glass slab, plus a Z-axis photo cascade | one smoked slab over a fixed blurred ground | three planes, foreground occlusion |
 | hero | full-screen photo, glass card, two lapping plates | split screen, pane crossing the seam | full bleed photo, plate hung over the edge |
 | services | zig-zag of three photographic bands | sticky split, photo swaps per service | full-screen sticky stack |
-| work | asymmetric bento, ten tiles | magazine masonry, twelve tiles | drag-to-pan filmstrip |
+| work | asymmetric bento, ten tiles | pane gallery, twelve slats that open | drag-to-pan filmstrip |
 | reels | three light glass plates | three smoked plates | three ink plates |
 | reviews | glass panes over a photo band | smoked panes with an amber edge | glass panes with a reflection sweep |
 | contact | full-screen photo, one big pane | split screen, bookending the hero | photograph with the number over it |

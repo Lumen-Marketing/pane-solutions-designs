@@ -48,7 +48,7 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   --gut:clamp(18px,4.6vw,72px);
   --ease:cubic-bezier(.16,1,.3,1);
   --r:26px;
-  --tray:7px;      /* tray padding. The core's radius is --r minus this. */
+  --tray:0px;      /* kept as a variable so the radius maths still reads. */
 }
 
 body{
@@ -68,37 +68,30 @@ a{color:inherit;text-decoration:none}
 
 /* ── the pane: an outer tray holding an inner core ──────────────────────────
    A single flat card cannot read as an object however much shadow you give it.
-   The tray is thin, translucent and blurred; the core sits inside it with its
-   own fill and its own lit rim, and its radius is the tray's minus the tray's
-   padding so the two curves stay concentric.
+   ONE slab, ONE hairline: the fill and the rim live on the pane, and the core
+   carries nothing but its padding. Two concentric hairlines seven pixels apart
+   read as a mistake rather than as machining.
 
    The shadow is three stops, tinted to the page rather than neutral black: a
    tight contact shadow, a mid lift and a wide ambient. One shadow is what makes
    a card look pasted on. */
 .pane{
-  position:relative;isolation:isolate;
+  position:relative;
   padding:var(--tray);
   border-radius:var(--r);
-  background:rgba(255,255,255,.3);
+  background:rgba(255,255,255,.78);
   backdrop-filter:blur(30px) saturate(170%);
   -webkit-backdrop-filter:blur(30px) saturate(170%);
-  border:1px solid rgba(255,255,255,.55);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.98),
+             inset 0 -1px 0 rgba(255,255,255,.45),
              0 1px 2px rgba(20,36,56,.06),
              0 14px 30px rgba(20,36,56,.13),
              0 44px 84px rgba(20,36,56,.16);
 }
-.core{
-  position:relative;height:100%;
-  border-radius:calc(var(--r) - var(--tray));
-  background:rgba(255,255,255,.72);
-  border:1px solid rgba(255,255,255,.8);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.98),
-             inset 0 -1px 0 rgba(255,255,255,.4);
-}
+.core{position:relative;height:100%;border-radius:calc(var(--r) - var(--tray))}
 @media(prefers-reduced-transparency:reduce){
-  .pane{background:#E6EBEF;backdrop-filter:none;-webkit-backdrop-filter:none}
-  .core{background:#FBFCFD}
+  .pane{background:#F4F7F9;backdrop-filter:none;-webkit-backdrop-filter:none}
 }
 
 /* ── buttons ────────────────────────────────────────────────────────────── */
