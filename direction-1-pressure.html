@@ -11,21 +11,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ============================================================================
-   DAYLIGHT.  A light poster, not a dark tech page.
+   DAYLIGHT.  Full-screen photography with the interface floating on glass.
    -------------------------------------------------------------------------
-   The concept comes from what the business actually sells: daylight through
-   clean glass. So the page is light, the photographs run at full scale, and
-   nothing gets a container unless it is a physical object.
+   Layout archetypes in use, in order down the page:
+     FULL-SCREEN   hero, contact
+     ZIG-ZAG       services, three alternating bands
+     GALLERY GRID  the job index
+   Nothing sits on a flat background any more. Every panel is a pane of glass
+   over a photograph, which for a window cleaner is the product itself rather
+   than a borrowed effect.
 
-   Depth device for THIS direction: offset colour planes and occlusion.
-   A blue plane sits behind each major photograph, shifted; a paper plate laps
-   across the boundary between two elements. Nothing is blurred, nothing glows,
-   nothing pretends to be frosted glass. Stacking, not softness.
+   THE GLASS IS GRADIENT-FREE. Standing rule on this set is no colour ramps, and
+   the usual glassmorphism recipe leans on a diagonal white gradient for its
+   highlight. Here the fill is one flat rgba, the lit edge is an inset
+   box-shadow and the rim is a 1px border. That reads as real glass and keeps
+   the rule.
 
-   Deliberately absent, because these are the things that make a page read as
-   machine-made: numbered section eyebrows, mono micro-labels, status dots,
-   scroll cues, phone mockups, fake documents, and any row of identical cards
-   that is an icon above a heading above two lines of text.
+   Contrast: the fill is held at .62 white with a heavy blur so ink type stays
+   readable no matter what photograph is behind it. A solid fallback is provided
+   under prefers-reduced-transparency.
+
+   Radius rule for this page: panes 20px, interactive elements are pills.
    ========================================================================= */
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -33,297 +39,340 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 :root{
-  --paper:#EDEEF0;      /* cool off-white. Daylight, not cream. */
-  --paper-2:#E1E4E8;
-  --plate:#F7F8F9;
-  --ink:#14181C;        /* off-black, never #000 */
-  --ink-2:#4C555D;
-  --line:#C8CDD2;
-  --blue:#1B54C8;       /* the one accent, and it lives on BIG surfaces */
-  --blue-d:#12388A;
-  --on-blue:#F1F5FC;
-  --gut:clamp(20px,5vw,76px);
+  --paper:#EDF0F2;
+  --ink:#101418;
+  --ink-2:#4B545C;
+  --blue:#1B54C8;
+  --blue-d:#123C96;
+  --on-blue:#F2F6FD;
+  --gut:clamp(18px,4.6vw,72px);
   --ease:cubic-bezier(.16,1,.3,1);
+  --r:26px;
+  --tray:7px;      /* tray padding. The core's radius is --r minus this. */
 }
 
 body{
   background:var(--paper);color:var(--ink);
   font-family:'Instrument Sans',ui-sans-serif,sans-serif;
   font-size:clamp(15px,1.02vw,17px);line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:clip;
-}
-
-/* one fixed grain layer, never on a scrolling container */
-body::after{
-  content:'';position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-font-smoothing:antialiased;overflow-x:clip;
 }
 
 h1,h2,h3{
   font-family:'Bricolage Grotesque','Instrument Sans',sans-serif;
-  font-weight:800;line-height:.92;letter-spacing:-.03em;
-  font-variation-settings:'opsz' 72;
+  font-weight:800;line-height:.94;letter-spacing:-.03em;font-variation-settings:'opsz' 72;
 }
 img{display:block;width:100%;height:auto}
 a{color:inherit;text-decoration:none}
-
 .wrap{max-width:1560px;margin:0 auto;padding-inline:var(--gut)}
 
-/* ── buttons. One radius system on this page and it is zero. ─────────────── */
+/* ── the pane: an outer tray holding an inner core ──────────────────────────
+   A single flat card cannot read as an object however much shadow you give it.
+   The tray is thin, translucent and blurred; the core sits inside it with its
+   own fill and its own lit rim, and its radius is the tray's minus the tray's
+   padding so the two curves stay concentric.
+
+   The shadow is three stops, tinted to the page rather than neutral black: a
+   tight contact shadow, a mid lift and a wide ambient. One shadow is what makes
+   a card look pasted on. */
+.pane{
+  position:relative;isolation:isolate;
+  padding:var(--tray);
+  border-radius:var(--r);
+  background:rgba(255,255,255,.3);
+  backdrop-filter:blur(30px) saturate(170%);
+  -webkit-backdrop-filter:blur(30px) saturate(170%);
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),
+             0 1px 2px rgba(20,36,56,.06),
+             0 14px 30px rgba(20,36,56,.13),
+             0 44px 84px rgba(20,36,56,.16);
+}
+.core{
+  position:relative;height:100%;
+  border-radius:calc(var(--r) - var(--tray));
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.8);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.98),
+             inset 0 -1px 0 rgba(255,255,255,.4);
+}
+@media(prefers-reduced-transparency:reduce){
+  .pane{background:#E6EBEF;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .core{background:#FBFCFD}
+}
+
+/* ── buttons ────────────────────────────────────────────────────────────── */
 .btn{
-  display:inline-block;padding:17px 30px;background:var(--blue);color:var(--on-blue);
-  font-weight:600;font-size:15px;white-space:nowrap;border:0;cursor:pointer;
-  transition:translate .25s var(--ease),background .25s var(--ease);
+  display:inline-block;padding:16px 30px;border-radius:999px;
+  background:var(--blue);color:var(--on-blue);font-weight:600;font-size:15px;
+  white-space:nowrap;border:0;cursor:pointer;
+  box-shadow:0 10px 26px rgba(27,84,200,.34);
+  transition:background .25s var(--ease),translate .25s var(--ease),box-shadow .25s var(--ease);
 }
-.btn:hover{background:var(--blue-d);translate:0 -2px}
-.btn:active{translate:0 1px}
-.btn-line{
-  display:inline-block;padding:16px 0;font-weight:600;font-size:15px;
-  border-bottom:2px solid var(--ink);
-  transition:border-color .25s var(--ease),color .25s var(--ease);
+.btn:hover{background:var(--blue-d);translate:0 -2px;box-shadow:0 16px 34px rgba(27,84,200,.42)}
+.btn:active{translate:0 1px;scale:.985}
+/* nested trailing icon rather than a naked arrow beside the label */
+.nav-cta{display:inline-flex;align-items:center;gap:10px;padding-right:8px}
+.nav-cta i{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2);
+  display:grid;place-items:center;transition:translate .3s var(--ease),background .3s var(--ease)}
+.nav-cta i::after{content:'';width:7px;height:7px;border-top:1.5px solid currentColor;
+  border-right:1.5px solid currentColor;rotate:45deg;margin-left:-2px}
+.nav-cta:hover i{translate:3px 0;background:rgba(255,255,255,.32)}
+.btn-glass{
+  display:inline-block;padding:15px 28px;border-radius:999px;font-weight:600;font-size:15px;
+  color:var(--ink);background:rgba(255,255,255,.5);
+  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+  transition:background .25s var(--ease),translate .25s var(--ease);
 }
-.btn-line:hover{color:var(--blue);border-color:var(--blue)}
+.btn-glass:hover{background:rgba(255,255,255,.78);translate:0 -2px}
 
-/* ── nav ────────────────────────────────────────────────────────────────── */
+/* ── nav: a floating glass bar, not a full-width strip ─────────────────── */
 .nav{
-  position:sticky;top:0;z-index:60;height:70px;display:flex;align-items:center;
-  gap:26px;padding-inline:var(--gut);
-  background:rgba(237,238,240,.9);backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line);
+  position:fixed;top:14px;left:var(--gut);right:var(--gut);z-index:70;height:64px;
+  display:flex;align-items:center;gap:24px;padding-inline:14px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.56);
+  backdrop-filter:blur(26px) saturate(170%);-webkit-backdrop-filter:blur(26px) saturate(170%);
+  border:1px solid rgba(255,255,255,.66);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 12px 34px rgba(16,24,36,.18);
 }
-.brand{display:flex;align-items:center;gap:11px;margin-right:auto}
-.brand img{width:34px;height:34px;object-fit:contain}
-.brand span{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:15.5px;letter-spacing:-.02em}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto;padding-left:8px}
+.brand img{width:32px;height:32px;object-fit:contain}
+.brand span{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:15.5px;letter-spacing:-.02em;white-space:nowrap}
 .nav-links{display:flex;gap:24px;font-size:14.5px;font-weight:500;color:var(--ink-2)}
-.nav-links a{position:relative;padding-block:4px}
-.nav-links a::after{
-  content:'';position:absolute;left:0;right:100%;bottom:0;height:2px;background:var(--blue);
-  transition:right .3s var(--ease);
-}
-.nav-links a:hover::after{right:0}
-.nav-tel{font-weight:600;font-size:14.5px}
-.burger{display:none;background:none;border:0;color:var(--ink);font-size:22px;cursor:pointer;line-height:1}
-
+.nav-links a{transition:color .2s var(--ease)}
+.nav-links a:hover{color:var(--blue)}
+.nav-tel{font-weight:600;font-size:14.5px;white-space:nowrap}
+.nav .btn{padding:12px 22px;font-size:14px;box-shadow:none}
+.nav .btn:hover{box-shadow:none;translate:0 0}
+.burger{display:none;background:none;border:0;color:var(--ink);font-size:21px;cursor:pointer;line-height:1;padding:8px}
 .drawer{
-  position:fixed;inset:0;z-index:80;background:var(--paper);
-  display:flex;flex-direction:column;justify-content:center;gap:6px;padding:var(--gut);
+  position:fixed;inset:0;z-index:85;
+  background:rgba(237,240,242,.9);backdrop-filter:blur(34px);-webkit-backdrop-filter:blur(34px);
+  display:flex;flex-direction:column;justify-content:center;gap:4px;padding:var(--gut);
   translate:0 -100%;transition:translate .5s var(--ease);
 }
 .drawer.on{translate:0 0}
 .drawer a{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(2rem,9vw,3.4rem);line-height:1.1}
-.drawer .x{position:absolute;top:22px;right:var(--gut);background:none;border:0;font:inherit;font-weight:600;cursor:pointer;color:var(--ink)}
+.drawer .x{position:absolute;top:24px;right:var(--gut);background:none;border:0;font:inherit;font-weight:600;cursor:pointer;color:var(--ink)}
 
-/* ── hero ───────────────────────────────────────────────────────────────────
-   Asymmetric. Type left on bare paper, photograph right running off the
-   viewport edge, and a paper plate straddling the two so something physically
-   overlaps something else. That overlap is the depth on this page. */
-.hero{position:relative;padding-top:clamp(28px,3.4vw,50px);padding-bottom:clamp(70px,8vw,110px)}
-/* the hero is sized to the viewport, not to the photograph. Letting the image
-   set the height pushed the headline 450px down the page and buried the CTA. */
-.hero-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
-  gap:clamp(24px,4vw,64px);align-items:center;min-height:min(70svh,690px)}
-.hero h1{font-size:clamp(2.7rem,6.1vw,5.9rem);max-width:17ch}
-.hero h1 i{font-style:normal;color:var(--blue)}
-.hero-sub{
-  margin-top:clamp(20px,2.4vw,32px);max-width:34ch;font-size:clamp(1rem,1.22vw,1.22rem);
-  color:var(--ink-2);line-height:1.5;
+/* ── hero: FULL-SCREEN archetype ───────────────────────────────────────────
+   The photograph is the page, the content is a pane floating on it, and a
+   second pane hangs across the bottom edge into the section below. */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:visible}
+.hero-bg{position:absolute;inset:0;overflow:hidden;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:64% 44%;
+  animation:drift 30s ease-in-out infinite alternate}
+@keyframes drift{to{scale:1.08}}
+/* one flat wash so the glass has a predictable ground, never a ramp */
+.hero-bg::after{content:'';position:absolute;inset:0;background:rgba(226,233,238,.34)}
+.hero-in{position:relative;z-index:2;width:100%;padding-top:90px}
+.hero-stack{position:relative;display:inline-block;max-width:100%}
+/* the cascade. Opposing rotations, mirrored about the pane, so the pair reads
+   as composition rather than as one thing knocked askew. */
+.chip{position:absolute;overflow:hidden;border-radius:18px;border:5px solid rgba(255,255,255,.85);
+  box-shadow:0 2px 5px rgba(20,36,56,.1),0 18px 38px rgba(20,36,56,.22),0 46px 80px rgba(20,36,56,.2);
+  transition:translate .5s var(--ease),rotate .5s var(--ease)}
+.chip img{width:100%;height:100%;object-fit:cover}
+.chip-a{width:clamp(140px,15vw,215px);aspect-ratio:4/5;right:-6%;bottom:-13%;rotate:5deg;z-index:4}
+.chip-b{width:clamp(120px,12.5vw,178px);aspect-ratio:1/1;right:16%;bottom:-24%;rotate:-6deg;z-index:3}
+.hero-stack:hover .chip-a{translate:0 -8px;rotate:3deg}
+.hero-stack:hover .chip-b{translate:0 -5px;rotate:-4deg}
+.hero-card{max-width:min(650px,100%)}
+.hero-card .core{padding:clamp(28px,3.4vw,50px)}
+.hero-card h1{font-size:clamp(2.6rem,5vw,4.5rem);max-width:14ch}
+.hero-card h1 i{font-style:normal;color:var(--blue)}
+.hero-card p{margin-top:18px;max-width:34ch;font-size:clamp(1rem,1.16vw,1.16rem);color:var(--ink-2)}
+.hero-acts{margin-top:clamp(22px,2.6vw,32px);display:flex;gap:12px;flex-wrap:wrap}
+/* the strip hung across the bottom edge of the hero */
+.strip{
+  position:relative;z-index:3;margin:0 var(--gut);margin-top:clamp(-92px,-6vw,-58px);
 }
-.hero-act{margin-top:clamp(26px,3vw,40px);display:flex;align-items:center;gap:clamp(18px,2.4vw,34px);flex-wrap:wrap}
+.strip .core{display:grid;grid-template-columns:repeat(3,1fr);
+  padding:clamp(18px,2vw,26px) clamp(10px,1.4vw,20px)}
+.strip div{padding-inline:clamp(12px,1.6vw,24px);border-right:1px solid rgba(16,24,36,.12)}
+.strip div:last-child{border-right:0}
+.strip b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+  font-size:clamp(1.5rem,2.5vw,2.2rem);line-height:1;letter-spacing:-.03em}
+.strip span{display:block;margin-top:6px;font-size:13.5px;color:var(--ink-2)}
 
-/* the photograph, bled to the right edge of the viewport */
-.hero-shot{position:relative;margin-right:calc(var(--gut) * -1);align-self:stretch;display:flex}
-.hero-shot::before{
-  /* the offset plane. The whole depth trick, and it is flat colour. */
-  content:'';position:absolute;left:34px;top:-26px;right:0;bottom:26px;background:var(--blue);
+/* ── services: ZIG-ZAG archetype ───────────────────────────────────────────
+   Three full-bleed photographic bands. The glass panel sits left, then right,
+   then centred, so the alternation never runs three deep. */
+.band{position:relative;min-height:clamp(460px,64svh,660px);display:flex;align-items:center;
+  overflow:hidden;padding-block:clamp(50px,7vw,100px)}
+.band-bg{position:absolute;inset:0;z-index:0}
+.band-bg img{width:100%;height:100%;object-fit:cover}
+.band-bg::after{content:'';position:absolute;inset:0;background:rgba(224,232,238,.3)}
+.band-in{position:relative;z-index:2;width:100%;display:flex}
+.band-l .band-in{justify-content:flex-start}
+.band-r .band-in{justify-content:flex-end}
+.band-c .band-in{justify-content:center}
+.band-card{max-width:min(575px,100%)}
+.band-card .core{padding:clamp(26px,3vw,44px)}
+.band-card h2{font-size:clamp(2rem,3.6vw,3.3rem);max-width:12ch}
+.band-card p{margin-top:15px;max-width:42ch;color:var(--ink-2)}
+.band-card .also{margin-top:16px;font-weight:600;color:var(--ink)}
+.band-c .band-card{text-align:center}
+.band-c .band-card h2,.band-c .band-card p{margin-inline:auto}
+
+/* ── work: GALLERY archetype ───────────────────────────────────────────────
+   Equal tiles, equal weight, caption on a glass bar inside each tile. */
+.work{padding-block:clamp(60px,8vw,116px)}
+.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap;
+  margin-bottom:clamp(24px,3vw,42px)}
+.sec-hd h2{font-size:clamp(2.1rem,4.2vw,3.8rem)}
+.sec-hd p{max-width:38ch;color:var(--ink-2)}
+.sec-hd a{color:var(--blue);font-weight:600}
+/* Asymmetric bento. Fixed row height plus row spans, never a per-tile
+   aspect-ratio: mixed ratios in one grid resolve to different heights and every
+   row comes out ragged. */
+.gal{display:grid;grid-template-columns:repeat(6,1fr);
+  grid-auto-rows:clamp(88px,10.2vw,150px);gap:clamp(10px,1.3vw,18px)}
+figure.tile{position:relative;overflow:hidden;border-radius:var(--r);
+  border:1px solid rgba(255,255,255,.5);
+  box-shadow:0 1px 2px rgba(20,36,56,.07),
+             0 14px 30px rgba(20,36,56,.15),
+             0 40px 76px rgba(20,36,56,.16);
+  transition:translate .4s var(--ease),box-shadow .4s var(--ease)}
+figure.tile:hover{translate:0 -7px;
+  box-shadow:0 2px 4px rgba(20,36,56,.08),
+             0 24px 46px rgba(20,36,56,.2),
+             0 64px 116px rgba(20,36,56,.22)}
+.g-a{grid-column:1/5;grid-row:1/5}
+.g-b{grid-column:5/7;grid-row:1/3}
+.g-c{grid-column:5/7;grid-row:3/5}
+.g-d{grid-column:1/3;grid-row:5/7}
+.g-e{grid-column:3/5;grid-row:5/7}
+.g-f{grid-column:5/7;grid-row:5/9}
+.g-g{grid-column:1/5;grid-row:7/9}
+.g-h{grid-column:1/3;grid-row:9/13}
+.g-i{grid-column:3/7;grid-row:9/11}
+.g-j{grid-column:3/7;grid-row:11/13}
+figure.tile img{width:100%;height:100%;object-fit:cover;transition:scale 1.1s var(--ease)}
+figure.tile:hover img{scale:1.06}
+figure.tile figcaption{
+  position:absolute;left:12px;right:12px;bottom:12px;padding:12px 16px;border-radius:14px;
+  font-size:13.5px;font-weight:600;color:var(--ink);
+  background:rgba(255,255,255,.74);
+  backdrop-filter:blur(22px) saturate(150%);-webkit-backdrop-filter:blur(22px) saturate(150%);
+  border:1px solid rgba(255,255,255,.7);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95);
 }
-.hero-shot img{position:relative;width:100%;height:100%;min-height:min(70svh,690px);object-fit:cover;object-position:54% 40%}
+@media(prefers-reduced-transparency:reduce){figure.tile figcaption{background:#FBFCFD;backdrop-filter:none}}
 
-/* the plate that laps across the column boundary */
-.hero-plate{
-  position:relative;z-index:3;margin-top:-58px;margin-left:clamp(0px,30vw,452px);
-  width:max-content;max-width:100%;
-  background:var(--plate);border:1px solid var(--line);
-  padding:clamp(16px,1.8vw,24px) clamp(20px,2.4vw,32px);
-  display:flex;align-items:center;gap:clamp(18px,2.6vw,40px);flex-wrap:wrap;
-}
-.hero-plate b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(1.5rem,2.6vw,2.3rem);letter-spacing:-.03em;display:block;line-height:1}
-.hero-plate small{display:block;font-size:13.5px;color:var(--ink-2);margin-top:5px}
-.hero-plate .sep{width:1px;align-self:stretch;background:var(--line)}
-
-/* ── services: three full-width bands, not three cards ─────────────────────
-   A row of identical cards is the most templated pattern there is. Each
-   service gets a whole band and a photograph at real scale instead. */
-.band{position:relative;display:grid;align-items:center;gap:clamp(24px,4.5vw,72px);
-  padding-block:clamp(46px,6vw,92px);border-top:1px solid var(--line)}
-.band:first-of-type{border-top:0}
-.band-a{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)}
-.band-b{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
-.band-a .band-shot{margin-left:calc(var(--gut) * -1)}
-.band-b .band-shot{margin-right:calc(var(--gut) * -1);order:2}
-.band-b .band-tx{order:1}
-.band-shot{position:relative}
-.band-shot img{aspect-ratio:16/11;object-fit:cover}
-.band-tx h2{font-size:clamp(2.1rem,4.2vw,3.9rem);max-width:12ch}
-.band-tx p{margin-top:18px;max-width:44ch;color:var(--ink-2);font-size:clamp(.98rem,1.1vw,1.1rem)}
-.band-tx .also{margin-top:20px;font-size:14.5px;font-weight:600;color:var(--ink)}
-
-/* the third service breaks the alternation: full-width photograph with the
-   name on a blue plate hung over its lower left corner */
-.band-full{border-top:1px solid var(--line);padding-top:clamp(46px,6vw,92px)}
-.band-full .shot{position:relative;margin-inline:calc(var(--gut) * -1);display:block}
-.band-full .shot img{aspect-ratio:21/8;object-fit:cover;object-position:50% 62%}
-.band-full .cap{
-  position:relative;z-index:2;margin-top:-84px;margin-left:clamp(0px,3vw,54px);
-  width:max-content;max-width:min(100%,52ch);
-  background:var(--blue);color:var(--on-blue);padding:clamp(22px,2.6vw,34px) clamp(24px,3vw,40px);
-}
-.band-full .cap h2{font-size:clamp(2rem,3.6vw,3.2rem)}
-.band-full .cap p{margin-top:12px;max-width:42ch;color:rgba(241,245,252,.84);font-size:clamp(.95rem,1.05vw,1.05rem)}
-
-/* ── work: big tiles, caption inside the object ────────────────────────────
-   No small rounded thumbnails. The photographs are the product. */
-.work{padding-block:clamp(56px,7vw,110px)}
-.work-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:clamp(26px,3.4vw,48px)}
-.work-hd h2{font-size:clamp(2.2rem,4.6vw,4.2rem)}
-.work-hd p{max-width:38ch;color:var(--ink-2)}
-/* Fixed row height plus row spans, NOT a per-tile aspect-ratio. Mixed aspect
-   ratios in one grid resolve to different heights and the row comes out
-   ragged. The caption is a real bar at the foot of the figure rather than a
-   pill floating on the photograph, so each tile is one object. */
-.grid{display:grid;grid-template-columns:repeat(6,1fr);
-  grid-auto-rows:clamp(96px,11.4vw,168px);gap:clamp(10px,1.3vw,20px)}
-figure.shot{position:relative;background:var(--paper-2);overflow:hidden;
-  display:flex;flex-direction:column}
-figure.shot img{flex:1;min-height:0;width:100%;object-fit:cover;transition:scale 1.1s var(--ease)}
-figure.shot:hover img{scale:1.045}
-figure.shot figcaption{
-  flex:none;background:var(--plate);color:var(--ink);border-top:1px solid var(--line);
-  padding:11px 16px;font-size:13.5px;font-weight:600;
-}
-.s-1{grid-column:span 4;grid-row:span 3}
-.s-2{grid-column:span 2;grid-row:span 3}
-.s-3,.s-4,.s-5{grid-column:span 2;grid-row:span 2}
-
-/* ── reels ─────────────────────────────────────────────────────────────────
-   Three equal panes, tops aligned. Instagram sizes each embed to its own video
-   aspect, so the pane is pinned to one height and the embeds are top-aligned;
-   that is what makes the row read as level. */
-.reels{background:var(--paper-2);padding-block:clamp(56px,7vw,110px);border-block:1px solid var(--line)}
-.reels-hd{margin-bottom:clamp(26px,3.4vw,44px);display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap}
-.reels-hd h2{font-size:clamp(2.2rem,4.6vw,4.2rem)}
-.reels-hd p{max-width:36ch;color:var(--ink-2)}
-.reels-hd a{color:var(--blue);font-weight:600}
-.panes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.8vw,26px);align-items:stretch}
-/* Each pane is a solid blue plate carrying the embed. Instagram sizes an embed
-   to its own video aspect and one of these three reels is landscape, so it
-   comes back ~180px shorter than its neighbours. On a white plate that left a
-   bright hole; on the blue plate the leftover reads as the plate itself. */
-.pane{position:relative;display:flex;background:var(--blue);padding:clamp(10px,1.1vw,16px)}
-.screen{
-  position:relative;flex:1;min-height:642px;background:transparent;border:0;
-  display:flex;align-items:flex-start;justify-content:center;
-}
-.screen .fallback{position:absolute;inset:0;overflow:hidden;display:block}
+/* ── reels: glass plates over a photographic ground ──────────────────────── */
+.reels{position:relative;padding-block:clamp(60px,8vw,116px);overflow:hidden}
+.reels-bg{position:absolute;inset:0;z-index:0}
+.reels-bg img{width:100%;height:100%;object-fit:cover}
+.reels-bg::after{content:'';position:absolute;inset:0;background:rgba(222,231,237,.62)}
+.reels>.wrap{position:relative;z-index:2}
+.panes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.7vw,24px);align-items:stretch}
+.pane-reel .core{display:flex;padding:clamp(9px,1vw,13px)}
+.screen{position:relative;flex:1;min-height:642px;display:flex;align-items:flex-start;justify-content:center}
+.screen .fallback{position:absolute;inset:0;overflow:hidden;display:block;border-radius:12px}
 .screen .fallback img{width:100%;height:100%;object-fit:cover}
-.screen .fb-in{
-  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
-  background:rgba(20,24,28,.4);color:#fff;font-weight:600;font-size:14px;
-}
-.play{width:52px;height:52px;background:var(--on-blue);position:relative;transition:scale .3s var(--ease)}
-.play::after{content:'';position:absolute;top:50%;left:53%;translate:-50% -50%;
+.screen .fb-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:13px;background:rgba(16,24,36,.34);color:#fff;font-weight:600;font-size:14px}
+.play{width:54px;height:54px;border-radius:50%;background:rgba(255,255,255,.9);position:relative;
+  box-shadow:0 10px 26px rgba(16,24,36,.3);transition:scale .3s var(--ease)}
+.play::after{content:'';position:absolute;top:50%;left:54%;translate:-50% -50%;
   border-left:15px solid var(--blue);border-top:9px solid transparent;border-bottom:9px solid transparent}
 .screen .fallback:hover .play{scale:1.1}
 .screen.live .fallback{display:none}
-.screen .instagram-media{margin:0 auto!important;min-width:0!important;width:100%!important;max-width:326px!important;border:0!important;box-shadow:none!important;border-radius:0!important}
+.screen .instagram-media{margin:0 auto!important;min-width:0!important;width:100%!important;max-width:326px!important;border:0!important;box-shadow:none!important;border-radius:12px!important}
 
-/* ── reviews ───────────────────────────────────────────────────────────────
-   Typography carries the headline quote; the rest sit on paper plates over a
-   blue plane, the same depth device as the hero. Not generic testimonial
-   cards with an avatar and a rounded corner. */
-.reviews{padding-block:clamp(56px,7vw,110px)}
+/* ── reviews: panes floating over a band ────────────────────────────────── */
+.reviews{position:relative;padding-block:clamp(60px,8vw,116px);overflow:hidden}
+.rev-bg{position:absolute;inset:0;z-index:0}
+.rev-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+.rev-bg::after{content:'';position:absolute;inset:0;background:rgba(220,229,236,.66)}
+.reviews>.wrap{position:relative;z-index:2}
 .pull blockquote{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
-  font-size:clamp(2.3rem,5.6vw,5.2rem);line-height:.95;letter-spacing:-.035em;max-width:17ch}
+  font-size:clamp(2rem,4.6vw,4.2rem);line-height:.98;letter-spacing:-.035em;max-width:18ch}
 .pull blockquote em{font-style:normal;color:var(--blue)}
-.pull-meta{margin-top:26px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.pull-meta{margin-top:22px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
 .stars{color:var(--blue);letter-spacing:.14em;font-size:15px}
 .who{font-weight:600}
 .src{color:var(--ink-2);font-size:14px}
-.rev-plane{position:relative;margin-top:clamp(40px,5vw,76px)}
-.rev-plane::before{content:'';position:absolute;left:16px;top:16px;right:-16px;bottom:-16px;background:var(--blue)}
-.rev-grid{position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.3vw,18px)}
-.rev{background:var(--plate);border:1px solid var(--line);padding:clamp(20px,2.2vw,30px);
-  display:flex;flex-direction:column;gap:13px;transition:translate .3s var(--ease)}
-.rev:hover{translate:0 -5px}
-.rev p{font-size:clamp(.95rem,1.05vw,1.06rem);line-height:1.5}
+.rev-grid{margin-top:clamp(34px,4vw,58px);display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.5vw,20px)}
+.rev{transition:translate .38s var(--ease),box-shadow .38s var(--ease)}
+.rev .core{padding:clamp(20px,2.2vw,28px);display:flex;flex-direction:column;gap:12px}
+.rev:hover{translate:0 -7px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),
+             0 2px 4px rgba(20,36,56,.07),
+             0 22px 44px rgba(20,36,56,.16),
+             0 60px 110px rgba(20,36,56,.2)}
+.rev p{font-size:clamp(.94rem,1.02vw,1.04rem);line-height:1.5}
 .rev .who{margin-top:auto}
 .rev .src{font-size:13px}
 
-/* ── contact: the one colour block on the page ─────────────────────────── */
-.contact{background:var(--blue);color:var(--on-blue);padding-block:clamp(60px,8vw,120px)}
-.contact h2{font-size:clamp(2.4rem,5.4vw,5rem);max-width:14ch}
-.contact-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(30px,5vw,80px);align-items:end}
-.bignum{
-  display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
-  font-size:clamp(2.3rem,5.4vw,4.6rem);letter-spacing:-.04em;line-height:1;
-  transition:opacity .25s var(--ease);
-}
-.bignum:hover{opacity:.72}
-.crows{margin-top:clamp(24px,3vw,40px)}
-.crow{display:flex;justify-content:space-between;gap:20px;padding:15px 0;border-top:1px solid rgba(241,245,252,.26)}
-.crow span{color:rgba(241,245,252,.75);font-size:14.5px}
+/* ── contact: FULL-SCREEN archetype again, closing the page ─────────────── */
+.contact{position:relative;min-height:88svh;display:flex;align-items:center;overflow:hidden;
+  padding-block:clamp(60px,8vw,110px)}
+.contact-bg{position:absolute;inset:0;z-index:0}
+.contact-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 46%}
+.contact-bg::after{content:'';position:absolute;inset:0;background:rgba(224,232,238,.4)}
+.contact>.wrap{position:relative;z-index:2;width:100%}
+.contact-card .core{padding:clamp(28px,3.6vw,54px);display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(26px,4vw,64px);align-items:end}
+.contact h2{font-size:clamp(2.1rem,4.4vw,4rem);max-width:13ch}
+.bignum{display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
+  font-size:clamp(2.1rem,4.6vw,3.9rem);letter-spacing:-.04em;line-height:1;
+  transition:color .25s var(--ease)}
+.bignum:hover{color:var(--blue)}
+.crows{margin-top:clamp(20px,2.4vw,32px)}
+.crow{display:flex;justify-content:space-between;gap:18px;padding:13px 0;border-top:1px solid rgba(16,24,36,.14)}
+.crow span{color:var(--ink-2);font-size:14px}
 .crow b{font-weight:600;text-align:right;word-break:break-word}
-.contact .btn{background:var(--on-blue);color:var(--blue);margin-top:clamp(24px,3vw,38px)}
-.contact .btn:hover{background:#fff}
 
-footer{padding-block:34px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
-  font-size:13.5px;color:var(--ink-2);border-top:1px solid var(--line)}
+footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  font-size:13.5px;color:var(--ink-2)}
 
-/* ── motion ────────────────────────────────────────────────────────────────
-   One idea: things resolve upward as they enter. It earns its place because
-   the layout is deliberately asymmetric and this gives it a reading order. */
-.rv{opacity:0;translate:0 34px;transition:opacity .85s var(--ease),translate .85s var(--ease)}
-.rv.in{opacity:1;translate:0 0}
+/* ── motion ────────────────────────────────────────────────────────────── */
+.rv{opacity:0;translate:0 34px;filter:blur(10px);
+  transition:opacity .9s var(--ease),translate .9s var(--ease),filter .9s var(--ease)}
+.rv.in{opacity:1;translate:0 0;filter:blur(0)}
 .rv[data-d="1"]{transition-delay:.09s}
 .rv[data-d="2"]{transition-delay:.18s}
 .rv[data-d="3"]{transition-delay:.27s}
 @media(prefers-reduced-motion:reduce){
-  .rv{opacity:1;translate:0 0;transition:none}
+  .rv{opacity:1;translate:0 0;filter:none;transition:none}
   *{animation:none!important;transition-duration:.01ms!important}
 }
 
-/* ── responsive ───────────────────────────────────────────────────────────*/
+/* ── responsive ─────────────────────────────────────────────────────────── */
 @media(max-width:1080px){
   .rev-grid{grid-template-columns:repeat(2,1fr)}
-  .panes{grid-template-columns:1fr;max-width:560px;margin-inline:auto}
+  .panes{grid-template-columns:1fr;max-width:540px;margin-inline:auto}
   .screen{min-height:600px}
+}
+@media(max-width:1080px){
+  .gal{grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(80px,12vw,140px)}
+  .gal figure{grid-column:auto;grid-row:auto}
+  .g-a,.g-g,.g-i{grid-column:span 4;grid-row:span 3}
+  .g-b,.g-c,.g-d,.g-e,.g-f,.g-h,.g-j{grid-column:span 2;grid-row:span 2}
 }
 @media(max-width:860px){
   .nav-links,.nav-tel{display:none}
+  /* overlapping plates become touch-target conflicts on a phone */
+  .chip{display:none}
+  .gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:clamp(74px,21vw,126px)}
+  .gal figure{grid-column:span 1;grid-row:span 2}
+  .g-a,.g-g,.g-i{grid-column:span 2;grid-row:span 3}
   .burger{display:block}
-  .hero-in{grid-template-columns:1fr;align-items:start}
-  .hero-shot{margin-inline:0 14px;margin-top:34px}
-  .hero-shot::before{left:14px;top:-14px;right:-14px;bottom:14px}
-  .hero-shot img{aspect-ratio:4/3}
-  .hero-plate{margin-top:-40px;margin-left:0;gap:16px}
-  .hero-shot img{min-height:0;aspect-ratio:4/3}
-  .hero-in{min-height:0}
-  .hero-plate .sep{display:none}
-  .band-a,.band-b{grid-template-columns:1fr}
-  .band-a .band-shot,.band-b .band-shot{margin-inline:calc(var(--gut) * -1);order:0}
-  .band-b .band-tx{order:0}
-  .band-full .cap{margin-top:-46px;margin-left:0;padding:22px}
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .s-1{grid-column:span 2;aspect-ratio:16/10}
-  .s-2,.s-3,.s-4,.s-5{grid-column:span 1;aspect-ratio:1/1}
-  .contact-in{grid-template-columns:1fr}
-  .rev-plane::before{left:10px;top:10px;right:-10px;bottom:-10px}
+  .strip div{border-right:0;border-bottom:1px solid rgba(16,24,36,.12);padding-block:12px}
+  .strip div:last-child{border-bottom:0}
+  .band-r .band-in,.band-l .band-in,.band-c .band-in{justify-content:center}
+  .band-c .band-card{text-align:left}
+  .band-c .band-card h2,.band-c .band-card p{margin-inline:0}
+  .contact-card .core{grid-template-columns:1fr}
+  .strip .core{grid-template-columns:1fr}
 }
 @media(max-width:560px){
   .rev-grid{grid-template-columns:1fr}
-  .hero-plate{width:auto}
-  .hero-plate>span{flex:1 1 28%}
-  .brand span{white-space:nowrap;font-size:14px}
   .nav .btn{display:none}
 }
 </style>
@@ -336,7 +385,7 @@ footer{padding-block:34px;display:flex;justify-content:space-between;gap:20px;fl
     <a href="#services">Services</a><a href="#work">Work</a><a href="#reels">Reels</a><a href="#reviews">Reviews</a>
   </div>
   <a class="nav-tel" href="tel:+15155254127">+1 515-525-4127</a>
-  <a class="btn" href="#contact">Free estimate</a>
+  <a class="btn nav-cta" href="#contact">Free estimate<i></i></a>
   <button class="burger" id="burger" aria-label="Open menu">&#9776;</button>
 </nav>
 
@@ -346,157 +395,194 @@ footer{padding-block:34px;display:flex;justify-content:space-between;gap:20px;fl
   <a href="#reviews">Reviews</a><a href="#contact">Free estimate</a>
 </div>
 
-<header class="hero wrap" id="top">
-  <div class="hero-in">
-    <div>
+<header class="hero" id="top">
+  <div class="hero-bg"><img src="assets/photos/pole-entry.webp" alt="Pane Solutions cleaning the entry glass of a Phoenix home with a water-fed pole" fetchpriority="high"></div>
+  <div class="hero-in wrap">
+    <div class="hero-stack">
+    <div class="hero-card pane">
+      <div class="core">
       <h1>Glass this clean <i>disappears.</i></h1>
-      <p class="hero-sub">Window cleaning, pressure washing and gutters for Phoenix homes and businesses.</p>
-      <div class="hero-act">
+      <p>Window cleaning, pressure washing and gutters for Phoenix homes and businesses.</p>
+      <div class="hero-acts">
         <a class="btn" href="#contact">Free estimate</a>
-        <a class="btn-line" href="#work">See the work</a>
+        <a class="btn-glass" href="#work">See the work</a>
+      </div>
       </div>
     </div>
-    <figure class="hero-shot">
-      <img src="assets/photos/pole-entry.webp" alt="Pane Solutions cleaning the entry glass of a Phoenix home with a water-fed pole" fetchpriority="high">
-    </figure>
-  </div>
-  <div class="hero-plate">
-    <span><b>5.0</b><small>Google rating</small></span>
-    <span class="sep"></span>
-    <span><b>13</b><small>Reviews, all five star</small></span>
-    <span class="sep"></span>
-    <span><b>Free</b><small>No charge to come look</small></span>
+    <!-- two plates in front of the pane, at opposing angles, so something is
+         genuinely occluding something else rather than sitting beside it -->
+    <figure class="chip chip-a"><img src="assets/photos/entry-ladder@sm.webp" alt="Cleaning entry glass on a Phoenix home" loading="lazy"></figure>
+    <figure class="chip chip-b"><img src="assets/photos/patio-covered@sm.webp" alt="A covered patio run of glass after cleaning" loading="lazy"></figure>
+    </div>
   </div>
 </header>
 
+<div class="strip pane">
+  <div class="core">
+    <div><b>5.0</b><span>Rating on Google</span></div>
+    <div><b>13</b><span>Reviews, every one five star</span></div>
+    <div><b>Free</b><span>No charge to come and look</span></div>
+  </div>
+</div>
+
 <main>
 
-<section id="services" class="wrap">
+<section id="services">
 
-  <div class="band band-a">
-    <figure class="band-shot rv"><img src="assets/photos/arch-reflect.webp" alt="An arched window in Phoenix reflecting the pool and sky after cleaning" loading="lazy"></figure>
-    <div class="band-tx rv" data-d="1">
-      <h2>Window cleaning</h2>
-      <p>Interior and exterior glass, tracks, sills and screens. Purified water through a fed pole reaches second storey panes with no ladder marks on the wall and no spotting once it dries.</p>
-      <p class="also">Homes and businesses. One visit or on a schedule.</p>
+  <div class="band band-l">
+    <div class="band-bg"><img src="assets/photos/arch-reflect.webp" alt="An arched Phoenix window reflecting the pool and sky after cleaning" loading="lazy"></div>
+    <div class="band-in wrap">
+      <div class="band-card pane rv">
+        <div class="core">
+        <h2>Window cleaning</h2>
+        <p>Interior and exterior glass, tracks, sills and screens. Purified water through a fed pole reaches second storey panes with no ladder marks on the wall and no spotting once it dries.</p>
+        <p class="also">Homes and businesses. One visit or on a schedule.</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="band band-b">
-    <div class="band-tx rv">
-      <h2>Pressure washing</h2>
-      <p>Driveways, walkways, patios, pool decks and block walls. Desert dust and hard water staining come off without chewing up the surface underneath.</p>
-      <p class="also">Pressure matched to the surface, every time.</p>
+  <div class="band band-r">
+    <div class="band-bg"><img src="assets/photos/lawn-side.webp" alt="The side elevation of a Phoenix home after a pressure wash" loading="lazy"></div>
+    <div class="band-in wrap">
+      <div class="band-card pane rv">
+        <div class="core">
+        <h2>Pressure washing</h2>
+        <p>Driveways, walkways, patios, pool decks and block walls. Desert dust and hard water staining come off without chewing up the surface underneath.</p>
+        <p class="also">Pressure matched to the surface, every time.</p>
+        </div>
+      </div>
     </div>
-    <figure class="band-shot rv" data-d="1"><img src="assets/photos/lawn-side.webp" alt="The side elevation of a Phoenix home after a pressure wash" loading="lazy"></figure>
   </div>
 
-  <div class="band-full">
-    <figure class="shot rv"><img src="assets/photos/adobe-sky.webp" alt="Roofline and gutters against the sky on an Arizona adobe home" loading="lazy"></figure>
-    <div class="cap rv" data-d="1">
-      <h2>Gutter cleaning</h2>
-      <p>Debris cleared, downspouts flushed, and the run checked for sag and separation while we are up there. Monsoon season is a bad time to find out a gutter is packed.</p>
+  <div class="band band-c">
+    <div class="band-bg"><img src="assets/photos/adobe-sky.webp" alt="Roofline and gutters against the sky on an Arizona adobe home" loading="lazy"></div>
+    <div class="band-in wrap">
+      <div class="band-card pane rv">
+        <div class="core">
+        <h2>Gutter cleaning</h2>
+        <p>Debris cleared, downspouts flushed, and the run checked for sag and separation while we are up there. Monsoon season is a bad time to find out a gutter is packed.</p>
+        <p class="also">Checked and reported before we leave.</p>
+        </div>
+      </div>
     </div>
   </div>
 
 </section>
 
 <section id="work" class="work wrap">
-  <div class="work-hd">
+  <div class="sec-hd">
     <h2 class="rv">Recent jobs<br>around Phoenix</h2>
     <p class="rv" data-d="1">Every photograph on this page is our own work on a real property. No stock, nothing staged.</p>
   </div>
-  <div class="grid">
-    <figure class="shot s-1 rv"><img src="assets/photos/bay-pool.webp" alt="Interior bay window looking out over a pool after cleaning" loading="lazy"><figcaption>Bay window, poolside</figcaption></figure>
-    <figure class="shot s-2 rv" data-d="1"><img src="assets/photos/interior-ladder.webp" alt="Cleaning a tall interior pane from a ladder" loading="lazy"><figcaption>Tall interior pane</figcaption></figure>
-    <figure class="shot s-3 rv" data-d="2"><img src="assets/photos/french-doors@sm.webp" alt="Black framed French doors after cleaning" loading="lazy"><figcaption>French doors</figcaption></figure>
-    <figure class="shot s-4 rv" data-d="1"><img src="assets/photos/glass-patio@sm.webp" alt="A full run of patio sliding doors after cleaning" loading="lazy"><figcaption>Patio slider run</figcaption></figure>
-    <figure class="shot s-5 rv" data-d="2"><img src="assets/photos/glass-corner@sm.webp" alt="A glazed corner on a modern Phoenix courtyard home" loading="lazy"><figcaption>Glazed corner</figcaption></figure>
+  <div class="gal">
+    <figure class="tile g-a rv"><img src="assets/photos/interior-ladder.webp" alt="Tall interior pane cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Tall interior pane</figcaption></figure>
+    <figure class="tile g-b rv" data-d="1"><img src="assets/photos/french-doors.webp" alt="French doors cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>French doors</figcaption></figure>
+    <figure class="tile g-c rv" data-d="2"><img src="assets/photos/glass-patio.webp" alt="Patio slider run cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Patio slider run</figcaption></figure>
+    <figure class="tile g-d rv"><img src="assets/photos/pole-entry.webp" alt="Entry glass, water-fed pole cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Entry glass, water-fed pole</figcaption></figure>
+    <figure class="tile g-e rv" data-d="1"><img src="assets/photos/midcentury.webp" alt="Mid-century glazing cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Mid-century glazing</figcaption></figure>
+    <figure class="tile g-f rv" data-d="2"><img src="assets/photos/patio-row.webp" alt="Covered patio run cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Covered patio run</figcaption></figure>
+    <figure class="tile g-g rv"><img src="assets/photos/bay-pool.webp" alt="Bay window, poolside cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Bay window, poolside</figcaption></figure>
+    <figure class="tile g-h rv" data-d="1"><img src="assets/photos/entry-ladder.webp" alt="Entry glazing cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Entry glazing</figcaption></figure>
+    <figure class="tile g-i rv" data-d="2"><img src="assets/photos/patio-covered.webp" alt="Shaded patio glass cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Shaded patio glass</figcaption></figure>
+    <figure class="tile g-j rv"><img src="assets/photos/glass-corner.webp" alt="Glazed corner, courtyard cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Glazed corner, courtyard</figcaption></figure>
   </div>
 </section>
 
 <section id="reels" class="reels">
+  <div class="reels-bg"><img src="assets/photos/slider-interior.webp" alt="" aria-hidden="true" loading="lazy"></div>
   <div class="wrap">
-    <div class="reels-hd">
+    <div class="sec-hd">
       <h2 class="rv">Watch a pane<br>get cleaned</h2>
       <p class="rv" data-d="1">Three reels straight from <a href="https://www.instagram.com/pane_solutions_llc/" target="_blank" rel="noopener">@pane_solutions_llc</a>. Tap one to play it.</p>
     </div>
     <div class="panes">
-      <div class="pane rv">
+      <div class="pane pane-reel rv">
+        <div class="core">
         <div class="screen" data-reel="https://www.instagram.com/reel/DC4osCWRL3L/">
           <a class="fallback" href="https://www.instagram.com/reel/DC4osCWRL3L/" target="_blank" rel="noopener">
             <img src="assets/reels/reel-pole-highrise.webp" alt="A water-fed pole reaching a second storey arched window">
             <span class="fb-in"><span class="play"></span><span>Play on Instagram</span></span>
           </a>
         </div>
+        </div>
       </div>
-      <div class="pane rv" data-d="1">
+      <div class="pane pane-reel rv" data-d="1">
+        <div class="core">
         <div class="screen" data-reel="https://www.instagram.com/reel/DC4oAoixUgB/">
           <a class="fallback" href="https://www.instagram.com/reel/DC4oAoixUgB/" target="_blank" rel="noopener">
             <img src="assets/reels/reel-estate.webp" alt="A large Phoenix estate property serviced by Pane Solutions">
             <span class="fb-in"><span class="play"></span><span>Play on Instagram</span></span>
           </a>
         </div>
+        </div>
       </div>
-      <div class="pane rv" data-d="2">
+      <div class="pane pane-reel rv" data-d="2">
+        <div class="core">
         <div class="screen" data-reel="https://www.instagram.com/reel/DC4nlEkxyKP/">
           <a class="fallback" href="https://www.instagram.com/reel/DC4nlEkxyKP/" target="_blank" rel="noopener">
             <img src="assets/reels/reel-squeegee.webp" alt="Squeegeeing a French door pane clean">
             <span class="fb-in"><span class="play"></span><span>Play on Instagram</span></span>
           </a>
         </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="reviews" class="reviews wrap">
-  <div class="pull rv">
-    <blockquote>&ldquo;My windows have never looked better. Completely <em>streak free.</em>&rdquo;</blockquote>
-    <div class="pull-meta">
-      <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-      <span class="who">Chris</span>
-      <span class="src">Google review</span>
+<section id="reviews" class="reviews">
+  <div class="rev-bg"><img src="assets/photos/modern-gray.webp" alt="" aria-hidden="true" loading="lazy"></div>
+  <div class="wrap">
+    <div class="pull rv">
+      <blockquote>&ldquo;My windows have never looked better. Completely <em>streak free.</em>&rdquo;</blockquote>
+      <div class="pull-meta">
+        <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        <span class="who">Chris</span><span class="src">Google review</span>
+      </div>
     </div>
-  </div>
-  <div class="rev-plane">
     <div class="rev-grid">
-      <article class="rev rv">
+      <article class="rev pane rv"><div class="core">
         <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
         <p>&ldquo;From start to finish their professionalism and attention to detail were outstanding.&rdquo;</p>
         <span class="who">Aminata TC Demaih</span><span class="src">Google review</span>
-      </article>
-      <article class="rev rv" data-d="1">
+      </div></article>
+      <article class="rev pane rv" data-d="1"><div class="core">
         <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
         <p>&ldquo;The team was punctual, professional, and incredibly thorough. They took the time to ensure every window was done right.&rdquo;</p>
         <span class="who">Marcus Baye</span><span class="src">Google review</span>
-      </article>
-      <article class="rev rv" data-d="2">
+      </div></article>
+      <article class="rev pane rv" data-d="2"><div class="core">
         <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
         <p>&ldquo;Answer and his team did a wonderful job doing my windows. Will be using Pane Solutions yearly.&rdquo;</p>
         <span class="who">Gee Nayou</span><span class="src">Google review</span>
-      </article>
-      <article class="rev rv" data-d="3">
+      </div></article>
+      <article class="rev pane rv" data-d="3"><div class="core">
         <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
         <p>&ldquo;I took a chance and they did an incredible job, on the spot. Great work, quality service, solid price.&rdquo;</p>
         <span class="who">Michael Morford</span><span class="src">Google review</span>
-      </article>
+      </div></article>
     </div>
   </div>
 </section>
 
 <section id="contact" class="contact">
-  <div class="wrap contact-in">
-    <div>
-      <h2 class="rv">Tell us what needs cleaning.</h2>
-      <a class="btn rv" data-d="1" href="tel:+15155254127">Free estimate</a>
-    </div>
-    <div class="rv" data-d="1">
-      <a class="bignum" href="tel:+15155254127">515.525.4127</a>
-      <div class="crows">
-        <div class="crow"><span>Email</span><b>answergaye22@gmail.com</b></div>
-        <div class="crow"><span>Service area</span><b>Phoenix, Arizona</b></div>
-        <div class="crow"><span>Instagram</span><b>@pane_solutions_llc</b></div>
+  <div class="contact-bg"><img src="assets/photos/glass-corner.webp" alt="" aria-hidden="true" loading="lazy"></div>
+  <div class="wrap">
+    <div class="contact-card pane">
+      <div class="core">
+      <div>
+        <h2 class="rv">Tell us what needs cleaning.</h2>
+        <a class="btn rv" data-d="1" style="margin-top:26px" href="tel:+15155254127">Free estimate</a>
+      </div>
+      <div class="rv" data-d="1">
+        <a class="bignum" href="tel:+15155254127">515.525.4127</a>
+        <div class="crows">
+          <div class="crow"><span>Email</span><b>answergaye22@gmail.com</b></div>
+          <div class="crow"><span>Service area</span><b>Phoenix, Arizona</b></div>
+          <div class="crow"><span>Instagram</span><b>@pane_solutions_llc</b></div>
+        </div>
+      </div>
       </div>
     </div>
   </div>
@@ -510,7 +596,6 @@ footer{padding-block:34px;display:flex;justify-content:space-between;gap:20px;fl
 </footer>
 
 <script>
-/* menu */
 (function(){
   var b=document.getElementById('burger'),d=document.getElementById('drawer'),x=document.getElementById('close');
   b.onclick=function(){d.classList.add('on')};
@@ -518,7 +603,6 @@ footer{padding-block:34px;display:flex;justify-content:space-between;gap:20px;fl
   d.querySelectorAll('a').forEach(function(a){a.onclick=function(){d.classList.remove('on')}});
 })();
 
-/* reveals. IntersectionObserver, never a scroll listener. */
 (function(){
   var els=document.querySelectorAll('.rv');
   if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){
@@ -526,13 +610,13 @@ footer{padding-block:34px;display:flex;justify-content:space-between;gap:20px;fl
   }
   var io=new IntersectionObserver(function(es){
     es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
-  },{rootMargin:'0px 0px -8% 0px',threshold:.12});
+  },{rootMargin:'0px 0px -8% 0px',threshold:.1});
   els.forEach(function(e){io.observe(e)});
 })();
 
-/* Instagram embeds, loaded only once the row is near the viewport. The poster
-   frame stays until Instagram's iframe actually reports a height, so a blocked
-   script degrades to a real cover image plus a link rather than an empty box. */
+/* Instagram embeds. The poster frame stays until Instagram's iframe actually
+   reports a height, so a blocked script degrades to a real cover image plus a
+   link rather than an empty box. */
 (function(){
   var screens=[].slice.call(document.querySelectorAll('.screen[data-reel]'));
   if(!screens.length)return;

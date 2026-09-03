@@ -37,16 +37,26 @@ sheet. None of them came from window cleaning. Removing the glows would not have
 saved any of them.
 
 The three rebuilds all start from what the business actually sells: daylight
-through clean glass, reaching panes nobody else can, and painted-steel trade
-work.
+through clean glass, reaching panes nobody else can, and a glazed facade at dusk.
+
+**Second pass, same day.** Daylight and the Standard direction came back as too
+plain and too flat, with a request for the layout archetypes from the Figma
+website-layout article and for glassmorphism. Both were rebuilt again around
+named archetypes and real glass; the Standard direction was replaced outright
+(the machined-steel version is in `.old/d3-v2.html`). Reach was left alone, and
+deliberately takes no glass at all, which is what keeps the three apart.
+
+Glass is not a borrowed effect here. The company cleans glass, so a pane of it
+is the product rather than a trend, and every pane on both pages sits over a
+photograph so the blur actually has something to do.
 
 ## Files
 
 ```
 index.html                     gallery chooser, live scaled iframe previews
-direction-1-pressure.html      DAYLIGHT   light poster, sparse
-direction-2-altitude.html      REACH      dark cinematic, sticky stack
-direction-3-spec-sheet.html    STEEL      industrial, dense, machined plates
+direction-1-pressure.html      DAYLIGHT   light glass, full-screen photography
+direction-2-altitude.html      REACH      dark cinematic, sticky stack, no glass
+direction-3-spec-sheet.html    FACADE     smoked glass, split screen, dense
 assets/photos/                 15 real job photos (1400w + 760w WebP)
 assets/reels/                  3 real reel cover frames
 assets/logo.png                logo, keyed to transparent
@@ -78,44 +88,42 @@ Nothing on these pages is invented. Everything is traceable:
 
 ### Basic, DAYLIGHT `direction-1-pressure.html`
 
-Light off-white paper, ink type, one saturated blue used on big surfaces.
-Bricolage Grotesque over Instrument Sans. Density 2: this is a poster, not a
-website. The hero sets type on bare paper against a photograph that runs off the
-right edge of the viewport, and a paper plate laps across the boundary between
-them. Services are three full-width bands, not a row of cards.
+Light, airy, glass over full-screen photography. Bricolage Grotesque over
+Instrument Sans, brand blue, panes at 26px with pill buttons. Layout archetypes:
+**full-screen** hero and contact, **zig-zag** for the three services, and an
+**asymmetric bento** for the job index.
 
-**Depth device: offset colour planes.** A flat blue plane sits behind each major
-object, shifted down and right, so things stack. No blur, no glass, no glow.
+**Depth device: light glass in a tray, plus a Z-axis cascade.** Every pane is an
+outer tray holding an inner core whose radius is the tray's minus its padding,
+so the curves stay concentric. Two photo plates lap the hero pane's lower corner
+at opposing rotations, mirrored about the pane so the pair reads as composition
+rather than as one thing knocked askew.
 
-### Standard, STEEL `direction-3-spec-sheet.html`
+### Standard, FACADE `direction-3-spec-sheet.html`
 
-Painted steel, off-black, safety orange. Archivo Expanded over IBM Plex Sans.
-Density 7: heavy rules, tight grids, everything lines up. The services are a
-horizontal accordion of full-height photographs where one opens at a time. The
-job index is a deliberately uniform eight-cell grid, which is the opposite of
-Daylight's asymmetric mosaic.
+A glazed building at dusk. Deep slate-teal, warm amber, smoked glass. Syne over
+Outfit, panes at 18px. This is the **dense** one of the three. Layout
+archetypes: **split-screen** for the hero and the contact, **sticky split** for
+the services where the left photograph swaps as you scroll the right column
+(which makes it an **interactive** layout too), and **magazine masonry** for the
+job index, twelve photographs packed at their own heights.
 
-**Depth device: machined plates.** Every object has a lit top edge, a dark foot
-and a hard accent offset with no blur, so it reads as metal standing off the
-panel behind it. Review quotes sit in cores recessed below the plate face.
-
-**On the orange:** the accent is safety orange rather than the logo blue. That
-is a deliberate option. It is the complementary colour to the mark, it is what
-makes this direction read as different rather than as a recolour of the others,
-and the logo itself still carries the brand blue. One word and it becomes blue.
+**Depth device: smoked glass in a tray with a hard amber edge.** Same concentric
+tray-and-core construction as Daylight but inverted for a dark ground, and a 3px
+amber rule down the left of anything that matters.
 
 ### Premium, REACH `direction-2-altitude.html`
 
 Near-black, photography carries everything, brand blue is the single accent.
-Big Shoulders Display over Sora. Density 5. Built vertically because the
-business is about height: the three services are full-screen panels that pin and
-stack on top of one another as you scroll, in pure CSS `position: sticky`.
+Big Shoulders Display over Sora. Built vertically because the business is about
+height: the three services are full-screen panels that pin and stack on top of
+one another as you scroll, in pure CSS `position: sticky`. **No glass on this
+one**, which is what keeps it distinct from the other two.
 
 **Depth device: three physical planes.** A photograph at the back, one flat
 atmospheric wash over it, and a plate lifted above both and hung across the
 hero's bottom edge so it occludes what is under it. Reviews sit behind glass
-panes with a lit top edge, a dark foot and one reflection that sweeps on hover,
-which on a page about glass is the material the page is already made of.
+panes with a lit top edge, a dark foot and one reflection that sweeps on hover.
 
 ## Tiers
 
@@ -126,9 +134,9 @@ homepage, and Standard/Premium add the pages listed on the card.
 
 | tier | direction | why |
 |---|---|---|
-| **Basic**, get found | Daylight | The plainest and the calmest. Sparse, legible, nothing to work out. |
-| **Standard**, look established | Steel | Reads like a working trade with real equipment behind it. Dense and organised, which is what this tier sells. |
-| **Premium**, stand out | Reach | The most memorable: full-bleed photography, a sticky stack, glass panes. Literally the "stand out" brief. |
+| **Basic**, get found | Daylight | The brightest and the calmest. Big legible glass panes over the client's own photography. |
+| **Standard**, look established | Facade | Dense, dark, a lot of work on show. The split screen that follows what you are reading is the thing people remember. |
+| **Premium**, stand out | Reach | Full-bleed cinematic photography and a sticky stack. Literally the "stand out" brief. |
 
 Worth re-reading before changing this: pairing look to price means choosing a
 design also chooses a scope, and the cheap tier has to look plainer on purpose.
@@ -143,16 +151,17 @@ reviews, contact, footer. So the client compares the *look*, not the layout.
 **Share the order, never the components.** No cell below is reused across two
 directions; any new direction fills in a column before it ships.
 
-| section | Basic, Daylight | Standard, Steel | Premium, Reach |
+| section | Basic, Daylight | Standard, Facade | Premium, Reach |
 |---|---|---|---|
-| theme | light paper | painted steel | near black |
-| depth device | offset colour planes | machined plates, lit edge, hard offset | three planes, foreground occlusion |
-| hero | type left, photo bled off the right edge | dense split with a plate photo | full bleed photo, plate hung over the edge |
-| services | three full-width bands | photo accordion, one opens at a time | full-screen sticky stack |
-| work | asymmetric mosaic | uniform index grid, eight cells | drag-to-pan filmstrip |
-| reels | three equal blue plates | three equal steel plates | three equal ink plates |
-| reviews | paper plates over a blue plane | plate with a recessed core | glass panes with a reflection sweep |
-| contact | solid blue block | ink block with an orange rule | photograph with the number over it |
+| theme | light, warm neutral | deep slate-teal | near black |
+| glass | light frosted panes | smoked panes, amber edge | none, this one stays opaque |
+| depth device | tray and core, plus a Z-axis photo cascade | tray and core inverted, hard amber edge | three planes, foreground occlusion |
+| hero | full-screen photo, glass card, two lapping plates | split screen, pane crossing the seam | full bleed photo, plate hung over the edge |
+| services | zig-zag of three photographic bands | sticky split, photo swaps per service | full-screen sticky stack |
+| work | asymmetric bento, ten tiles | magazine masonry, twelve tiles | drag-to-pan filmstrip |
+| reels | three light glass plates | three smoked plates | three ink plates |
+| reviews | glass panes over a photo band | smoked panes with an amber edge | glass panes with a reflection sweep |
+| contact | full-screen photo, one big pane | split screen, bookending the hero | photograph with the number over it |
 
 ## Standing rules for this set
 
@@ -181,10 +190,28 @@ One accent per page, locked across every section, and one radius system per page
 (all three are zero).
 
 ```
-Daylight   paper #EDEEF0   ink #14181C   accent #1B54C8  (brand blue)
-Reach      ink   #0B0E11   paper #F4F6F8 accent #2E6FE0  (brand blue)
-Steel      steel #D3D5D2   ink #121413   accent #E24E12  (safety orange)
+Daylight   paper #EDF0F2   ink #101418    accent #1B54C8  (brand blue)
+Facade     bg    #0D1A21   paper #E9F1F4  accent #FFB020  (warm amber)
+Reach      ink   #0B0E11   paper #F4F6F8  accent #2E6FE0  (brand blue)
 ```
+
+### The glass is gradient-free
+
+The standing no-gradients rule and glassmorphism look like they conflict: the
+usual recipe leans on a diagonal white gradient for its highlight. They do not
+have to. Every fill here is one flat `rgba`, every lit edge is an
+`inset box-shadow`, and every rim is a 1px border. `backdrop-filter` is not a
+gradient. That reads as real glass and keeps the rule.
+
+Three more things that matter for it not to look cheap:
+
+- **Contrast floor.** Light panes are held at .62 to .74 white with a heavy
+  blur so ink type stays readable over any photograph behind it.
+- **`prefers-reduced-transparency`.** Every pane has a solid fallback.
+- **Blur budget.** Blur costs GPU on every repaint. It is on the panes and the
+  nav, never on a large scrolling container, and the grain stays on one fixed
+  `pointer-events:none` layer.
+
 
 ## The Instagram reels
 
