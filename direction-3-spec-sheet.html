@@ -64,11 +64,15 @@ body{
    NOT pre-blurred, deliberately. On a phone lock screen the wallpaper behind
    the glass is sharp and the tile is what frosts it. Blurring the photograph
    here and then running backdrop-filter over it blurs the same pixels twice,
-   and two blurs is mud. One blur, and it belongs to the pane. */
+   and two blurs is mud. One blur, and it belongs to the pane.
+   Brightness matters as much as sharpness. At .22 this was near black, and a
+   pane over near black is a dark rectangle however you tune the pane. A tint
+   only reads as glass if what is under it is bright enough to survive being
+   tinted. */
 body::before{
-  content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:url("assets/photos/arch-reflect.webp") center/cover no-repeat;
-  filter:saturate(1.25) brightness(.22);
+  content:'';position:fixed;inset:-25%;z-index:-2;pointer-events:none;
+  background:url("assets/photos/adobe-sky.webp") center/cover no-repeat;
+  filter:saturate(1.45) brightness(.48);
 }
 body::after{
   content:'';position:fixed;inset:0;z-index:95;pointer-events:none;opacity:.05;
@@ -79,6 +83,13 @@ h1,h2,h3{font-family:'Syne','Outfit',sans-serif;font-weight:800;line-height:.98;
 img{display:block;width:100%;height:auto}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1500px;margin:0 auto;padding-inline:var(--gut)}
+
+/* The ground is a real photograph at better than half brightness, which is what
+   makes the glass work, and which white type cannot sit on unaided. A wide soft
+   shadow is invisible at a glance and holds the contrast. Panes carry their own
+   backdrop, so anything inside one opts back out. */
+.sec-hd,.pull,.hero-copy,.contact-copy,footer{text-shadow:0 2px 10px rgba(2,10,14,.9),0 2px 34px rgba(2,10,14,.8)}
+.pane,.pane *,.btn,.fact,.slat{text-shadow:none}
 
 /* ── smoked glass: a dark tray holding a lighter core ─────────────────────
    The tray is thin and blurred, the core sits inside it with its own fill and
@@ -91,11 +102,12 @@ a{color:inherit;text-decoration:none}
    element off from the backdrop it is supposed to be sampling. */
 .pane{
   position:relative;padding:var(--tray);border-radius:var(--r);
-  background:rgba(13,26,33,.5);
-  backdrop-filter:blur(30px) saturate(175%);
-  -webkit-backdrop-filter:blur(30px) saturate(175%);
-  border:1px solid rgba(233,241,244,.15);
-  box-shadow:inset 0 1px 0 rgba(233,241,244,.24),
+  background:rgba(13,26,33,.44);
+  backdrop-filter:blur(26px) saturate(190%);
+  -webkit-backdrop-filter:blur(26px) saturate(190%);
+  border:1px solid rgba(233,241,244,.28);
+  box-shadow:inset 0 1px 0 rgba(233,241,244,.38),
+             inset 0 -1px 0 rgba(233,241,244,.1),
              0 1px 2px rgba(2,10,14,.4),
              0 16px 34px rgba(2,10,14,.4),
              0 48px 90px rgba(2,10,14,.44);
@@ -167,16 +179,19 @@ a{color:inherit;text-decoration:none}
 .hero-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 44%;
   animation:drift 30s ease-in-out infinite alternate}
 @keyframes drift{to{scale:1.08}}
-.hero-shot::after{content:'';position:absolute;inset:0;background:rgba(13,26,33,.3)}
+.hero-shot::after{content:'';position:absolute;inset:0;background:rgba(13,26,33,.22)}
 /* a pane lapping across the seam between the two halves */
 .seam{position:absolute;z-index:5;left:clamp(38%,42%,46%);bottom:clamp(28px,5vw,66px);
   width:clamp(200px,20vw,286px);padding:var(--tray)}
 .seam .core{padding:16px 18px}
 .seam b{display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.5rem,2.3vw,2rem);line-height:1;color:var(--acc)}
 .seam span{display:block;margin-top:6px;font-size:13px;color:var(--mute)}
-/* transparent on purpose: the fixed ground shows through here, which is what
-   the panes on this side are refracting */
-.hero-copy{display:flex;flex-direction:column;justify-content:center;gap:clamp(16px,2vw,26px);
+/* A flat film over the ground, not a lid on it. The ground has to be bright
+   enough for the glass elsewhere on the page to read, and the headline cannot
+   sit on a sunlit stucco wall at that brightness. The film is part of what the
+   pills here sample, so they still frost a real picture. */
+.hero-copy{background:rgba(13,26,33,.42);
+  display:flex;flex-direction:column;justify-content:center;gap:clamp(16px,2vw,26px);
   padding:clamp(96px,10vw,132px) var(--gut) clamp(40px,5vw,70px) clamp(34px,5vw,84px)}
 .hero-copy h1{font-size:clamp(2rem,3.5vw,3.3rem);max-width:19ch}
 .hero-copy h1 i{font-style:normal;color:var(--acc)}
@@ -188,11 +203,11 @@ a{color:inherit;text-decoration:none}
 .facts{display:flex;flex-wrap:wrap;gap:9px}
 .fact{
   display:inline-flex;align-items:baseline;gap:9px;padding:11px 19px;border-radius:999px;
-  background:rgba(13,26,33,.5);
-  backdrop-filter:blur(28px) saturate(170%);
-  -webkit-backdrop-filter:blur(28px) saturate(170%);
-  border:1px solid rgba(233,241,244,.15);
-  box-shadow:inset 0 1px 0 rgba(233,241,244,.24),0 12px 28px rgba(2,10,14,.4);
+  background:rgba(13,26,33,.44);
+  backdrop-filter:blur(24px) saturate(190%);
+  -webkit-backdrop-filter:blur(24px) saturate(190%);
+  border:1px solid rgba(233,241,244,.28);
+  box-shadow:inset 0 1px 0 rgba(233,241,244,.38),0 12px 28px rgba(2,10,14,.4);
   transition:background .3s var(--ease),translate .3s var(--ease);
 }
 .fact:hover{background:rgba(233,241,244,.12);translate:0 -2px}
@@ -320,7 +335,8 @@ a{color:inherit;text-decoration:none}
 .contact-shot{position:relative;overflow:hidden}
 .contact-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
 .contact-shot::after{content:'';position:absolute;inset:0;background:rgba(13,26,33,.34)}
-.contact-copy{padding:clamp(44px,6vw,96px) var(--gut) clamp(44px,6vw,96px) clamp(30px,4.4vw,70px);
+.contact-copy{background:rgba(13,26,33,.42);
+  padding:clamp(44px,6vw,96px) var(--gut) clamp(44px,6vw,96px) clamp(30px,4.4vw,70px);
   display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,2.2vw,28px)}
 .contact h2{font-size:clamp(1.9rem,3.6vw,3.3rem);max-width:13ch}
 .bignum{display:block;font-family:'Syne',sans-serif;font-weight:800;

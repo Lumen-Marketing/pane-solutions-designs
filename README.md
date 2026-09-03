@@ -93,7 +93,11 @@ Instrument Sans, brand blue, panes at 26px with pill buttons. Layout archetypes:
 **full-screen** hero and contact, **zig-zag** for the three services, and an
 **asymmetric bento** for the job index.
 
-**Depth device: one glass slab, plus a Z-axis cascade.** Two photo plates lap
+**Depth device: one glass slab, plus a Z-axis cascade.** The pane is a 48%
+white tint with `brightness(1.5)` on its `backdrop-filter`, which washes the
+photograph underneath toward white far enough for dark type to sit on it while
+the picture still shows through. An opaque white card is not glass.
+ Two photo plates lap
 the hero pane's lower corner
 at opposing rotations, mirrored about the pane so the pair reads as composition
 rather than as one thing knocked askew.
@@ -133,8 +137,8 @@ translucent fill, heavy blur, one bright hairline rim, one lit top edge.
 **A pane needs something behind it.** The first version of this page put glass
 on a flat dark section and it read as a bordered rectangle, because blurring a
 flat colour returns that same flat colour. The page now carries a **fixed
-photographic ground**: one real photograph, **sharp**, saturated up and pushed
-to about a fifth brightness, sitting behind everything. Every pane on the page has
+photographic ground**: one real photograph, **sharp**, saturated up and held at
+just under half brightness, sitting behind everything. Every pane on the page has
 real hue and luminance variation to refract. It is a photograph, not a gradient,
 so the no-ramps rule still holds. Two traps that cost time:
 
@@ -147,8 +151,20 @@ so the no-ramps rule still holds. Two traps that cost time:
   wallpaper behind the glass is sharp, and the tile is what frosts it. Blurring
   the photograph and then running `backdrop-filter` over it blurs the same
   pixels twice, and two blurs is mud. It went 46px, then 22px, then none, and
-  none is the one that reads as glass. Darkness, not blur, is what keeps the
-  type legible: `brightness(.22)` with no blur at all.
+  none is the one that reads as glass.
+- **A tint only reads as glass if what is under it is bright enough to survive
+  being tinted.** The ground went to `brightness(.22)` to keep type legible and
+  every pane immediately went back to looking like a dark rectangle: dim picture
+  times dark film is a rectangle, and no amount of rim or shadow fixes it. The
+  ground sits at `.48` now and the panes are a `.44` tint with a heavy blur and
+  no brightness trick in them, which is what the reference actually does.
+- **Choose the ground frame for even luminance, not for subject.** The first two
+  candidates each had a dark mass right where the cards land, so the cards went
+  dark wherever they sat. `adobe-sky` is bright corner to corner.
+- Type that sits loose on the ground rather than on a pane needs a wide soft
+  `text-shadow`, and the two copy halves of the split screens carry a flat
+  `rgba` film. The film is part of what the pills on top of it sample, so they
+  still frost a real picture.
 
 ### Premium, REACH `direction-2-altitude.html`
 
