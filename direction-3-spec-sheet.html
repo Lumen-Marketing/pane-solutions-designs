@@ -33,7 +33,7 @@
    ========================================================================= */
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--bg)}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
 :root{
@@ -52,10 +52,19 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 }
 
 body{
-  background:var(--bg);color:var(--paper);
+  background:transparent;color:var(--paper);
   font-family:'Outfit',ui-sans-serif,sans-serif;font-weight:300;
   font-size:clamp(14.5px,.98vw,16px);line-height:1.6;
   -webkit-font-smoothing:antialiased;overflow-x:clip;
+}
+/* THE GROUND. A real photograph, blurred hard and pushed dark, fixed behind
+   everything. This is what makes the glass on this page read as glass: a pane
+   over a flat colour returns that same flat colour no matter how much you blur
+   it. Scaled past the edges so the blur has no bleed at the borders. */
+body::before{
+  content:'';position:fixed;inset:-10%;z-index:-2;pointer-events:none;
+  background:url("assets/photos/arch-reflect.webp") center/cover no-repeat;
+  filter:blur(46px) saturate(1.9) brightness(.52);
 }
 body::after{
   content:'';position:fixed;inset:0;z-index:95;pointer-events:none;opacity:.05;
@@ -71,29 +80,30 @@ a{color:inherit;text-decoration:none}
    The tray is thin and blurred, the core sits inside it with its own fill and
    its own lit rim, and the inner radius is the outer minus the tray padding so
    the curves stay concentric. Shadow is three stops, tinted to the page. */
+/* Same recipe as the nav island, which is the one that reads right: a dark
+   translucent fill, a heavy blur, a bright hairline rim and one lit top edge.
+   No isolation:isolate here. It opens a stacking context that cuts the element
+   off from the backdrop it is supposed to be sampling. */
 .pane{
-  position:relative;isolation:isolate;padding:var(--tray);border-radius:var(--r);
-  background:rgba(233,241,244,.055);
-  backdrop-filter:blur(26px) saturate(150%);
-  -webkit-backdrop-filter:blur(26px) saturate(150%);
-  border:1px solid rgba(233,241,244,.1);
-  box-shadow:inset 0 1px 0 rgba(233,241,244,.22),
-             0 1px 2px rgba(2,10,14,.5),
-             0 14px 30px rgba(2,10,14,.45),
-             0 44px 84px rgba(2,10,14,.5);
+  position:relative;padding:var(--tray);border-radius:var(--r);
+  background:rgba(13,26,33,.5);
+  backdrop-filter:blur(30px) saturate(175%);
+  -webkit-backdrop-filter:blur(30px) saturate(175%);
+  border:1px solid rgba(233,241,244,.15);
+  box-shadow:inset 0 1px 0 rgba(233,241,244,.24),
+             0 1px 2px rgba(2,10,14,.4),
+             0 16px 34px rgba(2,10,14,.4),
+             0 48px 90px rgba(2,10,14,.44);
 }
 .core{
   position:relative;height:100%;border-radius:calc(var(--r) - var(--tray));
-  background:rgba(18,38,48,.62);
-  border:1px solid rgba(233,241,244,.08);
-  box-shadow:inset 0 1px 0 rgba(233,241,244,.16),
-             inset 0 -1px 0 rgba(2,10,14,.5);
+  background:transparent;
+  border:1px solid rgba(233,241,244,.1);
+  box-shadow:inset 0 1px 0 rgba(233,241,244,.18);
 }
-/* the amber edge. A hard 3px rule down the left of anything that matters. */
-.edge>.core{border-left:3px solid var(--acc)}
 @media(prefers-reduced-transparency:reduce){
   .pane{background:#16292F;backdrop-filter:none;-webkit-backdrop-filter:none}
-  .core{background:#12242E}
+  .core{background:#1A343F}
 }
 
 .btn{
@@ -159,20 +169,33 @@ a{color:inherit;text-decoration:none}
 .seam{position:absolute;z-index:5;left:clamp(38%,42%,46%);bottom:clamp(28px,5vw,66px);
   width:clamp(200px,20vw,286px);padding:var(--tray)}
 .seam .core{padding:16px 18px}
-.seam b{display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.5rem,2.3vw,2rem);line-height:1}
+.seam b{display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.5rem,2.3vw,2rem);line-height:1;color:var(--acc)}
 .seam span{display:block;margin-top:6px;font-size:13px;color:var(--mute)}
+/* transparent on purpose: the fixed ground shows through here, which is what
+   the panes on this side are refracting */
 .hero-copy{display:flex;flex-direction:column;justify-content:center;gap:clamp(16px,2vw,26px);
   padding:clamp(96px,10vw,132px) var(--gut) clamp(40px,5vw,70px) clamp(34px,5vw,84px)}
 .hero-copy h1{font-size:clamp(2rem,3.5vw,3.3rem);max-width:19ch}
 .hero-copy h1 i{font-style:normal;color:var(--acc)}
 .hero-copy>p{max-width:38ch;font-size:clamp(1rem,1.1vw,1.12rem);color:#C3D3DA}
 .hero-acts{display:flex;gap:12px;flex-wrap:wrap}
-/* the dense fact stack. This is the page that packs in. */
-.facts{display:grid;gap:8px}
-.fact{padding:var(--tray)}
-.fact .core{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:13px 17px}
-.fact b{font-family:'Syne',sans-serif;font-weight:700;font-size:15px}
-.fact span{color:var(--mute);font-size:13.5px;text-align:right}
+/* Glass pills, same material and same shape as the nav island. Four stacked
+   bordered rows with a coloured bar down the side read as a settings screen,
+   not as a hero. */
+.facts{display:flex;flex-wrap:wrap;gap:9px}
+.fact{
+  display:inline-flex;align-items:baseline;gap:9px;padding:11px 19px;border-radius:999px;
+  background:rgba(13,26,33,.5);
+  backdrop-filter:blur(28px) saturate(170%);
+  -webkit-backdrop-filter:blur(28px) saturate(170%);
+  border:1px solid rgba(233,241,244,.15);
+  box-shadow:inset 0 1px 0 rgba(233,241,244,.24),0 12px 28px rgba(2,10,14,.4);
+  transition:background .3s var(--ease),translate .3s var(--ease);
+}
+.fact:hover{background:rgba(233,241,244,.12);translate:0 -2px}
+.fact b{font-weight:500;font-size:14px}
+.fact span{color:var(--mute);font-size:13px}
+@media(prefers-reduced-transparency:reduce){.fact{background:#16292F;backdrop-filter:none}}
 
 /* ── services: sticky split, the photograph swaps as you scroll ────────────
    The motion is motivated: each service is a different job on a different
@@ -218,10 +241,10 @@ a{color:inherit;text-decoration:none}
 .mason figcaption{
   position:absolute;left:9px;right:9px;bottom:9px;padding:9px 13px;border-radius:9px;
   font-size:12.5px;font-weight:500;color:var(--paper);
-  background:rgba(13,26,33,.62);
-  backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);
-  border:1px solid rgba(233,241,244,.16);
-  box-shadow:inset 0 1px 0 rgba(233,241,244,.2);
+  background:rgba(13,26,33,.5);
+  backdrop-filter:blur(24px) saturate(170%);-webkit-backdrop-filter:blur(24px) saturate(170%);
+  border:1px solid rgba(233,241,244,.18);
+  box-shadow:inset 0 1px 0 rgba(233,241,244,.26);
 }
 @media(prefers-reduced-transparency:reduce){.mason figcaption{background:#0D1A21;backdrop-filter:none}}
 
@@ -229,7 +252,7 @@ a{color:inherit;text-decoration:none}
 .reels{position:relative;padding-block:clamp(60px,8vw,116px);overflow:hidden}
 .reels-bg{position:absolute;inset:0;z-index:0}
 .reels-bg img{width:100%;height:100%;object-fit:cover}
-.reels-bg::after{content:'';position:absolute;inset:0;background:rgba(13,26,33,.84)}
+.reels-bg::after{content:'';position:absolute;inset:0;background:rgba(13,26,33,.66)}
 .reels>.wrap{position:relative;z-index:2}
 .panes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,22px);align-items:stretch}
 .pane-reel .core{display:flex;padding:clamp(9px,1vw,13px)}
@@ -352,7 +375,7 @@ footer{padding-block:26px;display:flex;justify-content:space-between;gap:18px;fl
   </div>
   <!-- sits outside .hero-shot on purpose: that element has to clip for the
        drift animation, and this pane needs to cross the seam -->
-  <div class="seam pane edge">
+  <div class="seam pane">
     <div class="core"><b>5.0</b><span>Rated on Google, 13 reviews</span></div>
   </div>
   <div class="hero-copy">
@@ -363,10 +386,10 @@ footer{padding-block:26px;display:flex;justify-content:space-between;gap:18px;fl
       <a class="btn-glass" href="#work">See the work</a>
     </div>
     <div class="facts">
-      <div class="fact pane edge"><div class="core"><b>Estimates are free</b><span>No charge to come and look</span></div></div>
-      <div class="fact pane edge"><div class="core"><b>Homes and businesses</b><span>One visit or on a schedule</span></div></div>
-      <div class="fact pane edge"><div class="core"><b>Water-fed pole reach</b><span>Second storey with no ladder marks</span></div></div>
-      <div class="fact pane edge"><div class="core"><b>Phoenix, Arizona</b><span>Established 2023</span></div></div>
+      <span class="fact"><b>Free estimates</b></span>
+      <span class="fact"><b>Homes and businesses</b></span>
+      <span class="fact"><b>Water-fed pole reach</b></span>
+      <span class="fact"><b>Phoenix, Arizona</b><span>since 2023</span></span>
     </div>
   </div>
 </header>
@@ -382,7 +405,7 @@ footer{padding-block:26px;display:flex;justify-content:space-between;gap:18px;fl
   <div class="steps">
 
     <article class="step" data-i="0">
-      <div class="step-card pane edge">
+      <div class="step-card pane">
         <div class="core">
           <h2>Window cleaning</h2>
           <p>Interior and exterior glass, tracks, sills and screens. Purified water through a fed pole reaches second storey panes with no ladder marks on the wall and no spotting once it dries.</p>
@@ -397,7 +420,7 @@ footer{padding-block:26px;display:flex;justify-content:space-between;gap:18px;fl
     </article>
 
     <article class="step" data-i="1">
-      <div class="step-card pane edge">
+      <div class="step-card pane">
         <div class="core">
           <h2>Pressure washing</h2>
           <p>Driveways, walkways, patios, pool decks and block walls. Desert dust and hard water staining come off without chewing up the surface underneath.</p>
@@ -412,7 +435,7 @@ footer{padding-block:26px;display:flex;justify-content:space-between;gap:18px;fl
     </article>
 
     <article class="step" data-i="2">
-      <div class="step-card pane edge">
+      <div class="step-card pane">
         <div class="core">
           <h2>Gutter cleaning</h2>
           <p>Debris cleared, downspouts flushed, and the run checked for sag and separation while we are up there. Monsoon season is a bad time to find out a gutter is packed.</p>
@@ -501,32 +524,32 @@ footer{padding-block:26px;display:flex;justify-content:space-between;gap:18px;fl
     </div>
   </div>
   <div class="rev-grid">
-    <article class="rev pane edge rv"><div class="core">
+    <article class="rev pane rv"><div class="core">
       <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
       <p>&ldquo;My windows have never looked better. Completely streak free and crystal clear.&rdquo;</p>
       <span class="who">Chris</span><span class="src">Google review</span>
     </div></article>
-    <article class="rev pane edge rv" data-d="1"><div class="core">
+    <article class="rev pane rv" data-d="1"><div class="core">
       <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
       <p>&ldquo;From start to finish their professionalism and attention to detail were outstanding.&rdquo;</p>
       <span class="who">Aminata TC Demaih</span><span class="src">Google review</span>
     </div></article>
-    <article class="rev pane edge rv" data-d="2"><div class="core">
+    <article class="rev pane rv" data-d="2"><div class="core">
       <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
       <p>&ldquo;They met with me before and after to ensure I was pleased with their work.&rdquo;</p>
       <span class="who">Katherine Sarbacker</span><span class="src">Google review</span>
     </div></article>
-    <article class="rev pane edge rv"><div class="core">
+    <article class="rev pane rv"><div class="core">
       <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
       <p>&ldquo;Answer and his team did a wonderful job doing my windows. Will be using Pane Solutions yearly.&rdquo;</p>
       <span class="who">Gee Nayou</span><span class="src">Google review</span>
     </div></article>
-    <article class="rev pane edge rv" data-d="1"><div class="core">
+    <article class="rev pane rv" data-d="1"><div class="core">
       <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
       <p>&ldquo;I took a chance and they did an incredible job, on the spot. Great work, quality service, solid price.&rdquo;</p>
       <span class="who">Michael Morford</span><span class="src">Google review</span>
     </div></article>
-    <article class="rev pane edge rv" data-d="2"><div class="core">
+    <article class="rev pane rv" data-d="2"><div class="core">
       <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
       <p>&ldquo;All of my demands were addressed with attention to detail by the staff.&rdquo;</p>
       <span class="who">Promise Boley</span><span class="src">Google review</span>

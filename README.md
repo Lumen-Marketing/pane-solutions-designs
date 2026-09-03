@@ -108,9 +108,24 @@ the services where the left photograph swaps as you scroll the right column
 (which makes it an **interactive** layout too), and **magazine masonry** for the
 job index, twelve photographs packed at their own heights.
 
-**Depth device: smoked glass in a tray with a hard amber edge.** Same concentric
-tray-and-core construction as Daylight but inverted for a dark ground, and a 3px
-amber rule down the left of anything that matters.
+**Depth device: smoked glass in a tray.** Same concentric tray-and-core
+construction as Daylight, inverted for a dark ground, in the nav island's exact
+material: dark translucent fill, heavy blur, a bright hairline rim, one lit top
+edge.
+
+**A pane needs something behind it.** The first version of this page put glass
+on a flat dark section and it read as a bordered rectangle, because blurring a
+flat colour returns that same flat colour. The page now carries a **fixed
+photographic ground**: one real photograph, blurred to 46px, saturated up and
+pushed to half brightness, sitting behind everything. Every pane on the page has
+real hue and luminance variation to refract. It is a photograph, not a gradient,
+so the no-ramps rule still holds. Two traps that cost time:
+
+- `isolation: isolate` on the pane opens a stacking context and cuts the element
+  off from the backdrop it is supposed to be sampling. Remove it.
+- The first ground was too dark and too heavily blurred, and collapsed to a flat
+  brown, which is the same problem again with extra steps. Pick a frame with
+  sky in it and keep brightness around .5.
 
 ### Premium, REACH `direction-2-altitude.html`
 
@@ -154,8 +169,8 @@ directions; any new direction fills in a column before it ships.
 | section | Basic, Daylight | Standard, Facade | Premium, Reach |
 |---|---|---|---|
 | theme | light, warm neutral | deep slate-teal | near black |
-| glass | light frosted panes | smoked panes, amber edge | none, this one stays opaque |
-| depth device | tray and core, plus a Z-axis photo cascade | tray and core inverted, hard amber edge | three planes, foreground occlusion |
+| glass | light frosted panes over photos | smoked panes over a fixed photographic ground | none, this one stays opaque |
+| depth device | tray and core, plus a Z-axis photo cascade | tray and core inverted, over a fixed blurred ground | three planes, foreground occlusion |
 | hero | full-screen photo, glass card, two lapping plates | split screen, pane crossing the seam | full bleed photo, plate hung over the edge |
 | services | zig-zag of three photographic bands | sticky split, photo swaps per service | full-screen sticky stack |
 | work | asymmetric bento, ten tiles | magazine masonry, twelve tiles | drag-to-pan filmstrip |
@@ -191,7 +206,8 @@ One accent per page, locked across every section, and one radius system per page
 
 ```
 Daylight   paper #EDF0F2   ink #101418    accent #1B54C8  (brand blue)
-Facade     bg    #0D1A21   paper #E9F1F4  accent #FFB020  (warm amber)
+Facade     bg    #0D1A21   paper #E9F1F4  accent #FFB020  (warm amber, on the
+                                                    button and the stars only)
 Reach      ink   #0B0E11   paper #F4F6F8  accent #2E6FE0  (brand blue)
 ```
 
