@@ -58,16 +58,17 @@ body{
   font-size:clamp(14.5px,.98vw,16px);line-height:1.6;
   -webkit-font-smoothing:antialiased;overflow-x:clip;
 }
-/* THE GROUND. A real photograph, blurred hard and pushed dark, fixed behind
-   everything. This is what makes the glass on this page read as glass: a pane
-   over a flat colour returns that same flat colour no matter how much you blur
-   it. Kept at 22px: past about 40 the photograph stops being a photograph and
-   turns into a wash, and the glass has nothing recognisable left to refract.
-   Scaled past the edges so the blur has no bleed at the borders. */
+/* THE GROUND. A real photograph, SHARP, pushed dark, fixed behind everything.
+   This is what makes the glass on this page read as glass: a pane over a flat
+   colour returns that same flat colour no matter how much you blur it.
+   NOT pre-blurred, deliberately. On a phone lock screen the wallpaper behind
+   the glass is sharp and the tile is what frosts it. Blurring the photograph
+   here and then running backdrop-filter over it blurs the same pixels twice,
+   and two blurs is mud. One blur, and it belongs to the pane. */
 body::before{
-  content:'';position:fixed;inset:-10%;z-index:-2;pointer-events:none;
+  content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;
   background:url("assets/photos/arch-reflect.webp") center/cover no-repeat;
-  filter:blur(22px) saturate(1.5) brightness(.46);
+  filter:saturate(1.25) brightness(.22);
 }
 body::after{
   content:'';position:fixed;inset:0;z-index:95;pointer-events:none;opacity:.05;
@@ -156,9 +157,12 @@ a{color:inherit;text-decoration:none}
 .drawer a{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,9vw,3.4rem);line-height:1.15}
 .drawer .x{position:absolute;top:24px;right:var(--gut);background:none;border:0;font:inherit;color:var(--paper);cursor:pointer}
 
-/* ── hero: SPLIT-SCREEN ────────────────────────────────────────────────────
-   Photograph one side, a dense stack of panes the other. */
-.hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);min-height:100svh;align-items:stretch}
+/* ── hero: SPLIT-SCREEN, photograph LEFT ──────────────────────────────────
+   Photograph one side, a dense stack of panes the other. Three split screens
+   run down this page and they alternate: hero left, services right, contact
+   left. Each photo half is exactly half the width and one viewport tall, so
+   they match each other going down. */
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:100svh;align-items:stretch}
 .hero-shot{position:relative;overflow:hidden}
 .hero-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 44%;
   animation:drift 30s ease-in-out infinite alternate}
@@ -200,13 +204,16 @@ a{color:inherit;text-decoration:none}
    The motion is motivated: each service is a different job on a different
    property, and the left half shows the one you are reading about. */
 .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);position:relative}
-.split-media{position:sticky;top:0;height:100svh;overflow:hidden}
+/* photograph RIGHT here, against the hero's left. order, not source order, so
+   a phone still gets the photograph before the words it belongs to. */
+.split-media{order:2;position:sticky;top:0;height:100svh;overflow:hidden}
+.steps{order:1}
 .split-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   opacity:0;scale:1.06;transition:opacity .8s var(--ease),scale 1.4s var(--ease)}
 .split-media img.on{opacity:1;scale:1}
 .split-media::after{content:'';position:absolute;inset:0;background:rgba(13,26,33,.34);pointer-events:none}
 .steps{display:flex;flex-direction:column}
-.step{min-height:100svh;display:flex;align-items:center;padding:clamp(40px,6vw,90px) var(--gut) clamp(40px,6vw,90px) clamp(30px,4.4vw,70px)}
+.step{min-height:100svh;display:flex;align-items:center;padding:clamp(40px,6vw,90px) clamp(30px,4.4vw,70px) clamp(40px,6vw,90px) var(--gut)}
 .step-card{width:100%;padding:var(--tray)}
 .step-card .core{padding:clamp(24px,2.8vw,40px)}
 .step-card h2{font-size:clamp(1.7rem,3vw,2.9rem);max-width:12ch}
@@ -306,9 +313,11 @@ a{color:inherit;text-decoration:none}
 .rev .src{font-size:12.5px}
 
 /* ── contact: SPLIT-SCREEN again, closing the bookend ─────────────────────*/
+/* photograph LEFT again, closing the alternation, and the same size as the
+   hero's so the page is symmetrical top to bottom. */
 .contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;
-  border-top:1px solid rgba(233,241,244,.12)}
-.contact-shot{position:relative;overflow:hidden;min-height:clamp(320px,46svh,540px)}
+  min-height:100svh;border-top:1px solid rgba(233,241,244,.12)}
+.contact-shot{position:relative;overflow:hidden}
 .contact-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 46%}
 .contact-shot::after{content:'';position:absolute;inset:0;background:rgba(13,26,33,.34)}
 .contact-copy{padding:clamp(44px,6vw,96px) var(--gut) clamp(44px,6vw,96px) clamp(30px,4.4vw,70px);
@@ -362,7 +371,8 @@ footer{padding-block:26px;display:flex;justify-content:space-between;gap:18px;fl
   .hero-shot{min-height:58svh}
   .seam{left:var(--gut);right:var(--gut);bottom:auto;top:calc(58svh - 46px);width:auto}
   .split{grid-template-columns:1fr}
-  .split-media{position:relative;height:52svh}
+  .split-media{order:0;position:relative;height:52svh}
+  .steps{order:0}
   .split-media img{opacity:1;scale:1}
   .split-media img:not(.on){display:none}
   .step{min-height:0;padding:26px var(--gut)}

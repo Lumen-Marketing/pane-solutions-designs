@@ -108,9 +108,16 @@ live on the pane and the core carries nothing but its padding.
 A glazed building at dusk. Deep slate-teal, warm amber, smoked glass. Syne over
 Outfit, panes at 18px. This is the **dense** one of the three. Layout
 archetypes: **split-screen** for the hero and the contact, **sticky split** for
-the services where the left photograph swaps as you scroll the right column
+the services where the photograph swaps as you scroll the column beside it
 (which makes it an **interactive** layout too), and a **pane gallery** for the
 job index.
+
+**The three splits alternate and match.** Hero photograph left, services
+photograph right, contact photograph left. Each photo half is exactly half the
+width and one viewport tall, so the page reads as symmetrical top to bottom
+rather than as one long left-hand column of pictures. The services flip is
+`order`, not source order, so a phone still gets the photograph before the words
+it belongs to.
 
 **The pane gallery.** Twelve jobs held as twelve upright panes in a row. Point
 at one, tab to one or tap one and it opens to roughly three quarters of the
@@ -126,8 +133,8 @@ translucent fill, heavy blur, one bright hairline rim, one lit top edge.
 **A pane needs something behind it.** The first version of this page put glass
 on a flat dark section and it read as a bordered rectangle, because blurring a
 flat colour returns that same flat colour. The page now carries a **fixed
-photographic ground**: one real photograph, blurred to 22px, saturated up and
-pushed to just under half brightness, sitting behind everything. Every pane on the page has
+photographic ground**: one real photograph, **sharp**, saturated up and pushed
+to about a fifth brightness, sitting behind everything. Every pane on the page has
 real hue and luminance variation to refract. It is a photograph, not a gradient,
 so the no-ramps rule still holds. Two traps that cost time:
 
@@ -136,9 +143,12 @@ so the no-ramps rule still holds. Two traps that cost time:
 - The first ground was too dark and too heavily blurred, and collapsed to a flat
   brown, which is the same problem again with extra steps. Pick a frame with
   sky in it and keep brightness around .5.
-- Blur is a budget, not a dial to max out. At 46px the photograph stopped being
-  a photograph and the page read as a brown wash. 22px keeps it recognisable,
-  which is the whole point of putting it there.
+- **Do not pre-blur the ground at all.** Look at a phone lock screen: the
+  wallpaper behind the glass is sharp, and the tile is what frosts it. Blurring
+  the photograph and then running `backdrop-filter` over it blurs the same
+  pixels twice, and two blurs is mud. It went 46px, then 22px, then none, and
+  none is the one that reads as glass. Darkness, not blur, is what keeps the
+  type legible: `brightness(.22)` with no blur at all.
 
 ### Premium, REACH `direction-2-altitude.html`
 
