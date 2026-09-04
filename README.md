@@ -217,6 +217,66 @@ directions; any new direction fills in a column before it ships.
 | reviews | glass panes over a photo band | smoked panes with an amber edge | glass panes with a reflection sweep |
 | contact | full-screen photo, one big pane | split screen, bookending the hero | photograph with the number over it |
 
+## Grounds: the rule the whole set now follows
+
+Flat colour was the complaint, and "add texture everywhere" would have been the
+wrong answer. Every section on every page is one of three kinds, and no page
+uses one kind more than about twice in a row.
+
+| kind | what it is | when |
+|---|---|---|
+| **IMAGE** | a real client photograph under one flat veil | when the section has no photographs of its own |
+| **PLAIN** | flat colour, nothing on it | when the section's own content is already busy. The bento of ten photographs does not need a patterned ground behind it |
+| **COLOUR + TEXTURE** | a block of the accent with a real photograph laid into it, greyscaled and held low | once per page, as the one place the page raises its voice |
+
+That third one is not decoration. **A pane of glass over a flat colour is a
+rectangle**, so any section carrying glass cards needs either a photograph or a
+colour block with a photograph in it. A 4 percent SVG pattern is not enough:
+blur turns fine texture into a flat field, which is the same problem again.
+Texture gives a plain section tooth; only large scale variation makes glass read.
+
+The per page rhythm:
+
+| | Daylight | Facade | Reach |
+|---|---|---|---|
+| hero | image | image, over the fixed ground | image |
+| services | image bands | image, sticky split | image, sticky panels |
+| work | **plain** | fixed ground | **plain** with a hairline rake |
+| reels | **colour block**, brand blue | fixed ground | image |
+| reviews | plain with a dot field | fixed ground | **colour block**, deep blue |
+| contact | image | image | image |
+
+Facade is the exception on purpose: it carries one fixed photograph behind the
+entire document, which is its whole depth device, so it does not need a
+per section rhythm.
+
+Each direction gets its own texture so they cannot be confused: a soft **dot
+field** on Daylight, a hairline **rake** on Reach, and the fixed photograph on
+Facade. Both are SVG data URIs, never `repeating-linear-gradient`, because the
+no-ramps rule on this set is absolute.
+
+## Glass, per direction
+
+The same physics three times with a different edge each time, so the set does
+not collapse into one look:
+
+- **Daylight**: soft cornered, light. `rgba(255,255,255,.48)` with
+  `brightness(1.5)` on the `backdrop-filter`, which washes the photograph
+  underneath toward white far enough for dark type to sit on it.
+- **Facade**: soft cornered, smoked. A `.44` dark tint over the fixed ground.
+- **Reach**: **square cornered**, with a lit top rule and a dark foot so it
+  reads as a bevelled sheet rather than a rounded chip.
+
+## The chooser
+
+`index.html` was the last thing still in the old language: cyan, Space Mono
+chips, and two `linear-gradient` grids in the background. Rebuilt on the same
+material as the pages it presents. One family, Archivo, in two roles, because
+each direction owns a type pairing and the chooser cannot borrow one without
+looking like a fourth entry in its own list. Live previews are unchanged: a
+full size iframe scaled with a transform, so what you see is the real page at a
+real viewport width.
+
 ## Standing rules for this set
 
 These are constraints the client set, not preferences. Breaking one is a

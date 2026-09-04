@@ -8,214 +8,248 @@
 <link rel="icon" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&display=swap" rel="stylesheet">
 <style>
+/* ===========================================================================
+   PANE SOLUTIONS, the chooser.
+
+   Rebuilt to the same material language as the three directions it presents,
+   because a gallery in cyan and monospace was arguing with everything inside
+   it. Same rules apply here as apply there: one accent, the client's own blue;
+   zero gradients; a real photograph as the ground so the glass has something
+   to refract; and no numbered labels, mono chips or scroll cues anywhere.
+
+   One family, Archivo, in two roles. The three directions each own a type
+   pairing, so the chooser cannot borrow any of them without looking like a
+   fourth entry in its own list.
+   ======================================================================== */
 :root{
-  --ink:#06080A; --steel-950:#0A0E11; --steel-900:#10151A; --steel-800:#171E24;
-  --steel-700:#212A32; --steel-600:#2E3941; --steel-400:#6E7C87; --steel-300:#97A4AE;
-  --paper:#E9EFF3;
-  --cy:#2FD8DC; --az:#40A3D4; --bl:#567CD3;
-  /* flat accent: no ramps anywhere in this set */
-  --acc:var(--cy);
+  --ink:#090C0F;
+  --ink-2:#111820;
+  --paper:#E9EEF2;
+  --mute:#9BA9B5;
+  --line:rgba(233,238,242,.14);
+  --blue:#2E6FE0;        /* the client's blue. The only accent on this page. */
+  --blue-d:#1E51AC;
   --gut:clamp(18px,4vw,56px);
-  --ease:cubic-bezier(.19,1,.22,1);
+  --ease:cubic-bezier(.16,1,.3,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--ink);color:var(--paper);font-family:'Archivo',system-ui,sans-serif;
-  line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
+html{background:var(--ink);-webkit-text-size-adjust:100%}
+body{
+  background:transparent;color:var(--paper);
+  font-family:'Archivo',system-ui,sans-serif;font-weight:400;
+  font-size:15.5px;line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:clip;
+}
+/* THE GROUND. Sharp, dark, and real, exactly as on the directions themselves:
+   a pane over a flat colour is a rectangle, and a pane over a pre-blurred
+   photograph is mud. The photograph stays in focus and the glass does the
+   blurring. */
+body::before{
+  content:'';position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:url("assets/photos/glass-corner.webp") center/cover no-repeat;
+  filter:saturate(1.3) brightness(.34);
+}
+body::after{
+  content:'';position:fixed;inset:0;z-index:95;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
-::selection{background:var(--cy);color:var(--ink)}
-.grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:linear-gradient(rgba(47,216,220,.05) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(47,216,220,.05) 1px,transparent 1px);
-  background-size:80px 80px;
-  -webkit-mask-image:radial-gradient(130% 80% at 50% 0%,#000 15%,transparent 72%);
-  mask-image:radial-gradient(130% 80% at 50% 0%,#000 15%,transparent 72%)}
+::selection{background:var(--blue);color:#fff}
+h1,h2{font-weight:800;letter-spacing:-.03em;line-height:.92;font-stretch:112%}
+
 .wrap{max-width:1680px;margin-inline:auto;padding-inline:var(--gut);position:relative;z-index:2}
-.mono{font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.18em;font-size:10.5px;color:var(--steel-400)}
-.mono b{color:var(--cy);font-weight:700}
+/* type sitting loose on a lit photograph needs help; anything on glass opts out */
+header,footer{text-shadow:0 2px 10px rgba(2,8,12,.9),0 2px 32px rgba(2,8,12,.8)}
+.card,.card *{text-shadow:none}
 
-/* header */
-header{padding-block:clamp(40px,7vw,92px) clamp(24px,4vw,48px);border-bottom:1px solid var(--steel-800)}
+/* ── glass ───────────────────────────────────────────────────────────────
+   A tint, a heavy blur, one hairline rim and a lit top edge. No second border
+   six pixels inside the first one. */
+.glass{
+  background:rgba(9,12,15,.42);
+  backdrop-filter:blur(26px) saturate(190%);
+  -webkit-backdrop-filter:blur(26px) saturate(190%);
+  border:1px solid rgba(233,238,242,.2);
+  box-shadow:inset 0 1px 0 rgba(233,238,242,.3),
+             0 1px 2px rgba(2,8,12,.4),
+             0 18px 40px rgba(2,8,12,.42),
+             0 54px 100px rgba(2,8,12,.4);
+}
+@media(prefers-reduced-transparency:reduce){
+  .glass{background:#131A22;backdrop-filter:none;-webkit-backdrop-filter:none}
+}
+
+/* ── header ─────────────────────────────────────────────────────────────── */
+header{padding-block:clamp(38px,7vw,86px) clamp(24px,4vw,46px)}
 .hbar{display:flex;align-items:center;gap:13px;margin-bottom:clamp(22px,4vw,42px)}
-.hbar img{width:52px;height:52px;border-radius:50%;border:1px solid var(--steel-700)}
-.hbar .t b{display:block;font-size:16px;font-weight:800;letter-spacing:-.02em;font-stretch:118%}
-h1{font-size:clamp(2.2rem,7.4vw,6.4rem);font-weight:800;line-height:.86;letter-spacing:-.038em;
-  font-stretch:125%;text-transform:uppercase;max-width:16ch}
-h1 em{font-style:normal;color:var(--acc)}
-.lead{display:flex;gap:clamp(20px,4vw,60px);flex-wrap:wrap;align-items:flex-end;margin-top:clamp(20px,3vw,34px)}
-.lead p{max-width:56ch;color:var(--steel-300);font-size:15.5px}
-.lead p b{color:var(--paper);font-weight:600}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto;align-items:center}
-.seg{display:flex;border:1px solid var(--steel-700)}
-.seg button{background:0;border:0;color:var(--steel-300);font-family:'Space Mono',monospace;font-size:10.5px;
-  letter-spacing:.16em;text-transform:uppercase;padding:10px 17px;cursor:pointer;transition:background .3s,color .3s}
-.seg button+button{border-left:1px solid var(--steel-700)}
-.seg button.on{background:var(--acc);color:var(--ink);font-weight:700}
+.hbar img{width:50px;height:50px;border-radius:50%;border:1px solid var(--line)}
+.hbar b{display:block;font-size:15.5px;font-weight:800;letter-spacing:-.01em}
+.hbar span{display:block;font-size:13.5px;color:var(--mute)}
+h1{font-size:clamp(2.2rem,7vw,5.6rem);max-width:15ch}
+h1 em{font-style:normal;color:var(--blue)}
+.lead{margin-top:clamp(20px,3vw,32px);max-width:62ch;color:#CBD6DF}
+.lead b{color:var(--paper);font-weight:600}
+.seg{display:inline-flex;margin-top:clamp(22px,3vw,34px);border-radius:999px;padding:5px;
+  background:rgba(9,12,15,.5);
+  backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(233,238,242,.2);
+  box-shadow:inset 0 1px 0 rgba(233,238,242,.28),0 14px 32px rgba(2,8,12,.45)}
+.seg button{background:0;border:0;border-radius:999px;color:var(--mute);font:inherit;font-size:13.5px;
+  font-weight:500;padding:8px 20px;cursor:pointer;transition:background .3s var(--ease),color .3s var(--ease)}
+.seg button.on{background:var(--blue);color:#fff;font-weight:600}
 
-/* cards */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));gap:clamp(18px,2.4vw,34px);
-  padding-block:clamp(30px,5vw,64px)}
-.card{border:1px solid var(--steel-800);background:var(--steel-950);display:flex;flex-direction:column;
-  opacity:0;translate:0 30px;transition:opacity .8s var(--ease),translate .8s var(--ease),border-color .4s}
+/* ── cards ──────────────────────────────────────────────────────────────── */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));
+  gap:clamp(18px,2.4vw,32px);padding-block:clamp(26px,4vw,54px)}
+.card{border-radius:20px;overflow:hidden;display:flex;flex-direction:column;
+  opacity:0;translate:0 30px;
+  transition:opacity .85s var(--ease),translate .85s var(--ease)}
 .card.is-in{opacity:1;translate:0 0}
-.card:nth-child(2){transition-delay:.1s}.card:nth-child(3){transition-delay:.2s}
-.card:hover{border-color:var(--steel-600)}
-.card-hd{display:flex;align-items:center;gap:11px;padding:14px 17px;border-bottom:1px solid var(--steel-800)}
-.card-hd .no{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;color:var(--cy);font-weight:700}
-.tier{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;padding:11px 17px;
-  border-bottom:1px solid var(--steel-800);background:var(--ink)}
-.tier b{font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
-  color:var(--ink);background:var(--acc);padding:5px 9px;font-weight:700}
-.tier span{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--steel-400)}
-.incl{list-style:none;display:grid;gap:6px;padding-top:11px;margin-top:2px;border-top:1px solid var(--steel-800)}
-.incl li{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--steel-300);display:flex;gap:9px;align-items:baseline}
-.incl li::before{content:'+';color:var(--acc);flex-shrink:0}
-.incl li.off{color:var(--steel-600)}
-.incl li.off::before{content:'−';color:var(--steel-600)}
-.card-hd h2{font-size:19px;font-weight:800;letter-spacing:-.02em;font-stretch:118%;text-transform:uppercase}
-.card-hd .open{margin-left:auto;font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.16em;
-  text-transform:uppercase;border:1px solid var(--steel-700);padding:8px 12px;transition:border-color .3s,color .3s;white-space:nowrap}
-.card-hd .open:hover{border-color:var(--cy);color:var(--cy)}
+.card:nth-child(2){transition-delay:.1s}
+.card:nth-child(3){transition-delay:.2s}
 
-.stage{position:relative;background:var(--ink);border-bottom:1px solid var(--steel-800);overflow:hidden}
+.card-hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:16px 18px 14px}
+.card-hd h2{font-size:24px}
+.tierlab{font-size:13px;font-weight:600;color:var(--blue)}
+.card-hd .open{margin-left:auto;font-size:13px;font-weight:500;color:var(--mute);
+  transition:color .3s var(--ease);white-space:nowrap}
+.card-hd .open:hover{color:var(--paper)}
+
+.stage{position:relative;background:#05080A;overflow:hidden;
+  border-block:1px solid rgba(233,238,242,.12)}
 .stage.desktop{aspect-ratio:16/11}
 .stage.mobile{aspect-ratio:16/11;display:flex;align-items:flex-start;justify-content:center;padding-top:14px}
 .holder{position:absolute;top:0;left:0;transform-origin:top left}
 .stage.mobile .holder{position:relative;transform-origin:top center}
-.holder iframe{border:0;display:block;background:var(--ink)}
-.veil{position:absolute;inset:0;z-index:5;background:rgba(6,8,10,.28);
+.holder iframe{border:0;display:block;background:#05080A}
+.veil{position:absolute;inset:0;z-index:5;background:rgba(5,8,10,.24);
   display:flex;align-items:flex-end;justify-content:center;padding-bottom:18px;cursor:pointer;
-  transition:opacity .4s,backdrop-filter .4s}
-.veil span{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-  background:var(--ink);border:1px solid var(--steel-700);padding:9px 15px;color:var(--paper)}
-.veil:hover span{border-color:var(--cy);color:var(--cy)}
+  transition:opacity .4s var(--ease)}
+.veil span{font-size:13px;font-weight:500;padding:9px 18px;border-radius:999px;
+  background:rgba(9,12,15,.55);
+  backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);
+  border:1px solid rgba(233,238,242,.24);
+  box-shadow:inset 0 1px 0 rgba(233,238,242,.3),0 12px 26px rgba(2,8,12,.5)}
 .stage.live .veil{opacity:0;pointer-events:none}
-.loading{position:absolute;inset:0;display:grid;place-items:center;z-index:2}
-.loading span{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--steel-600);text-transform:uppercase}
+.loading{position:absolute;inset:0;display:grid;place-items:center;z-index:2;color:#5D6D79;font-size:13px}
 
-.card-bd{padding:17px;display:flex;flex-direction:column;gap:13px;flex:1}
-.card-bd p{font-size:14.5px;color:var(--steel-300);line-height:1.62}
-.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:4px}
-.chip{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
-  border:1px solid var(--steel-700);padding:6px 10px;color:var(--steel-400)}
-.chip.cy{border-color:rgba(47,216,220,.45);color:var(--cy)}
+.card-bd{padding:18px;display:flex;flex-direction:column;gap:15px;flex:1}
+.card-bd p{font-size:14.5px;color:#C2CFD9;line-height:1.6}
+.card-bd p b{color:var(--paper);font-weight:600}
+.incl{list-style:none;display:grid;gap:7px;padding-top:14px;border-top:1px solid rgba(233,238,242,.12)}
+.incl li{font-size:13.5px;color:#C2CFD9;display:flex;gap:10px;align-items:baseline}
+.incl li::before{content:'Yes';flex:0 0 34px;font-size:11px;font-weight:700;letter-spacing:.02em;color:var(--blue)}
+.incl li.off{color:#7A8894}
+.incl li.off::before{content:'No';color:#6A7681}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:4px}
+.tag{font-size:12px;color:var(--mute);border:1px solid rgba(233,238,242,.16);
+  border-radius:999px;padding:5px 12px}
+.tag.key{color:var(--paper);border-color:rgba(46,111,224,.6)}
 
+footer{padding-block:28px;display:flex;flex-wrap:wrap;gap:16px;
+  align-items:center;justify-content:space-between;font-size:13.5px;color:var(--mute);
+  border-top:1px solid var(--line)}
+.fl{display:flex;gap:22px;flex-wrap:wrap}
+.fl a:hover{color:var(--paper)}
 
-footer{border-top:1px solid var(--steel-800);padding-block:30px;display:flex;flex-wrap:wrap;gap:16px;
-  align-items:center;justify-content:space-between}
-.fl{display:flex;gap:20px;flex-wrap:wrap}
-
-@media(max-width:900px){
-  .cards{grid-template-columns:1fr}
-  .toolbar{margin-left:0;width:100%}
-}
+@media(max-width:900px){.cards{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<div class="grid-bg"></div>
 
 <div class="wrap">
 <header>
   <div class="hbar">
     <img src="assets/logo.png" alt="Pane Solutions logo">
-    <div class="t"><b>PANE SOLUTIONS LLC</b><span class="mono">Window cleaning in Phoenix, Arizona</span></div>
+    <div><b>Pane Solutions LLC</b><span>Window cleaning in Phoenix, Arizona</span></div>
   </div>
   <h1>Three homepages, three <em>looks.</em></h1>
-  <div class="lead">
-    <p>Every one uses the <b>same real content</b>: Pane Solutions' own Instagram photos, their three real reels, and the 5.0★ Google reviews quoted as written. <b>What you see on each card is that package's homepage.</b> Basic stops there. Standard and Premium add the pages listed underneath.</p>
-    <div class="toolbar">
-      <div class="seg" id="seg">
-        <button class="on" data-mode="desktop">Desktop</button>
-        <button data-mode="mobile">Mobile</button>
-      </div>
-    </div>
+  <p class="lead">Every one uses the <b>same real content</b>: Pane Solutions' own Instagram photos, their three real reels, and the 5.0 star Google reviews quoted as written. <b>What you see on each card is that package's homepage,</b> running live. Basic stops there. Standard and Premium add the pages listed underneath.</p>
+  <div class="seg" id="seg">
+    <button class="on" data-mode="desktop">Desktop</button>
+    <button data-mode="mobile">Mobile</button>
   </div>
 </header>
 
 <div class="cards" id="cards">
 
-  <article class="card">
-    <div class="tier"><b>Basic</b><span>Get found</span></div>
+  <article class="card glass">
     <div class="card-hd">
-      <h2>Daylight</h2>
-      <a class="open" href="direction-1-pressure.html" target="_blank" rel="noopener">Open full screen &#8599;</a>
+      <h2>Daylight</h2><span class="tierlab">Basic</span>
+      <a class="open" href="direction-1-pressure.html" target="_blank" rel="noopener">Open full screen</a>
     </div>
     <div class="stage desktop" data-src="direction-1-pressure.html">
-      <div class="loading"><span>Loading preview&#8230;</span></div>
+      <div class="loading">Loading preview</div>
       <div class="holder"></div>
       <div class="veil"><span>Click to interact</span></div>
     </div>
     <div class="card-bd">
-      <p><b>Bright glass on full-screen photography.</b> The airy one. Every panel is a pane of frosted glass floating over a photograph, and two smaller plates lap across the hero pane at opposing angles so things are genuinely in front of each other. Services run as a zig-zag of full-bleed bands, the job index is an asymmetric bento.</p>
+      <p><b>Bright frosted glass on full screen photography.</b> The airy one. Every panel is a sheet of glass over a photograph, and two smaller plates lap across the hero at opposing angles so things are genuinely in front of each other. Services run as a zig zag of full bleed bands, the job index is an asymmetric bento, and the reels sit on a deep blue block.</p>
       <ul class="incl">
         <li>One page, everything on it</li>
         <li>Click to call and click to email</li>
         <li>Their real photos and reviews</li>
-        <li class="off">No contact form</li>
-        <li class="off">No extra pages</li>
+        <li class="off">Contact form</li>
+        <li class="off">Extra pages</li>
       </ul>
-      <div class="chips">
-        <span class="chip cy">Light glass</span><span class="chip">Bricolage Grotesque</span>
-        <span class="chip">Full-screen hero</span><span class="chip">Zig-zag bands</span><span class="chip">Bento index</span>
+      <div class="tags">
+        <span class="tag key">Light glass</span><span class="tag">Bricolage Grotesque</span>
+        <span class="tag">Full screen hero</span><span class="tag">Zig zag bands</span><span class="tag">Bento index</span>
       </div>
     </div>
   </article>
 
-  <article class="card">
-    <div class="tier"><b>Standard</b><span>Look established</span></div>
+  <article class="card glass">
     <div class="card-hd">
-      <h2>Facade</h2>
-      <a class="open" href="direction-3-spec-sheet.html" target="_blank" rel="noopener">Open full screen &#8599;</a>
+      <h2>Facade</h2><span class="tierlab">Standard</span>
+      <a class="open" href="direction-3-spec-sheet.html" target="_blank" rel="noopener">Open full screen</a>
     </div>
     <div class="stage desktop" data-src="direction-3-spec-sheet.html">
-      <div class="loading"><span>Loading preview&#8230;</span></div>
+      <div class="loading">Loading preview</div>
       <div class="holder"></div>
       <div class="veil"><span>Click to interact</span></div>
     </div>
     <div class="card-bd">
-      <p><b>Smoked glass at dusk.</b> The dense one. Deep slate-teal with a warm amber edge down anything that matters. The hero is a true split screen, and the services keep that split: the photograph on the left changes as you scroll each service on the right. The job index is real masonry, twelve photographs packed tight.</p>
+      <p><b>Smoked glass at dusk.</b> The dense one. Deep slate teal over a photograph that runs behind the whole page, which is what the glass refracts. Three split screens alternate down the page, and the services keep the split: the photograph changes as you scroll the column beside it. The job index is twelve upright panes that open when you point at them.</p>
       <ul class="incl">
         <li>Homepage plus Services and Contact</li>
         <li>Working lead form to email and database</li>
         <li>Click to call and click to email</li>
         <li>Their real photos and reviews</li>
-        <li class="off">No SEO build-out</li>
+        <li class="off">SEO build out</li>
       </ul>
-      <div class="chips">
-        <span class="chip cy">Smoked glass</span><span class="chip">Syne + Outfit</span>
-        <span class="chip">Split screen</span><span class="chip">Sticky photo swap</span><span class="chip">Masonry index</span>
+      <div class="tags">
+        <span class="tag key">Smoked glass</span><span class="tag">Syne and Outfit</span>
+        <span class="tag">Split screen</span><span class="tag">Sticky photo swap</span><span class="tag">Pane gallery</span>
       </div>
     </div>
   </article>
 
-  <article class="card">
-    <div class="tier"><b>Premium</b><span>Stand out</span></div>
+  <article class="card glass">
     <div class="card-hd">
-      <h2>Reach</h2>
-      <a class="open" href="direction-2-altitude.html" target="_blank" rel="noopener">Open full screen &#8599;</a>
+      <h2>Reach</h2><span class="tierlab">Premium</span>
+      <a class="open" href="direction-2-altitude.html" target="_blank" rel="noopener">Open full screen</a>
     </div>
     <div class="stage desktop" data-src="direction-2-altitude.html">
-      <div class="loading"><span>Loading preview&#8230;</span></div>
+      <div class="loading">Loading preview</div>
       <div class="holder"></div>
       <div class="veil"><span>Click to interact</span></div>
     </div>
     <div class="card-bd">
-      <p><b>The one people remember.</b> Dark and cinematic, built vertically because the business is about reaching glass nobody else can. The three services are full screen panels that stack on top of each other as you scroll, and the reviews sit behind glass panes that catch a reflection when you touch them.</p>
+      <p><b>The one people remember.</b> Dark and cinematic, built vertically because the business is about reaching glass nobody else can. Its glass is square edged rather than soft. The three services are full screen panels that stack on each other as you scroll, the work is a filmstrip you drag, and the reviews sit on a deep blue block behind panes that catch a reflection when you touch them.</p>
       <ul class="incl">
-        <li>Full multi-page site</li>
+        <li>Full multi page site</li>
         <li>Working lead form to email and database</li>
         <li>SEO groundwork and structured data</li>
         <li>Google Business schema for local search</li>
         <li>Full editorial motion throughout</li>
       </ul>
-      <div class="chips">
-        <span class="chip cy">Dark and photographic</span><span class="chip">Big Shoulders and Sora</span>
-        <span class="chip">Sticky stack</span><span class="chip">Drag filmstrip</span><span class="chip">Glass panes</span>
+      <div class="tags">
+        <span class="tag key">Square glass</span><span class="tag">Big Shoulders and Sora</span>
+        <span class="tag">Sticky stack</span><span class="tag">Drag filmstrip</span><span class="tag">Colour block</span>
       </div>
     </div>
   </article>
@@ -223,10 +257,10 @@ footer{border-top:1px solid var(--steel-800);padding-block:30px;display:flex;fle
 </div>
 
 <footer>
-  <span class="mono">Pane Solutions LLC, Phoenix Arizona. +1 515-525-4127</span>
+  <span>Pane Solutions LLC, Phoenix Arizona. +1 515-525-4127</span>
   <div class="fl">
-    <a class="mono" href="https://www.instagram.com/pane_solutions_llc/" target="_blank" rel="noopener">Instagram</a>
-    <a class="mono" href="tel:+15155254127">Call</a>
+    <a href="https://www.instagram.com/pane_solutions_llc/" target="_blank" rel="noopener">Instagram</a>
+    <a href="tel:+15155254127">Call</a>
   </div>
 </footer>
 </div>

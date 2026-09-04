@@ -39,6 +39,7 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   --line:rgba(244,246,248,.14);
   --blue:#2E6FE0;       /* the single accent. No second colour on this page. */
   --blue-d:#1E51AC;
+  --blue-block:#173F86; /* the one colour block, a shade of the same accent */
   --gut:clamp(20px,5vw,80px);
   --ease:cubic-bezier(.16,1,.3,1);
 }
@@ -58,6 +59,49 @@ h1,h2,h3,.disp{
   font-family:'Big Shoulders Display','Sora',sans-serif;font-weight:800;
   line-height:.86;letter-spacing:.005em;text-transform:uppercase;
 }
+
+/* ── grounds ──────────────────────────────────────────────────────────────
+   Three kinds, used once each rather than one kind used six times.
+
+   RAKE. Hairlines across a flat colour, wide apart and barely there, so a
+   plain section has tooth without becoming a pattern. An SVG, not a repeating
+   gradient, because the no-ramps rule on this set is absolute.
+
+   TINT. A colour block with a real photograph laid into it, greyscaled and
+   held low. This is the version of "coloured background" that glass can sit
+   on: a pane over a flat colour is a rectangle no matter how it is tuned, and
+   a photograph in the colour gives the blur something to carry. */
+.rake{position:relative}
+.rake::before{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='6' height='1' fill='%23F4F6F8' fill-opacity='.055'/%3E%3C/svg%3E");
+}
+.rake>*{position:relative;z-index:1}
+
+.tint{position:relative;background:var(--blue-block);overflow:hidden}
+.tint-bg{position:absolute;inset:0;z-index:0;pointer-events:none;
+  opacity:.3;filter:grayscale(1) contrast(1.25) brightness(.9);mix-blend-mode:luminosity}
+.tint-bg img{width:100%;height:100%;object-fit:cover}
+.tint>.wrap,.tint>*:not(.tint-bg){position:relative;z-index:1}
+
+/* ── this page's glass: square, not soft ─────────────────────────────────
+   Same physics as the other two directions, different edge. A dark tint, a
+   heavy blur, a lit top rule and a dark foot so it reads as a bevelled sheet
+   rather than a rounded chip. Every use of it sits over a photograph or over
+   the tinted block, never over a flat colour. */
+.sheet{
+  position:relative;
+  background:rgba(11,14,17,.42);
+  backdrop-filter:blur(26px) saturate(180%);
+  -webkit-backdrop-filter:blur(26px) saturate(180%);
+  border:1px solid rgba(244,246,248,.16);
+  border-top-color:rgba(244,246,248,.4);
+  border-bottom-color:rgba(0,0,0,.6);
+  box-shadow:inset 0 1px 0 rgba(244,246,248,.24),0 26px 60px rgba(4,7,10,.5);
+}
+@media(prefers-reduced-transparency:reduce){
+  .sheet{background:#131920;backdrop-filter:none;-webkit-backdrop-filter:none}
+}
 img{display:block;width:100%;height:auto}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1600px;margin:0 auto;padding-inline:var(--gut)}
@@ -76,11 +120,19 @@ a{color:inherit;text-decoration:none}
 .btn-out:hover{border-color:var(--paper);background:rgba(244,246,248,.06)}
 
 /* ── nav ────────────────────────────────────────────────────────────────── */
+/* Detached and inset, and square: Facade's nav is a pill, so this one cannot
+   be. A bar glued edge to edge across the top is the default every site has. */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:70;height:74px;display:flex;align-items:center;
-  gap:26px;padding-inline:var(--gut);
-  background:rgba(11,14,17,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);
+  position:fixed;top:14px;left:var(--gut);right:var(--gut);z-index:70;height:66px;
+  display:flex;align-items:center;gap:26px;padding-inline:20px;
+  background:rgba(11,14,17,.5);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(244,246,248,.16);
+  border-top-color:rgba(244,246,248,.34);
+  box-shadow:inset 0 1px 0 rgba(244,246,248,.2),0 20px 46px rgba(4,7,10,.55);
 }
+@media(prefers-reduced-transparency:reduce){.nav{background:#0F141A;backdrop-filter:none}}
 .brand{display:flex;align-items:center;gap:11px;margin-right:auto}
 .brand img{width:33px;height:33px;object-fit:contain}
 .brand span{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:21px;text-transform:uppercase;letter-spacing:.03em}
@@ -119,11 +171,12 @@ a{color:inherit;text-decoration:none}
 
 /* the plate hung across the boundary. This is the occlusion. */
 .hang{
-  position:relative;z-index:3;margin-inline:var(--gut);margin-bottom:clamp(-104px,-7.4vw,-62px);
-  background:var(--ink-2);border:1px solid var(--line);
+  position:relative;z-index:3;margin-inline:var(--gut);margin-bottom:clamp(-58px,-4.2vw,-36px);
+  /* .sheet carries the material. It laps the hero photograph, so the blur has
+     a real picture to work on. */
   display:grid;grid-template-columns:repeat(3,1fr);
 }
-.hang div{padding:clamp(20px,2.3vw,30px) clamp(20px,2.4vw,32px);border-right:1px solid var(--line)}
+.hang div{padding:clamp(20px,2.3vw,30px) clamp(20px,2.4vw,32px);border-right:1px solid rgba(244,246,248,.14)}
 .hang div:last-child{border-right:0}
 .hang b{display:block;font-family:'Big Shoulders Display',sans-serif;font-weight:800;
   font-size:clamp(2rem,3.4vw,3.1rem);line-height:.9;text-transform:uppercase}
@@ -133,7 +186,7 @@ a{color:inherit;text-decoration:none}
    Three full-height panels that pin and are covered by the next one. The
    motion is motivated: it is one job finishing before the next begins, and it
    is the reason this direction does not need a row of service cards. */
-.stack{position:relative;padding-top:clamp(120px,13vw,190px)}
+.stack{position:relative;padding-top:clamp(70px,7vw,104px)}
 .panel{position:sticky;top:0;min-height:100svh;display:flex;align-items:flex-end;
   overflow:hidden;border-top:1px solid var(--line)}
 .panel-bg{position:absolute;inset:0;z-index:0}
@@ -155,33 +208,48 @@ a{color:inherit;text-decoration:none}
    Different layout family from anything else on the page, and the frames run
    at real size rather than being shrunk into thumbnails. */
 .work{padding-block:clamp(70px,9vw,130px);background:var(--ink)}
-.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;flex-wrap:wrap;margin-bottom:clamp(26px,3.4vw,46px)}
+/* The sub-line used to float in the top right corner of the section with
+   nothing aligned to it, which is what left the header reading as an empty
+   slab. Stacked under the headline it is just a sentence. */
+.sec-hd{margin-bottom:clamp(26px,3.4vw,46px)}
 .sec-hd h2{font-size:clamp(2.6rem,6vw,5.4rem)}
-.sec-hd p{max-width:38ch;color:var(--mute)}
+.sec-hd p{margin-top:16px;max-width:52ch;color:var(--mute)}
 .sec-hd a{color:var(--blue);font-weight:500}
-.strip{display:flex;gap:clamp(10px,1.3vw,18px);overflow-x:auto;scroll-snap-type:x mandatory;
+.strip{display:flex;align-items:flex-start;gap:clamp(10px,1.3vw,18px);overflow-x:auto;scroll-snap-type:x mandatory;
   padding-inline:var(--gut);padding-bottom:16px;cursor:grab;scrollbar-width:thin}
 .strip.drag{cursor:grabbing;scroll-snap-type:none}
 .strip::-webkit-scrollbar{height:3px}
 .strip::-webkit-scrollbar-thumb{background:var(--ink-3)}
 .frame{position:relative;flex:0 0 clamp(250px,27vw,410px);scroll-snap-align:start;overflow:hidden;
   background:var(--ink-2)}
-.frame img{width:100%;aspect-ratio:3/4;object-fit:cover;transition:scale 1.2s var(--ease);
+.frame img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;transition:scale 1.2s var(--ease);
   pointer-events:none;-webkit-user-drag:none}
 .frame:hover img{scale:1.05}
 .frame.wide{flex-basis:clamp(330px,42vw,620px)}
 .frame.wide img{aspect-ratio:4/3}
-.frame figcaption{padding:15px 17px;font-size:13.5px;font-weight:500;
-  border-top:1px solid var(--line);background:var(--ink-2)}
+/* the caption lies ON the photograph as a sheet of glass, rather than being a
+   solid bar bolted under it */
+.frame figcaption{position:absolute;left:0;right:0;bottom:0;
+  padding:14px 17px;font-size:13.5px;font-weight:500;
+  background:rgba(11,14,17,.42);
+  backdrop-filter:blur(22px) saturate(180%);
+  -webkit-backdrop-filter:blur(22px) saturate(180%);
+  border-top:1px solid rgba(244,246,248,.34);
+}
+@media(prefers-reduced-transparency:reduce){.frame figcaption{background:#131920;backdrop-filter:none}}
 
 /* ── reels: three equal plates, tops aligned ───────────────────────────────
    Instagram sizes each embed to its own video aspect and one of these three
    reels is landscape, so the plate is pinned to one height and the embeds are
    top aligned. The leftover reads as the plate rather than as a hole. */
-.reels{padding-block:clamp(70px,9vw,130px);background:var(--ink-2);border-block:1px solid var(--line)}
+.reels{position:relative;overflow:hidden;padding-block:clamp(70px,9vw,130px);
+  border-block:1px solid var(--line)}
+.reels-bg{position:absolute;inset:0;z-index:0}
+.reels-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.reels-bg::after{content:'';position:absolute;inset:0;background:rgba(8,11,14,.6)}
+.reels>.wrap{position:relative;z-index:2}
 .panes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.7vw,24px);align-items:stretch}
-.pane{position:relative;display:flex;background:var(--ink-3);padding:clamp(10px,1.1vw,16px);
-  border:1px solid var(--line)}
+.pane{display:flex;padding:clamp(10px,1.1vw,16px)}
 .screen{position:relative;flex:1;min-height:642px;display:flex;align-items:flex-start;justify-content:center}
 .screen .fallback{position:absolute;inset:0;overflow:hidden;display:block}
 .screen .fallback img{width:100%;height:100%;object-fit:cover}
@@ -198,35 +266,45 @@ a{color:inherit;text-decoration:none}
    Not testimonial cards. On a page about glass the review sits behind one,
    with a lit top edge, a dark foot, and a single reflection that sweeps
    across when you hover it. That is this page's own material language. */
-.reviews{padding-block:clamp(70px,9vw,130px)}
+/* The one colour moment on the page. Three flat near-black sections in a row
+   was the thing that read as unfinished. */
+.reviews{padding-block:clamp(80px,10vw,140px)}
+.reviews .wrap{position:relative;z-index:1}
 .pull{margin-bottom:clamp(40px,5vw,70px)}
 .pull blockquote{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;
   font-size:clamp(2.6rem,6.6vw,6rem);line-height:.88;max-width:18ch}
-.pull blockquote em{font-style:normal;color:var(--blue)}
+/* on the blue block the accent word cannot be the accent colour, so it is cut
+   out of the same type instead */
+.pull blockquote em{font-style:normal;color:transparent;
+  -webkit-text-stroke:2px rgba(244,246,248,.85)}
+@supports not (-webkit-text-stroke:1px #000){.pull blockquote em{color:#BBD3FF}}
 .pull-meta{margin-top:24px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
-.stars{color:var(--blue);letter-spacing:.14em;font-size:15px}
+.stars{color:#8FB6FF;letter-spacing:.14em;font-size:15px}
 .who{font-weight:500}
 .src{color:var(--mute);font-size:13.5px}
 .glass-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.3vw,18px)}
 .gpane{
-  position:relative;overflow:hidden;isolation:isolate;
-  background:rgba(244,246,248,.06);
-  border:1px solid rgba(244,246,248,.1);
-  border-top-color:rgba(244,246,248,.42);      /* lit top edge */
-  border-bottom-color:rgba(0,0,0,.72);         /* dark foot. Reads as a bevel. */
-  box-shadow:inset 0 1px 0 rgba(244,246,248,.16), 0 26px 60px rgba(4,7,10,.55);
+  position:relative;overflow:hidden;
+  background:rgba(11,14,17,.34);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(244,246,248,.18);
+  border-top-color:rgba(244,246,248,.45);      /* lit top edge */
+  border-bottom-color:rgba(0,0,0,.55);         /* dark foot. Reads as a bevel. */
+  box-shadow:inset 0 1px 0 rgba(244,246,248,.2), 0 26px 60px rgba(4,7,10,.45);
   padding:clamp(20px,2.2vw,30px);
   display:flex;flex-direction:column;gap:13px;
   transition:background .35s var(--ease),translate .35s var(--ease);
 }
-.gpane:hover{background:rgba(244,246,248,.07);translate:0 -5px}
+.gpane:hover{background:rgba(11,14,17,.24);translate:0 -5px}
 /* one reflection, and it only moves on hover */
 .gpane::before{
-  content:'';position:absolute;top:-40%;bottom:-40%;left:-70%;width:44%;z-index:-1;
-  background:rgba(244,246,248,.09);rotate:14deg;
+  content:'';position:absolute;top:-40%;bottom:-40%;left:-70%;width:44%;
+  pointer-events:none;background:rgba(244,246,248,.07);rotate:14deg;
   transition:translate .9s var(--ease);
 }
 .gpane:hover::before{translate:340% 0}
+.gpane>*{position:relative}
 .gpane p{font-size:clamp(.94rem,1.02vw,1.04rem);line-height:1.55}
 .gpane .who{margin-top:auto}
 .gpane .src{font-size:12.5px}
@@ -274,7 +352,7 @@ footer{padding-block:32px;display:flex;justify-content:space-between;gap:20px;fl
 @media(max-width:860px){
   .nav-links,.nav-tel{display:none}
   .burger{display:block}
-  .hang{grid-template-columns:1fr;margin-bottom:-40px}
+  .hang{grid-template-columns:1fr;margin-bottom:-30px}
   .hang div{border-right:0;border-bottom:1px solid var(--line)}
   .hang div:last-child{border-bottom:0}
   .mast{padding-bottom:clamp(70px,14vw,110px)}
@@ -288,6 +366,7 @@ footer{padding-block:32px;display:flex;justify-content:space-between;gap:20px;fl
   .glass-grid{grid-template-columns:1fr}
   .brand span{white-space:nowrap;font-size:17px}
   .nav .btn{display:none}
+  .nav{left:12px;right:12px;padding-inline:14px}
 }
 </style>
 </head>
@@ -320,7 +399,7 @@ footer{padding-block:32px;display:flex;justify-content:space-between;gap:20px;fl
       <a class="btn-out" href="#work">See the work</a>
     </div>
   </div>
-  <div class="hang">
+  <div class="hang sheet">
     <div><b>5.0</b><span>Rating on Google</span></div>
     <div><b>13</b><span>Reviews, every one five star</span></div>
     <div><b>Free</b><span>No charge to come and look</span></div>
@@ -366,7 +445,7 @@ footer{padding-block:32px;display:flex;justify-content:space-between;gap:20px;fl
 
 </section>
 
-<section class="work" id="work">
+<section class="work rake" id="work">
   <div class="wrap sec-hd">
     <h2 class="rv">Recent jobs<br>around Phoenix</h2>
     <p class="rv" data-d="1">Drag sideways. Every frame is our own work on a real property, no stock and nothing staged.</p>
@@ -383,13 +462,14 @@ footer{padding-block:32px;display:flex;justify-content:space-between;gap:20px;fl
 </section>
 
 <section class="reels" id="reels">
+  <div class="reels-bg"><img src="assets/photos/glass-corner.webp" alt="" aria-hidden="true" loading="lazy"></div>
   <div class="wrap">
     <div class="sec-hd">
       <h2 class="rv">Watch a pane<br>get cleaned</h2>
       <p class="rv" data-d="1">Three reels straight from <a href="https://www.instagram.com/pane_solutions_llc/" target="_blank" rel="noopener">@pane_solutions_llc</a>. Tap one to play it.</p>
     </div>
     <div class="panes">
-      <div class="pane rv">
+      <div class="pane sheet rv">
         <div class="screen" data-reel="https://www.instagram.com/reel/DC4osCWRL3L/">
           <a class="fallback" href="https://www.instagram.com/reel/DC4osCWRL3L/" target="_blank" rel="noopener">
             <img src="assets/reels/reel-pole-highrise.webp" alt="A water-fed pole reaching a second storey arched window">
@@ -397,7 +477,7 @@ footer{padding-block:32px;display:flex;justify-content:space-between;gap:20px;fl
           </a>
         </div>
       </div>
-      <div class="pane rv" data-d="1">
+      <div class="pane sheet rv" data-d="1">
         <div class="screen" data-reel="https://www.instagram.com/reel/DC4oAoixUgB/">
           <a class="fallback" href="https://www.instagram.com/reel/DC4oAoixUgB/" target="_blank" rel="noopener">
             <img src="assets/reels/reel-estate.webp" alt="A large Phoenix estate property serviced by Pane Solutions">
@@ -405,7 +485,7 @@ footer{padding-block:32px;display:flex;justify-content:space-between;gap:20px;fl
           </a>
         </div>
       </div>
-      <div class="pane rv" data-d="2">
+      <div class="pane sheet rv" data-d="2">
         <div class="screen" data-reel="https://www.instagram.com/reel/DC4nlEkxyKP/">
           <a class="fallback" href="https://www.instagram.com/reel/DC4nlEkxyKP/" target="_blank" rel="noopener">
             <img src="assets/reels/reel-squeegee.webp" alt="Squeegeeing a French door pane clean">
@@ -417,7 +497,9 @@ footer{padding-block:32px;display:flex;justify-content:space-between;gap:20px;fl
   </div>
 </section>
 
-<section class="reviews wrap" id="reviews">
+<section class="reviews tint" id="reviews">
+  <div class="tint-bg"><img src="assets/photos/patio-row.webp" alt="" aria-hidden="true" loading="lazy"></div>
+  <div class="wrap">
   <div class="pull rv">
     <blockquote>&ldquo;Punctual, professional, and <em>incredibly thorough.</em>&rdquo;</blockquote>
     <div class="pull-meta">
@@ -447,6 +529,7 @@ footer{padding-block:32px;display:flex;justify-content:space-between;gap:20px;fl
       <p>&ldquo;I took a chance and they did an incredible job, on the spot. Great work, quality service, solid price.&rdquo;</p>
       <span class="who">Michael Morford</span><span class="src">Google review</span>
     </article>
+  </div>
   </div>
 </section>
 

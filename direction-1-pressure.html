@@ -49,6 +49,7 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   --ease:cubic-bezier(.16,1,.3,1);
   --r:26px;
   --tray:0px;      /* kept as a variable so the radius maths still reads. */
+  --blue-block:#1B4FBE;   /* the one colour block. A shade of the same accent. */
 }
 
 body{
@@ -95,6 +96,27 @@ a{color:inherit;text-decoration:none}
 }
 
 /* ── buttons ────────────────────────────────────────────────────────────── */
+/* ── grounds ──────────────────────────────────────────────────────────────
+   DOT. A soft, wide dot field. Light through frosted glass, near enough. An
+   SVG rather than a repeating gradient, because the no-ramps rule on this set
+   is absolute, and wide enough apart that it never reads as a pattern swatch.
+
+   TINT. A colour block with a real photograph laid into it, held low. This is
+   the version of a coloured background that glass can sit on: a pane over a
+   flat colour is a rectangle no matter how it is tuned. */
+.dots{position:relative}
+.dots::before{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='2' cy='2' r='1.4' fill='%23102436' fill-opacity='.09'/%3E%3C/svg%3E");
+}
+.dots>*{position:relative;z-index:1}
+
+.tint{position:relative;background:var(--blue-block);overflow:hidden;color:var(--on-blue)}
+.tint-bg{position:absolute;inset:0;z-index:0;pointer-events:none;
+  opacity:.34;filter:grayscale(1) contrast(1.2);mix-blend-mode:luminosity}
+.tint-bg img{width:100%;height:100%;object-fit:cover}
+.tint>*:not(.tint-bg){position:relative;z-index:1}
+
 .btn{
   display:inline-block;padding:16px 30px;border-radius:999px;
   background:var(--blue);color:var(--on-blue);font-weight:600;font-size:15px;
@@ -214,10 +236,12 @@ a{color:inherit;text-decoration:none}
 /* ── work: GALLERY archetype ───────────────────────────────────────────────
    Equal tiles, equal weight, caption on a glass bar inside each tile. */
 .work{padding-block:clamp(60px,8vw,116px)}
-.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap;
-  margin-bottom:clamp(24px,3vw,42px)}
+/* Stacked, not split. A giant headline on the left with a small paragraph
+   floating in the top right corner is the layout every generated page uses,
+   and it is what leaves section headers reading as empty slabs. */
+.sec-hd{margin-bottom:clamp(24px,3vw,42px)}
 .sec-hd h2{font-size:clamp(2.1rem,4.2vw,3.8rem)}
-.sec-hd p{max-width:38ch;color:var(--ink-2)}
+.sec-hd p{margin-top:14px;max-width:54ch;color:var(--ink-2)}
 .sec-hd a{color:var(--blue);font-weight:600}
 /* Asymmetric bento. Fixed row height plus row spans, never a per-tile
    aspect-ratio: mixed ratios in one grid resolve to different heights and every
@@ -256,12 +280,14 @@ figure.tile figcaption{
 }
 @media(prefers-reduced-transparency:reduce){figure.tile figcaption{background:#FBFCFD;backdrop-filter:none}}
 
-/* ── reels: glass plates over a photographic ground ──────────────────────── */
-.reels{position:relative;padding-block:clamp(60px,8vw,116px);overflow:hidden}
-.reels-bg{position:absolute;inset:0;z-index:0}
-.reels-bg img{width:100%;height:100%;object-fit:cover}
-.reels-bg::after{content:'';position:absolute;inset:0;background:rgba(222,231,237,.62)}
-.reels>.wrap{position:relative;z-index:2}
+/* ── reels: the one colour block, glass plates over it ───────────────────
+   Six pale sections in a row was the problem. This one raises its voice, and
+   the photograph laid into the blue is what gives the plates something to
+   refract. */
+.reels{padding-block:clamp(66px,9vw,124px)}
+.reels .sec-hd h2,.reels .sec-hd p,.reels .sec-hd a{color:var(--on-blue)}
+.reels .sec-hd a{text-decoration:underline;text-underline-offset:3px}
+.reels .sec-hd{border-bottom-color:rgba(242,246,253,.3)}
 .panes{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.7vw,24px);align-items:stretch}
 .pane-reel .core{display:flex;padding:clamp(9px,1vw,13px)}
 .screen{position:relative;flex:1;min-height:642px;display:flex;align-items:flex-start;justify-content:center}
@@ -277,12 +303,10 @@ figure.tile figcaption{
 .screen.live .fallback{display:none}
 .screen .instagram-media{margin:0 auto!important;min-width:0!important;width:100%!important;max-width:326px!important;border:0!important;box-shadow:none!important;border-radius:12px!important}
 
-/* ── reviews: panes floating over a band ────────────────────────────────── */
-.reviews{position:relative;padding-block:clamp(60px,8vw,116px);overflow:hidden}
-.rev-bg{position:absolute;inset:0;z-index:0}
-.rev-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 60%}
-.rev-bg::after{content:'';position:absolute;inset:0;background:rgba(220,229,236,.66)}
-.reviews>.wrap{position:relative;z-index:2}
+/* ── reviews: paper with tooth ───────────────────────────────────────────
+   Plain, but not bare. The dot field is the light-mode answer to grain. */
+.reviews{position:relative;padding-block:clamp(66px,9vw,124px);
+  background:#E6EBEF;border-block:1px solid rgba(16,36,54,.1)}
 .pull blockquote{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
   font-size:clamp(2rem,4.6vw,4.2rem);line-height:.98;letter-spacing:-.035em;max-width:18ch}
 .pull blockquote em{font-style:normal;color:var(--blue)}
@@ -482,8 +506,8 @@ footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;fl
   </div>
 </section>
 
-<section id="reels" class="reels">
-  <div class="reels-bg"><img src="assets/photos/slider-interior.webp" alt="" aria-hidden="true" loading="lazy"></div>
+<section id="reels" class="reels tint">
+  <div class="tint-bg"><img src="assets/photos/slider-interior.webp" alt="" aria-hidden="true" loading="lazy"></div>
   <div class="wrap">
     <div class="sec-hd">
       <h2 class="rv">Watch a pane<br>get cleaned</h2>
@@ -524,8 +548,7 @@ footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;fl
   </div>
 </section>
 
-<section id="reviews" class="reviews">
-  <div class="rev-bg"><img src="assets/photos/modern-gray.webp" alt="" aria-hidden="true" loading="lazy"></div>
+<section id="reviews" class="reviews dots">
   <div class="wrap">
     <div class="pull rv">
       <blockquote>&ldquo;My windows have never looked better. Completely <em>streak free.</em>&rdquo;</blockquote>
