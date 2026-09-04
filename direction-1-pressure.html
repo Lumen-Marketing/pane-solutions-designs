@@ -361,8 +361,144 @@ figure.tile figcaption{
 .crow span{color:var(--ink-2);font-size:14px}
 .crow b{font-weight:600;text-align:right;word-break:break-word}
 
-footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
-  font-size:13.5px;color:var(--ink-2)}
+
+
+
+/* ── how a job goes: ruled cells, ghost numerals ──────────────────────────
+   The ground here is plain paper, so there are no cards. Cards on a flat
+   ground are rectangles. A 1px grid gap over a line colour rules the cells
+   apart instead, which is the same move a printed table makes. */
+.how{padding-block:clamp(56px,7.5vw,108px)}
+.how-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
+  background:rgba(16,36,54,.14);border:1px solid rgba(16,36,54,.14);
+  border-radius:calc(var(--r) - 6px);overflow:hidden}
+.how-cell{position:relative;background:var(--paper);
+  padding:clamp(26px,3.1vw,50px);overflow:hidden}
+.how-cell:nth-child(1),.how-cell:nth-child(4){grid-column:span 3}
+.how-cell:nth-child(2),.how-cell:nth-child(3){grid-column:span 2}
+.how-cell .num{position:absolute;right:clamp(6px,1vw,20px);top:-.2em;
+  font-family:'Bricolage Grotesque',sans-serif;font-weight:800;line-height:1;
+  font-size:clamp(6.5rem,12vw,12rem);pointer-events:none;user-select:none;
+  color:transparent;-webkit-text-stroke:1.6px rgba(27,84,200,.3)}
+@supports not ((-webkit-text-stroke:1px red)){
+  .how-cell .num{color:rgba(27,84,200,.1);-webkit-text-stroke:0}
+}
+.how-cell h3{position:relative;font-size:clamp(1.28rem,2.1vw,1.85rem);
+  letter-spacing:-.02em;max-width:14ch}
+.how-cell p{position:relative;margin-top:12px;max-width:46ch;color:var(--ink-2)}
+.how-cell .free{position:relative;display:inline-block;margin-top:16px;
+  padding:6px 13px;border-radius:999px;font-size:12.5px;font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase;
+  background:var(--blue);color:var(--on-blue)}
+@media(max-width:860px){
+  .how-grid{grid-template-columns:1fr}
+  .how-cell:nth-child(n){grid-column:span 1}
+}
+
+/* ── why us: four columns, ruled apart, no cards ──────────────────────────
+   The band is flat, and a card on a flat ground is a rectangle whatever is
+   done to it. Vertical hairlines separate the four just as well and leave the
+   section reading as one run rather than as four objects. */
+.why{padding-block:clamp(56px,7.5vw,108px);background:#E6EBEF;
+  border-block:1px solid rgba(16,36,54,.1)}
+.why-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.why-cell{padding-inline:clamp(16px,2.1vw,36px);
+  border-left:1px solid rgba(16,36,54,.16)}
+.why-cell:first-child{border-left:0;padding-left:0}
+.why-cell:last-child{padding-right:0}
+.why-cell h3{font-size:clamp(1.16rem,1.8vw,1.58rem);letter-spacing:-.02em;
+  max-width:14ch;
+  /* two lines reserved, which is what all four wrap to. Three left a hole
+     between every heading and its paragraph. */
+  min-height:2.2em}
+.why-cell p{margin-top:13px;font-size:14.6px;color:var(--ink-2)}
+@media(max-width:940px){
+  .why-grid{grid-template-columns:1fr 1fr;gap:clamp(22px,3vw,34px) 0}
+  .why-cell:nth-child(odd){border-left:0;padding-left:0}
+  .why-cell h3{min-height:0}
+}
+@media(max-width:560px){
+  .why-grid{grid-template-columns:1fr}
+  .why-cell{border-left:0;padding-inline:0}
+}
+
+/* ── filter row on the job index ──────────────────────────────────────────
+   The bento's spans are hand placed, so a filtered bento would leave holes.
+   On any filter but ALL the grid drops to even cells and packs dense. */
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:clamp(18px,2.2vw,30px)}
+.tab{font:inherit;font-weight:600;font-size:14px;cursor:pointer;
+  padding:10px 21px;border-radius:999px;color:var(--ink);
+  border:1px solid rgba(16,36,54,.2);background:transparent;
+  transition:background .3s var(--ease),border-color .3s var(--ease),color .3s var(--ease)}
+.tab:hover{border-color:rgba(16,36,54,.5)}
+.tab.on{background:var(--blue);border-color:var(--blue);color:var(--on-blue)}
+.gal{grid-auto-flow:dense}
+.gal.filt .tile{grid-column:span 3;grid-row:span 2}
+figure.tile[hidden]{display:none}
+@media(max-width:820px){.gal.filt .tile{grid-column:span 6}}
+
+/* ── FAQ: sticky title, native accordion ──────────────────────────────────
+   details and summary rather than buttons and hidden divs: it opens with no
+   JS at all, it is in the tab order already, and find-in-page reaches the
+   closed answers. */
+.faq{padding-block:clamp(56px,7.5vw,108px)}
+.faq-in{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.4fr);
+  gap:clamp(26px,4vw,80px);align-items:start}
+.faq-hd{position:sticky;top:clamp(96px,9vw,124px)}
+.faq-hd h2{font-size:clamp(2.1rem,4.2vw,3.5rem);max-width:11ch}
+.faq-hd p{margin-top:15px;max-width:32ch;color:var(--ink-2)}
+.faq-hd a{color:var(--blue);font-weight:600}
+.faq-shot{margin-top:clamp(28px,3.4vw,46px)}
+.faq-shot img{aspect-ratio:5/4}
+.q{border-top:1px solid rgba(16,36,54,.17)}
+.q:last-child{border-bottom:1px solid rgba(16,36,54,.17)}
+.q summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:20px;
+  padding:clamp(19px,2.2vw,28px) 0;font-weight:600;letter-spacing:-.01em;
+  font-size:clamp(1.02rem,1.55vw,1.3rem)}
+.q summary::-webkit-details-marker{display:none}
+.q summary:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.sign{margin-left:auto;position:relative;flex:0 0 28px;height:28px;border-radius:50%;
+  border:1px solid rgba(16,36,54,.26);
+  transition:background .35s var(--ease),border-color .35s var(--ease),rotate .45s var(--ease)}
+.sign::before,.sign::after{content:'';position:absolute;left:50%;top:50%;
+  translate:-50% -50%;background:var(--ink);transition:background .35s var(--ease)}
+.sign::before{width:12px;height:1.6px}
+.sign::after{width:1.6px;height:12px;transition:scale .4s var(--ease)}
+.q[open] .sign{background:var(--blue);border-color:var(--blue);rotate:180deg}
+.q[open] .sign::before,.q[open] .sign::after{background:var(--on-blue)}
+.q[open] .sign::after{scale:1 0}
+.q .a{padding-bottom:clamp(19px,2.2vw,30px);max-width:64ch;color:var(--ink-2)}
+.q[open] .a{animation:qin .5s var(--ease) both}
+@keyframes qin{from{opacity:0;translate:0 -8px}to{opacity:1;translate:0 0}}
+@media(prefers-reduced-motion:reduce){.q[open] .a{animation:none}}
+@media(max-width:860px){
+  .faq-in{grid-template-columns:1fr;gap:26px}
+  .faq-hd{position:static}
+}
+
+/* ── footer ───────────────────────────────────────────────────────────────
+   All four wireframes end on a real footer with columns. This page ended on
+   one line of grey type, which throws away the last screen of the page. */
+footer{border-top:1px solid rgba(16,36,54,.14);
+  padding-block:clamp(44px,5.6vw,80px) 28px}
+.f-grid{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(3,minmax(0,1fr));
+  gap:clamp(26px,3.2vw,54px)}
+.f-brand{display:flex;align-items:center;gap:11px;font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
+.f-brand img{height:32px;width:auto;display:block}
+.f-say{margin-top:16px;max-width:34ch;color:var(--ink-2);font-size:14.5px}
+.f-tel{display:inline-block;margin-top:20px;font-family:'Bricolage Grotesque',sans-serif;
+  font-weight:800;letter-spacing:-.03em;font-size:clamp(1.5rem,2.5vw,2.1rem);
+  color:var(--blue)}
+.f-col h4{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-2);margin-bottom:14px}
+.f-col a,.f-col span{display:block;padding-block:5px;font-size:14.5px;color:var(--ink)}
+.f-col a:hover{color:var(--blue)}
+.f-bot{margin-top:clamp(32px,4.2vw,58px);padding-top:22px;
+  border-top:1px solid rgba(16,36,54,.12);display:flex;justify-content:space-between;
+  gap:18px;flex-wrap:wrap;font-size:13px;color:var(--ink-2)}
+@media(max-width:900px){.f-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.f-grid{grid-template-columns:1fr}}
 
 /* ── motion ────────────────────────────────────────────────────────────── */
 .rv{opacity:0;translate:0 34px;filter:blur(10px);
@@ -415,7 +551,7 @@ footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;fl
 <nav class="nav">
   <a class="brand" href="#top"><img src="assets/logo.png" alt="Pane Solutions"><span>Pane Solutions</span></a>
   <div class="nav-links">
-    <a href="#services">Services</a><a href="#work">Work</a><a href="#reels">Reels</a><a href="#reviews">Reviews</a>
+    <a href="#services">Services</a><a href="#how">Process</a><a href="#work">Work</a><a href="#reels">Reels</a><a href="#faq">FAQ</a>
   </div>
   <a class="nav-tel" href="tel:+15155254127">+1 515-525-4127</a>
   <a class="btn nav-cta" href="#contact">Free estimate<i></i></a>
@@ -424,8 +560,8 @@ footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;fl
 
 <div class="drawer" id="drawer">
   <button class="x" id="close">Close</button>
-  <a href="#services">Services</a><a href="#work">Work</a><a href="#reels">Reels</a>
-  <a href="#reviews">Reviews</a><a href="#contact">Free estimate</a>
+  <a href="#services">Services</a><a href="#how">Process</a><a href="#work">Work</a><a href="#reels">Reels</a>
+  <a href="#reviews">Reviews</a><a href="#faq">FAQ</a><a href="#contact">Free estimate</a>
 </div>
 
 <header class="hero" id="top">
@@ -493,22 +629,86 @@ footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;fl
 
 </section>
 
+<section id="how" class="how wrap">
+  <div class="sec-hd">
+    <h2 class="rv">How a job goes</h2>
+    <p class="rv" data-d="1">Four steps, and you have paid nothing by the end of the second one.</p>
+  </div>
+  <div class="how-grid rv" data-d="1">
+    <article class="how-cell">
+      <span class="num" aria-hidden="true">1</span>
+      <h3>You tell us what needs cleaning</h3>
+      <p>Call or text and describe the property. How many storeys, roughly how much glass, and whether you want the outside only or both sides.</p>
+    </article>
+    <article class="how-cell">
+      <span class="num" aria-hidden="true">2</span>
+      <h3>We come and look</h3>
+      <p>We would rather see the glass than guess at it, so you get a price from a real look at the property.</p>
+      <span class="free">No charge for this</span>
+    </article>
+    <article class="how-cell">
+      <span class="num" aria-hidden="true">3</span>
+      <h3>We clean</h3>
+      <p>Purified water through a fed pole for the panes a ladder should not reach, and pressure matched to the surface on anything we wash.</p>
+    </article>
+    <article class="how-cell">
+      <span class="num" aria-hidden="true">4</span>
+      <h3>We check the work before we leave</h3>
+      <p>Glass, tracks, sills and screens, and on a gutter job the run gets checked for sag and separation while we are up there. Anything we find, you hear about.</p>
+    </article>
+  </div>
+</section>
+
+
+<section id="why" class="why">
+  <div class="wrap">
+    <div class="sec-hd">
+      <h2 class="rv">Why anyone calls us twice</h2>
+      <p class="rv" data-d="1">Four things that decide whether glass still looks clean a week later.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-cell rv">
+        <h3>Reach without ladders</h3>
+        <p>Purified water through a fed pole gets to second storey panes from the ground. No ladder feet in the planting and no marks down the wall.</p>
+      </div>
+      <div class="why-cell rv" data-d="1">
+        <h3>Nothing left to dry into a spot</h3>
+        <p>The water is purified before it touches the glass, so there are no minerals sitting on the pane waiting to show up as the sun takes the water off.</p>
+      </div>
+      <div class="why-cell rv" data-d="2">
+        <h3>Pressure matched to the surface</h3>
+        <p>A concrete driveway and a painted block wall do not take the same pressure, so they do not get the same pressure.</p>
+      </div>
+      <div class="why-cell rv" data-d="3">
+        <h3>The price comes before the work</h3>
+        <p>We come and look for nothing, and you have the number in your hand before anybody unrolls a hose.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="work" class="work wrap">
   <div class="sec-hd">
     <h2 class="rv">Recent jobs<br>around Phoenix</h2>
     <p class="rv" data-d="1">Every photograph on this page is our own work on a real property. No stock, nothing staged.</p>
   </div>
-  <div class="gal">
-    <figure class="tile g-a rv"><img src="assets/photos/interior-ladder.webp" alt="Tall interior pane cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Tall interior pane</figcaption></figure>
-    <figure class="tile g-b rv" data-d="1"><img src="assets/photos/french-doors.webp" alt="French doors cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>French doors</figcaption></figure>
-    <figure class="tile g-c rv" data-d="2"><img src="assets/photos/glass-patio.webp" alt="Patio slider run cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Patio slider run</figcaption></figure>
-    <figure class="tile g-d rv"><img src="assets/photos/pole-entry.webp" alt="Entry glass, water-fed pole cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Entry glass, water-fed pole</figcaption></figure>
-    <figure class="tile g-e rv" data-d="1"><img src="assets/photos/midcentury.webp" alt="Mid-century glazing cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Mid-century glazing</figcaption></figure>
-    <figure class="tile g-f rv" data-d="2"><img src="assets/photos/patio-row.webp" alt="Covered patio run cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Covered patio run</figcaption></figure>
-    <figure class="tile g-g rv"><img src="assets/photos/bay-pool.webp" alt="Bay window, poolside cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Bay window, poolside</figcaption></figure>
-    <figure class="tile g-h rv" data-d="1"><img src="assets/photos/entry-ladder.webp" alt="Entry glazing cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Entry glazing</figcaption></figure>
-    <figure class="tile g-i rv" data-d="2"><img src="assets/photos/patio-covered.webp" alt="Shaded patio glass cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Shaded patio glass</figcaption></figure>
-    <figure class="tile g-j rv"><img src="assets/photos/glass-corner.webp" alt="Glazed corner, courtyard cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Glazed corner, courtyard</figcaption></figure>
+  <div class="tabs rv" data-d="1" role="group" aria-label="Filter the job index">
+    <button type="button" class="tab on" data-cat="all">Everything</button>
+    <button type="button" class="tab" data-cat="interior">From inside</button>
+    <button type="button" class="tab" data-cat="doors">Doors and patios</button>
+    <button type="button" class="tab" data-cat="exterior">Exteriors</button>
+  </div>
+  <div class="gal" id="gal">
+    <figure class="tile g-a rv" data-cat="interior"><img src="assets/photos/interior-ladder.webp" alt="Tall interior pane cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Tall interior pane</figcaption></figure>
+    <figure class="tile g-b rv" data-d="1" data-cat="doors"><img src="assets/photos/french-doors.webp" alt="French doors cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>French doors</figcaption></figure>
+    <figure class="tile g-c rv" data-d="2" data-cat="doors"><img src="assets/photos/glass-patio.webp" alt="Patio slider run cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Patio slider run</figcaption></figure>
+    <figure class="tile g-d rv" data-cat="exterior"><img src="assets/photos/pole-entry.webp" alt="Entry glass, water-fed pole cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Entry glass, water-fed pole</figcaption></figure>
+    <figure class="tile g-e rv" data-d="1" data-cat="exterior"><img src="assets/photos/midcentury.webp" alt="Mid-century glazing cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Mid-century glazing</figcaption></figure>
+    <figure class="tile g-f rv" data-d="2" data-cat="doors"><img src="assets/photos/patio-row.webp" alt="Covered patio run cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Covered patio run</figcaption></figure>
+    <figure class="tile g-g rv" data-cat="interior"><img src="assets/photos/bay-pool.webp" alt="Bay window, poolside cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Bay window, poolside</figcaption></figure>
+    <figure class="tile g-h rv" data-d="1" data-cat="exterior"><img src="assets/photos/entry-ladder.webp" alt="Entry glazing cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Entry glazing</figcaption></figure>
+    <figure class="tile g-i rv" data-d="2" data-cat="doors"><img src="assets/photos/patio-covered.webp" alt="Shaded patio glass cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Shaded patio glass</figcaption></figure>
+    <figure class="tile g-j rv" data-cat="exterior"><img src="assets/photos/glass-corner.webp" alt="Glazed corner, courtyard cleaned by Pane Solutions in Phoenix" loading="lazy"><figcaption>Glazed corner, courtyard</figcaption></figure>
   </div>
 </section>
 
@@ -588,6 +788,47 @@ footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;fl
   </div>
 </section>
 
+
+<section id="faq" class="faq wrap">
+  <div class="faq-in">
+    <div class="faq-hd rv">
+      <h2>Questions we get asked</h2>
+      <p>If yours is not here, call <a href="tel:+15155254127">515.525.4127</a> and ask. It costs nothing to find out.</p>
+      <figure class="plate faq-shot"><img src="assets/photos/french-doors.webp" alt="Black framed French doors cleaned by Pane Solutions in Phoenix" loading="lazy"></figure>
+    </div>
+    <div class="rv" data-d="1">
+      <details class="q" open>
+        <summary>Do you clean second storey windows?<span class="sign" aria-hidden="true"></span></summary>
+        <div class="a"><p>Yes. Purified water through a fed pole reaches upper panes from the ground, so there are no ladder marks down the wall and no spotting once the glass dries.</p></div>
+      </details>
+      <details class="q">
+        <summary>Do you work on businesses as well as homes?<span class="sign" aria-hidden="true"></span></summary>
+        <div class="a"><p>Both. One visit, or on a schedule if you would rather not think about it again.</p></div>
+      </details>
+      <details class="q">
+        <summary>What does an estimate cost?<span class="sign" aria-hidden="true"></span></summary>
+        <div class="a"><p>Nothing. There is no charge to come and look, and you get the price before any work starts.</p></div>
+      </details>
+      <details class="q">
+        <summary>Will pressure washing damage my driveway or patio?<span class="sign" aria-hidden="true"></span></summary>
+        <div class="a"><p>Pressure is matched to the surface every time. Desert dust and hard water staining come off without chewing up what is underneath.</p></div>
+      </details>
+      <details class="q">
+        <summary>Are screens, tracks and sills included?<span class="sign" aria-hidden="true"></span></summary>
+        <div class="a"><p>Yes. A window clean is interior and exterior glass plus the tracks, the sills and the screens.</p></div>
+      </details>
+      <details class="q">
+        <summary>Are the photographs on this site your own work?<span class="sign" aria-hidden="true"></span></summary>
+        <div class="a"><p>Every one of them. Real Phoenix properties we have cleaned, straight off our own camera. There is no stock photography anywhere on this page.</p></div>
+      </details>
+      <details class="q">
+        <summary>Where do you work?<span class="sign" aria-hidden="true"></span></summary>
+        <div class="a"><p>Phoenix, Arizona. Tell us where you are and you will get a straight yes or no on the phone.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
 <section id="contact" class="contact">
   <div class="contact-bg"><img src="assets/photos/glass-corner.webp" alt="" aria-hidden="true" loading="lazy"></div>
   <div class="wrap">
@@ -613,8 +854,39 @@ footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;fl
 </main>
 
 <footer class="wrap">
-  <span>Pane Solutions LLC, Phoenix Arizona. Established 2023.</span>
-  <span>Window cleaning, pressure washing, gutter cleaning.</span>
+  <div class="f-grid">
+    <div>
+      <span class="f-brand"><img src="assets/logo.png" alt="">Pane Solutions</span>
+      <p class="f-say">Window cleaning, pressure washing and gutter cleaning for Phoenix homes and businesses. Every photograph on this site is our own work.</p>
+      <a class="f-tel" href="tel:+15155254127">515.525.4127</a>
+    </div>
+    <div class="f-col">
+      <h4>Services</h4>
+      <a href="#services">Window cleaning</a>
+      <a href="#services">Pressure washing</a>
+      <a href="#services">Gutter cleaning</a>
+      <a href="#how">How a job goes</a>
+      <a href="#why">Why us</a>
+    </div>
+    <div class="f-col">
+      <h4>Have a look</h4>
+      <a href="#work">Recent jobs</a>
+      <a href="#reels">Reels</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">Questions</a>
+    </div>
+    <div class="f-col">
+      <h4>Get in touch</h4>
+      <a href="tel:+15155254127">515.525.4127</a>
+      <a href="mailto:answergaye22@gmail.com">answergaye22@gmail.com</a>
+      <a href="https://www.instagram.com/pane_solutions_llc/" target="_blank" rel="noopener">@pane_solutions_llc</a>
+      <span>Phoenix, Arizona</span>
+    </div>
+  </div>
+  <div class="f-bot">
+    <span>Pane Solutions LLC, Phoenix Arizona. Established 2023.</span>
+    <span>Rated 5.0 on Google from 13 reviews.</span>
+  </div>
 </footer>
 
 <script>
@@ -634,6 +906,25 @@ footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;fl
     es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
   },{rootMargin:'0px 0px -8% 0px',threshold:.1});
   els.forEach(function(e){io.observe(e)});
+})();
+
+/* the job index filter. The bento holds its hand placed spans on ALL and
+   falls to an even dense grid on anything else, because a bento with holes
+   punched through it is just a broken bento. */
+(function(){
+  var gal=document.getElementById('gal');if(!gal)return;
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var tiles=[].slice.call(gal.querySelectorAll('.tile'));
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){
+      var c=t.dataset.cat;
+      tabs.forEach(function(o){o.classList.toggle('on',o===t)});
+      gal.classList.toggle('filt',c!=='all');
+      tiles.forEach(function(f){
+        f.hidden = (c!=='all' && f.dataset.cat!==c);
+      });
+    });
+  });
 })();
 
 /* Instagram embeds. The poster frame stays until Instagram's iframe actually

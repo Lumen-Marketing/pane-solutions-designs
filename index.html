@@ -101,8 +101,15 @@ h1 em{font-style:normal;color:var(--blue)}
 .seg button.on{background:var(--blue);color:#fff;font-weight:600}
 
 /* ── cards ──────────────────────────────────────────────────────────────── */
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(430px,1fr));
+.cards{display:grid;grid-template-columns:1fr;
   gap:clamp(18px,2.4vw,32px);padding-block:clamp(26px,4vw,54px)}
+/* Two up, and the third runs the full width rather than sitting orphaned in
+   the left column with half a screen of nothing beside it. auto-fit was
+   deciding the column count on its own and stranding it. */
+@media(min-width:900px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .card:last-child{grid-column:1 / -1}
+}
 .card{border-radius:20px;overflow:hidden;display:flex;flex-direction:column;
   opacity:0;translate:0 30px;
   transition:opacity .85s var(--ease),translate .85s var(--ease)}
@@ -167,7 +174,7 @@ footer{padding-block:28px;display:flex;flex-wrap:wrap;gap:16px;
     <div><b>Pane Solutions LLC</b><span>Window cleaning in Phoenix, Arizona</span></div>
   </div>
   <h1>Three homepages, three <em>looks.</em></h1>
-  <p class="lead">Every one uses the <b>same real content</b>: Pane Solutions' own Instagram photos, their three real reels, and the 5.0 star Google reviews quoted as written. <b>What you see on each card is that package's homepage,</b> running live. Basic stops there. Standard and Premium add the pages listed underneath.</p>
+  <p class="lead">Every one uses the <b>same real content</b>: Pane Solutions' own Instagram photos, their three real reels, and the 5.0 star Google reviews quoted as written. <b>What you see on each card is that package's homepage,</b> running live. All three run the <b>same nine sections in the same order</b>, and no two of them lay a section out the same way, so what you are choosing between is the design. Basic stops at the homepage. Standard and Premium add the pages listed underneath.</p>
   <div class="seg" id="seg">
     <button class="on" data-mode="desktop">Desktop</button>
     <button data-mode="mobile">Mobile</button>
@@ -187,7 +194,7 @@ footer{padding-block:28px;display:flex;flex-wrap:wrap;gap:16px;
       <div class="veil"><span>Click to interact</span></div>
     </div>
     <div class="card-bd">
-      <p><b>Bright frosted glass on full screen photography.</b> The airy one. Every panel is a sheet of glass over a photograph, and two smaller plates lap across the hero at opposing angles so things are genuinely in front of each other. Services run as a zig zag of full bleed bands, the job index is an asymmetric bento, and the reels sit on a deep blue block.</p>
+      <p><b>Bright frosted glass on full screen photography.</b> The airy one. Every pane is a sheet of glass over a photograph, and two smaller plates lap across the hero at opposing angles so things are genuinely in front of each other. Services zig zag down the page. The four steps of a job sit in ruled cells behind outlined numerals, the reasons to call are four columns ruled apart with no cards at all, and the job index has filter tabs that drop the bento to an even grid when you use one. Questions open on an accordion at the end.</p>
       <ul class="incl">
         <li>One page, everything on it</li>
         <li>Click to call and click to email</li>
@@ -197,7 +204,8 @@ footer{padding-block:28px;display:flex;flex-wrap:wrap;gap:16px;
       </ul>
       <div class="tags">
         <span class="tag key">Light glass</span><span class="tag">Bricolage Grotesque</span>
-        <span class="tag">Full screen hero</span><span class="tag">Zig zag bands</span><span class="tag">Bento index</span>
+        <span class="tag">Full screen hero</span><span class="tag">Outlined numerals</span>
+        <span class="tag">Filter tabs</span><span class="tag">Bento index</span><span class="tag">FAQ accordion</span>
       </div>
     </div>
   </article>
@@ -213,7 +221,7 @@ footer{padding-block:28px;display:flex;flex-wrap:wrap;gap:16px;
       <div class="veil"><span>Click to interact</span></div>
     </div>
     <div class="card-bd">
-      <p><b>Smoked glass at dusk.</b> The dense one. Deep slate teal over a photograph that runs behind the whole page, which is what the glass refracts. Three split screens alternate down the page, and the services keep the split: the photograph changes as you scroll the column beside it. The job index is twelve upright panes that open when you point at them.</p>
+      <p><b>Smoked glass at dusk.</b> The dense one. Deep slate teal over a photograph that runs behind the whole page, which is what the glass refracts. Three split screens alternate down the page, and the services keep the split: the photograph changes as you scroll the column beside it. The four steps of a job are glass tiles threaded on a hairline, the reasons to call are an asymmetric grid with a photograph occupying one cell, and the job index is twelve upright panes that open when you point at them. Questions run in two columns.</p>
       <ul class="incl">
         <li>Homepage plus Services and Contact</li>
         <li>Working lead form to email and database</li>
@@ -223,7 +231,8 @@ footer{padding-block:28px;display:flex;flex-wrap:wrap;gap:16px;
       </ul>
       <div class="tags">
         <span class="tag key">Smoked glass</span><span class="tag">Syne and Outfit</span>
-        <span class="tag">Split screen</span><span class="tag">Sticky photo swap</span><span class="tag">Pane gallery</span>
+        <span class="tag">Split screen</span><span class="tag">Sticky photo swap</span>
+        <span class="tag">Numbered rail</span><span class="tag">Pane gallery</span><span class="tag">Two column FAQ</span>
       </div>
     </div>
   </article>
@@ -239,7 +248,7 @@ footer{padding-block:28px;display:flex;flex-wrap:wrap;gap:16px;
       <div class="veil"><span>Click to interact</span></div>
     </div>
     <div class="card-bd">
-      <p><b>The one people remember.</b> Dark and cinematic, built vertically because the business is about reaching glass nobody else can. Its glass is square edged rather than soft. The three services are full screen panels that stack on each other as you scroll, the work is a filmstrip you drag, and the reviews sit on a deep blue block behind panes that catch a reflection when you touch them.</p>
+      <p><b>The one people remember.</b> Dark and cinematic, built vertically because the business is about reaching glass nobody else can. Its glass is square edged rather than soft. The three services are full screen panels that stack on each other as you scroll. The four steps of a job stagger either side of a spine, the reasons to call are four solid cards nested inside a brand colour panel, the work is a filmstrip you drag, and the reviews sit on a deep blue block behind panes that catch a reflection when you touch them.</p>
       <ul class="incl">
         <li>Full multi page site</li>
         <li>Working lead form to email and database</li>
@@ -249,7 +258,8 @@ footer{padding-block:28px;display:flex;flex-wrap:wrap;gap:16px;
       </ul>
       <div class="tags">
         <span class="tag key">Square glass</span><span class="tag">Big Shoulders and Sora</span>
-        <span class="tag">Sticky stack</span><span class="tag">Drag filmstrip</span><span class="tag">Colour block</span>
+        <span class="tag">Sticky stack</span><span class="tag">Journey spine</span>
+        <span class="tag">Nested panel</span><span class="tag">Drag filmstrip</span><span class="tag">Colour block</span>
       </div>
     </div>
   </article>

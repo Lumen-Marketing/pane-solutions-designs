@@ -24,7 +24,7 @@
 //     of live chrome.exe behind and each later run gets slower until it stops
 //     answering at all.
 import { spawn } from 'node:child_process';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -129,7 +129,10 @@ async function run(file, { width, height, out, slices = 0, wait = 2400 }) {
     try { ws && ws.close(); } catch {}
     chrome.kill();
     spawn('taskkill', ['/PID', String(chrome.pid), '/T', '/F'], { stdio: 'ignore' });
-    await sleep(150);
+    await sleep(400);
+    // Delete the profile. Chrome writes 40MB or so per run into it, and 275
+    // of these left behind over this project filled the disk outright.
+    try { rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 }); } catch {}
   }
 }
 
