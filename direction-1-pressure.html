@@ -133,15 +133,15 @@ a{color:inherit;text-decoration:none}
 .nav-cta i::after{content:'';width:7px;height:7px;border-top:1.5px solid currentColor;
   border-right:1.5px solid currentColor;rotate:45deg;margin-left:-2px}
 .nav-cta:hover i{translate:3px 0;background:rgba(255,255,255,.32)}
-.btn-glass{
-  display:inline-block;padding:15px 28px;border-radius:999px;font-weight:600;font-size:15px;
-  color:var(--ink);background:rgba(255,255,255,.5);
-  backdrop-filter:blur(20px) saturate(150%);-webkit-backdrop-filter:blur(20px) saturate(150%);
-  border:1px solid rgba(255,255,255,.7);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
-  transition:background .25s var(--ease),translate .25s var(--ease);
-}
-.btn-glass:hover{background:rgba(255,255,255,.78);translate:0 -2px}
+/* the hero's secondary action sits on paper now, not on a photograph, so it
+   is a plain outline button. Glass over paper is a white rectangle. */
+.btn-out{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:14px 26px;border-radius:999px;font-weight:600;font-size:15px;
+  border:1px solid rgba(16,36,54,.28);color:var(--ink);background:transparent;
+  transition:border-color .3s var(--ease),background .3s var(--ease),translate .3s var(--ease)}
+.btn-out:hover{border-color:rgba(16,36,54,.6);background:rgba(16,36,54,.05)}
+.btn-out:active{translate:0 1px}
 
 /* ── nav: a floating glass bar, not a full-width strip ─────────────────── */
 .nav{
@@ -173,45 +173,47 @@ a{color:inherit;text-decoration:none}
 .drawer a{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(2rem,9vw,3.4rem);line-height:1.1}
 .drawer .x{position:absolute;top:24px;right:var(--gut);background:none;border:0;font:inherit;font-weight:600;cursor:pointer;color:var(--ink)}
 
-/* ── hero: FULL-SCREEN archetype ───────────────────────────────────────────
-   The photograph is the page, the content is a pane floating on it, and a
-   second pane hangs across the bottom edge into the section below. */
-.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:visible}
-.hero-bg{position:absolute;inset:0;overflow:hidden;z-index:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:64% 44%;
-  animation:drift 30s ease-in-out infinite alternate}
-@keyframes drift{to{scale:1.08}}
-/* one flat wash so the glass has a predictable ground, never a ramp */
-.hero-bg::after{content:'';position:absolute;inset:0;background:rgba(226,233,238,.34)}
-.hero-in{position:relative;z-index:2;width:100%;padding-top:90px}
-.hero-stack{position:relative;display:inline-block;max-width:100%}
-/* the cascade. Opposing rotations, mirrored about the pane, so the pair reads
-   as composition rather than as one thing knocked askew. */
-.chip{position:absolute;overflow:hidden;border-radius:18px;border:5px solid rgba(255,255,255,.85);
-  box-shadow:0 2px 5px rgba(20,36,56,.1),0 18px 38px rgba(20,36,56,.22),0 46px 80px rgba(20,36,56,.2);
-  transition:translate .5s var(--ease),rotate .5s var(--ease)}
-.chip img{width:100%;height:100%;object-fit:cover}
-.chip-a{width:clamp(140px,15vw,215px);aspect-ratio:4/5;right:-6%;bottom:-13%;rotate:5deg;z-index:4}
-.chip-b{width:clamp(120px,12.5vw,178px);aspect-ratio:1/1;right:16%;bottom:-24%;rotate:-6deg;z-index:3}
-.hero-stack:hover .chip-a{translate:0 -8px;rotate:3deg}
-.hero-stack:hover .chip-b{translate:0 -5px;rotate:-4deg}
-.hero-card{max-width:min(650px,100%)}
-.hero-card .core{padding:clamp(28px,3.4vw,50px)}
-.hero-card h1{font-size:clamp(2.6rem,5vw,4.5rem);max-width:14ch}
-.hero-card h1 i{font-style:normal;color:var(--blue)}
-.hero-card p{margin-top:18px;max-width:34ch;font-size:clamp(1rem,1.16vw,1.16rem);color:var(--ink-2)}
-.hero-acts{margin-top:clamp(22px,2.6vw,32px);display:flex;gap:12px;flex-wrap:wrap}
-/* the strip hung across the bottom edge of the hero */
-.strip{
-  position:relative;z-index:3;margin:0 var(--gut);margin-top:clamp(-92px,-6vw,-58px);
-}
-.strip .core{display:grid;grid-template-columns:repeat(3,1fr);
-  padding:clamp(18px,2vw,26px) clamp(10px,1.4vw,20px)}
-.strip div{padding-inline:clamp(12px,1.6vw,24px);border-right:1px solid rgba(16,24,36,.12)}
-.strip div:last-child{border-right:0}
+/* ── hero: ASYMMETRIC SPLIT ───────────────────────────────────────────────
+   Type on textured paper, one uninterrupted photograph beside it. No card and
+   no plates: the headline does not need a box to sit in when the ground under
+   it is already paper, and two tilted photo chips lapping a card was
+   decoration rather than composition. The picture gets a whole half. */
+.hero{position:relative;min-height:100svh;
+  display:grid;grid-template-columns:minmax(0,1.06fr) minmax(0,1fr);align-items:stretch}
+.hero-copy{position:relative;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(118px,12vw,152px) clamp(30px,4.6vw,88px) clamp(48px,6vw,92px) var(--gut)}
+.hero-copy h1{font-size:clamp(2.7rem,5.3vw,4.9rem);max-width:13ch;letter-spacing:-.035em}
+.hero-copy h1 i{font-style:normal;color:var(--blue)}
+.hero-copy p{margin-top:20px;max-width:37ch;
+  font-size:clamp(1.02rem,1.2vw,1.2rem);color:var(--ink-2)}
+.hero-acts{margin-top:clamp(26px,3vw,38px);display:flex;gap:12px;flex-wrap:wrap}
+.hero-shot{position:relative;overflow:hidden;background:#DCE3E8}
+.hero-shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:54% 44%;animation:drift 34s ease-in-out infinite alternate}
+@keyframes drift{to{scale:1.07}}
+@media(prefers-reduced-motion:reduce){.hero-shot img{animation:none}}
+
+/* the 5.0 / 13 / Free row. It used to hang inside the hero as a glass card,
+   which is a trust strip sitting in the one place a trust strip should not be.
+   It is its own solid band now, directly under. */
+.strip{background:#E3E8EC;border-block:1px solid rgba(16,36,54,.12)}
+.strip-in{display:grid;grid-template-columns:repeat(3,1fr);
+  padding-block:clamp(22px,2.6vw,32px)}
+.strip-in>div{padding-inline:clamp(14px,2vw,36px);border-left:1px solid rgba(16,36,54,.14)}
+.strip-in>div:first-child{border-left:0;padding-left:0}
 .strip b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;
   font-size:clamp(1.5rem,2.5vw,2.2rem);line-height:1;letter-spacing:-.03em}
 .strip span{display:block;margin-top:6px;font-size:13.5px;color:var(--ink-2)}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:0}
+  .hero-copy{padding:clamp(106px,26vw,132px) var(--gut) clamp(34px,7vw,52px)}
+  .hero-shot{aspect-ratio:4/3}
+  .strip-in{grid-template-columns:1fr;padding-block:clamp(20px,5vw,28px)}
+  .strip-in>div{border-left:0;padding-inline:0;
+    border-top:1px solid rgba(16,36,54,.14);padding-top:14px;margin-top:14px}
+  .strip-in>div:first-child{border-top:0;padding-top:0;margin-top:0}
+}
 
 /* ── services: photographs IN the section, not behind it ──────────────────
    This used to be three full bleed photographic bands, which on its own put
@@ -368,11 +370,14 @@ figure.tile figcaption{
    The ground here is plain paper, so there are no cards. Cards on a flat
    ground are rectangles. A 1px grid gap over a line colour rules the cells
    apart instead, which is the same move a printed table makes. */
-.how{padding-block:clamp(56px,7.5vw,108px)}
+/* SOLID. A flat band and nothing on it. Not every section needs a material,
+   and the ruled cells below carry this one on their own. */
+.how{padding-block:clamp(56px,7.5vw,108px);background:#E6EBEF;
+  border-block:1px solid rgba(16,36,54,.1)}
 .how-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
   background:rgba(16,36,54,.14);border:1px solid rgba(16,36,54,.14);
   border-radius:calc(var(--r) - 6px);overflow:hidden}
-.how-cell{position:relative;background:var(--paper);
+.how-cell{position:relative;background:#E6EBEF;
   padding:clamp(26px,3.1vw,50px);overflow:hidden}
 .how-cell:nth-child(1),.how-cell:nth-child(4){grid-column:span 3}
 .how-cell:nth-child(2),.how-cell:nth-child(3){grid-column:span 2}
@@ -395,12 +400,33 @@ figure.tile figcaption{
   .how-cell:nth-child(n){grid-column:span 1}
 }
 
+/* ── ground: TEXTURE OVER PICTURE ─────────────────────────────────────────
+   The fourth kind. Not a photograph behind the section and not a flat colour
+   with a pattern on it, but both: a heavy paper wash over the picture so the
+   photograph reads as something under the page rather than behind it, then
+   the same dot field laid over the top of that. Dark type stays legible and
+   the page never flips to a dark section mid scroll. */
+.pict{position:relative;overflow:hidden}
+.pict-bg{position:absolute;inset:0;z-index:0}
+/* Under a heavy paper wash a full colour photograph turns to grey mush, so it
+   is pulled most of the way to greyscale and lifted first. What survives the
+   wash is then structure, which is what a ground wants, rather than muddy
+   colour. Contrast is measured off the rendered pixels, not off these numbers:
+   shots/contrast.mjs, worst case has to clear 4.5:1. */
+.pict-bg img{width:100%;height:100%;object-fit:cover;object-position:50% 44%;
+  filter:grayscale(.72) brightness(1.1) contrast(1.06)}
+.pict-bg::after{content:'';position:absolute;inset:0;background:rgba(236,240,242,.8)}
+.pict::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22'%3E%3Ccircle cx='2' cy='2' r='1.4' fill='%23102436' fill-opacity='.11'/%3E%3C/svg%3E");
+}
+.pict>*:not(.pict-bg){position:relative;z-index:2}
+
 /* ── why us: four columns, ruled apart, no cards ──────────────────────────
    The band is flat, and a card on a flat ground is a rectangle whatever is
    done to it. Vertical hairlines separate the four just as well and leave the
    section reading as one run rather than as four objects. */
-.why{padding-block:clamp(56px,7.5vw,108px);background:#E6EBEF;
-  border-block:1px solid rgba(16,36,54,.1)}
+.why{padding-block:clamp(56px,7.5vw,108px);
+  border-block:1px solid rgba(16,36,54,.12)}
 .why-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
 .why-cell{padding-inline:clamp(16px,2.1vw,36px);
   border-left:1px solid rgba(16,36,54,.16)}
@@ -565,29 +591,21 @@ footer{border-top:1px solid rgba(16,36,54,.14);
 </div>
 
 <header class="hero" id="top">
-  <div class="hero-bg"><img src="assets/photos/pole-entry.webp" alt="Pane Solutions cleaning the entry glass of a Phoenix home with a water-fed pole" fetchpriority="high"></div>
-  <div class="hero-in wrap">
-    <div class="hero-stack">
-    <div class="hero-card pane">
-      <div class="core">
-      <h1>Glass this clean <i>disappears.</i></h1>
-      <p>Window cleaning, pressure washing and gutters for Phoenix homes and businesses.</p>
-      <div class="hero-acts">
-        <a class="btn" href="#contact">Free estimate</a>
-        <a class="btn-glass" href="#work">See the work</a>
-      </div>
-      </div>
-    </div>
-    <!-- two plates in front of the pane, at opposing angles, so something is
-         genuinely occluding something else rather than sitting beside it -->
-    <figure class="chip chip-a"><img src="assets/photos/entry-ladder@sm.webp" alt="Cleaning entry glass on a Phoenix home" loading="lazy"></figure>
-    <figure class="chip chip-b"><img src="assets/photos/patio-covered@sm.webp" alt="A covered patio run of glass after cleaning" loading="lazy"></figure>
+  <div class="hero-copy dots">
+    <h1>Glass this clean <i>disappears.</i></h1>
+    <p>Window cleaning, pressure washing and gutters for Phoenix homes and businesses.</p>
+    <div class="hero-acts">
+      <a class="btn" href="#contact">Free estimate</a>
+      <a class="btn-out" href="#work">See the work</a>
     </div>
   </div>
+  <figure class="hero-shot">
+    <img src="assets/photos/arch-reflect.webp" alt="A Pane Solutions cleaner squeegeeing a tall arched window in Phoenix that reflects the pool and the palms behind him" fetchpriority="high">
+  </figure>
 </header>
 
-<div class="strip pane">
-  <div class="core">
+<div class="strip">
+  <div class="wrap strip-in">
     <div><b>5.0</b><span>Rating on Google</span></div>
     <div><b>13</b><span>Reviews, every one five star</span></div>
     <div><b>Free</b><span>No charge to come and look</span></div>
@@ -599,7 +617,7 @@ footer{border-top:1px solid rgba(16,36,54,.14);
 <section id="services" class="svc wrap dots">
 
   <div class="svc-row rv">
-    <figure class="plate"><img src="assets/photos/arch-reflect.webp" alt="An arched Phoenix window reflecting the pool and sky after cleaning" loading="lazy"></figure>
+    <figure class="plate"><img src="assets/photos/pole-entry.webp" alt="Cleaning the entry glass of a Phoenix home with a water-fed pole" loading="lazy"></figure>
     <div class="svc-copy">
       <h2>Window cleaning</h2>
       <p>Interior and exterior glass, tracks, sills and screens. Purified water through a fed pole reaches second storey panes with no ladder marks on the wall and no spotting once it dries.</p>
@@ -629,7 +647,8 @@ footer{border-top:1px solid rgba(16,36,54,.14);
 
 </section>
 
-<section id="how" class="how wrap">
+<section id="how" class="how">
+  <div class="wrap">
   <div class="sec-hd">
     <h2 class="rv">How a job goes</h2>
     <p class="rv" data-d="1">Four steps, and you have paid nothing by the end of the second one.</p>
@@ -657,10 +676,12 @@ footer{border-top:1px solid rgba(16,36,54,.14);
       <p>Glass, tracks, sills and screens, and on a gutter job the run gets checked for sag and separation while we are up there. Anything we find, you hear about.</p>
     </article>
   </div>
+  </div>
 </section>
 
 
-<section id="why" class="why">
+<section id="why" class="why pict">
+  <div class="pict-bg"><img src="assets/photos/midcentury.webp" alt="" aria-hidden="true" loading="lazy"></div>
   <div class="wrap">
     <div class="sec-hd">
       <h2 class="rv">Why anyone calls us twice</h2>

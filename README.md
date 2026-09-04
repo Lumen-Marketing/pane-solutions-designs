@@ -211,7 +211,7 @@ column before it ships.
 | theme | light, warm neutral | deep slate-teal | near black |
 | glass | light frosted panes over photos | smoked panes over a fixed photographic ground | none, this one stays opaque |
 | depth device | one glass slab, plus a Z-axis photo cascade | one smoked slab over a fixed blurred ground | three planes, foreground occlusion |
-| hero | full-screen photo, glass card, two lapping plates | split screen, pane crossing the seam | full bleed photo, plate hung over the edge |
+| hero | asymmetric split, type on textured paper, one photograph | split screen, pane crossing the seam | full bleed photo, plate hung over the edge |
 | services | zig-zag of three photographic bands | sticky split, photo swaps per service | full-screen sticky stack |
 | work | asymmetric bento, ten tiles | pane gallery, twelve slats that open | drag-to-pan filmstrip |
 | reels | three light glass plates | three smoked plates | three ink plates |
@@ -221,6 +221,34 @@ column before it ships.
 | why us | four columns ruled apart, no cards | asymmetric 2x2 with a photo in one cell | solid cards nested inside a colour panel |
 | FAQ | sticky title left, accordion right | one heading, questions in two columns | sticky title left, square accordion right |
 | footer | four columns on paper | four columns on the fixed photograph | four columns on a raised ink band |
+
+## The Daylight hero, rebuilt
+
+The glass card with two tilted photo plates lapping its corner was rejected on
+sight. Five things were wrong with it, and only the first is a matter of taste:
+
+1. **The plates were decoration.** They said nothing, they overlapped each
+   other so one was always half hidden, and a card only earns its place when
+   elevation means something.
+2. **The photograph showed almost no glass.** It was a close up of stucco and a
+   brown door, on the homepage of a company that cleans windows.
+3. **The pane picked up a warm pink cast** off the stucco behind it, which
+   fought the brand blue on the button sitting inside it.
+4. **A quarter of the screen above the card was empty wall.**
+5. **A 5.0 / 13 / Free strip is a trust micro strip,** and those belong under
+   the hero rather than inside it.
+
+It is an **asymmetric split** now. Type on textured paper on the left, one
+uninterrupted photograph on the right, no card and no plates. The headline sits
+on real paper, so it stays legible no matter what the picture does, and the
+photograph gets a whole half rather than being chopped into three pieces. The
+frame is the one that shows the work, the glass and the result at once: a
+cleaner squeegeeing an arched window that is reflecting the pool behind him.
+The trust strip is its own solid band directly underneath.
+
+The secondary button went from frosted glass to a plain outline in the same
+move. **Glass over paper is a white rectangle**, and there is no photograph
+behind it any more.
 
 ## The wireframe pass
 
@@ -263,14 +291,29 @@ leaves nothing behind the words.
 ## Grounds: the rule the whole set now follows
 
 Flat colour was the complaint, and "add texture everywhere" would have been the
-wrong answer. Every section on every page is one of three kinds, and no page
+wrong answer. Every section on every page is one of **four** kinds, and no page
 uses one kind more than about twice in a row.
 
 | kind | what it is | when |
 |---|---|---|
-| **IMAGE** | a real client photograph under one flat veil | when the section has no photographs of its own |
-| **PLAIN** | flat colour, nothing on it | when the section's own content is already busy. The bento of ten photographs does not need a patterned ground behind it |
+| **PICTURE** | a real client photograph under one flat veil | when the section has no photographs of its own |
+| **SOLID** | flat colour, nothing on it | when the section's own content is already busy. The bento of ten photographs does not need a patterned ground behind it |
+| **TEXTURE** | flat colour with a fine SVG pattern on it | the default working ground. Gives a plain section tooth without competing with anything |
+| **TEXTURE OVER PICTURE** | a heavy paper wash **over** a photograph, then the pattern laid over the top of that | once or twice a page. The photograph reads as something under the page rather than behind it |
 | **COLOUR + TEXTURE** | a block of the accent with a real photograph laid into it, greyscaled and held low | once per page, as the one place the page raises its voice |
+
+Daylight runs all four inside its first four sections: the hero is textured
+paper beside a photograph, the services are textured, the process is solid, and
+the why us section is the picture read through the page.
+
+**Two things make TEXTURE OVER PICTURE work rather than look like fog.** The
+photograph is pulled most of the way to greyscale and lifted before the wash
+goes on, because a full colour picture under heavy paper turns to grey mush and
+what you want to survive is structure. And the contrast is measured off the
+**rendered pixels**, not off the CSS: a ground with a picture in it has no
+single background colour, so `shots/contrast.mjs` samples the real pixels
+inside every text box and reports the worst patch. Daylight's worst case in
+that section is 4.58:1, which clears AA for body text.
 
 That third one is not decoration. **A pane of glass over a flat colour is a
 rectangle**, so any section carrying glass cards needs either a photograph or a
