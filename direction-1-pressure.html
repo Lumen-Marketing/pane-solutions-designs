@@ -213,25 +213,41 @@ a{color:inherit;text-decoration:none}
   font-size:clamp(1.5rem,2.5vw,2.2rem);line-height:1;letter-spacing:-.03em}
 .strip span{display:block;margin-top:6px;font-size:13.5px;color:var(--ink-2)}
 
-/* ── services: ZIG-ZAG archetype ───────────────────────────────────────────
-   Three full-bleed photographic bands. The glass panel sits left, then right,
-   then centred, so the alternation never runs three deep. */
-.band{position:relative;min-height:clamp(460px,64svh,660px);display:flex;align-items:center;
-  overflow:hidden;padding-block:clamp(50px,7vw,100px)}
-.band-bg{position:absolute;inset:0;z-index:0}
-.band-bg img{width:100%;height:100%;object-fit:cover}
-.band-bg::after{content:'';position:absolute;inset:0;background:rgba(224,232,238,.3)}
-.band-in{position:relative;z-index:2;width:100%;display:flex}
-.band-l .band-in{justify-content:flex-start}
-.band-r .band-in{justify-content:flex-end}
-.band-c .band-in{justify-content:center}
-.band-card{max-width:min(575px,100%)}
-.band-card .core{padding:clamp(26px,3vw,44px)}
-.band-card h2{font-size:clamp(2rem,3.6vw,3.3rem);max-width:12ch}
-.band-card p{margin-top:15px;max-width:42ch;color:var(--ink-2)}
-.band-card .also{margin-top:16px;font-weight:600;color:var(--ink)}
-.band-c .band-card{text-align:center}
-.band-c .band-card h2,.band-c .band-card p{margin-inline:auto}
+/* ── services: photographs IN the section, not behind it ──────────────────
+   This used to be three full bleed photographic bands, which on its own put
+   three photographic grounds in a row and made the whole page read as one long
+   wash. The photographs are now plates held on the paper.
+
+   Two calm editorial rows, then one that laps: the third row is a wide plate
+   with a glass card pulled up over its lower corner, which is the only place in
+   this section where a card earns itself. Rows one and two are type beside a
+   photograph, because a pane of glass on flat paper is a white rectangle for
+   exactly the same reason a dark pane on flat near-black is a dark one. */
+.svc{padding-block:clamp(56px,7.5vw,108px)}
+.svc-row{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);
+  gap:clamp(24px,3.6vw,62px);align-items:center;padding-block:clamp(26px,3.4vw,50px)}
+.svc-row+.svc-row{border-top:1px solid rgba(16,36,54,.13)}
+.svc-row.flip .plate{order:2}
+.svc-copy h2{font-size:clamp(2rem,3.6vw,3.3rem);max-width:12ch}
+.svc-copy p{margin-top:15px;max-width:44ch;color:var(--ink-2)}
+.svc-copy .also{margin-top:16px;font-weight:600;color:var(--ink)}
+.plate{position:relative;overflow:hidden;border-radius:20px;
+  border:1px solid rgba(255,255,255,.75);
+  box-shadow:0 1px 2px rgba(20,36,56,.07),
+             0 18px 38px rgba(20,36,56,.15),
+             0 54px 94px rgba(20,36,56,.16)}
+.plate img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:scale 1.3s var(--ease)}
+.plate:hover img{scale:1.05}
+/* the lap. The card is half on the photograph and half on the paper, which is
+   the clearest way to show that the material is actually transparent. */
+.svc-lap{padding-top:clamp(26px,3.4vw,50px);border-top:1px solid rgba(16,36,54,.13)}
+.svc-lap .plate img{aspect-ratio:2.4/1}
+.svc-lap .svc-card{position:relative;z-index:2;max-width:min(560px,88%);
+  margin-top:clamp(-132px,-9vw,-76px);margin-left:clamp(16px,4vw,64px)}
+.svc-lap .svc-card .core{padding:clamp(24px,2.8vw,40px)}
+.svc-lap h2{font-size:clamp(2rem,3.6vw,3.3rem);max-width:12ch}
+.svc-lap p{margin-top:15px;max-width:42ch;color:var(--ink-2)}
+.svc-lap .also{margin-top:16px;font-weight:600;color:var(--ink)}
 
 /* ── work: GALLERY archetype ───────────────────────────────────────────────
    Equal tiles, equal weight, caption on a glass bar inside each tile. */
@@ -444,43 +460,33 @@ footer{padding-block:30px;display:flex;justify-content:space-between;gap:20px;fl
 
 <main>
 
-<section id="services">
+<section id="services" class="svc wrap dots">
 
-  <div class="band band-l">
-    <div class="band-bg"><img src="assets/photos/arch-reflect.webp" alt="An arched Phoenix window reflecting the pool and sky after cleaning" loading="lazy"></div>
-    <div class="band-in wrap">
-      <div class="band-card pane rv">
-        <div class="core">
-        <h2>Window cleaning</h2>
-        <p>Interior and exterior glass, tracks, sills and screens. Purified water through a fed pole reaches second storey panes with no ladder marks on the wall and no spotting once it dries.</p>
-        <p class="also">Homes and businesses. One visit or on a schedule.</p>
-        </div>
-      </div>
+  <div class="svc-row rv">
+    <figure class="plate"><img src="assets/photos/arch-reflect.webp" alt="An arched Phoenix window reflecting the pool and sky after cleaning" loading="lazy"></figure>
+    <div class="svc-copy">
+      <h2>Window cleaning</h2>
+      <p>Interior and exterior glass, tracks, sills and screens. Purified water through a fed pole reaches second storey panes with no ladder marks on the wall and no spotting once it dries.</p>
+      <p class="also">Homes and businesses. One visit or on a schedule.</p>
     </div>
   </div>
 
-  <div class="band band-r">
-    <div class="band-bg"><img src="assets/photos/lawn-side.webp" alt="The side elevation of a Phoenix home after a pressure wash" loading="lazy"></div>
-    <div class="band-in wrap">
-      <div class="band-card pane rv">
-        <div class="core">
-        <h2>Pressure washing</h2>
-        <p>Driveways, walkways, patios, pool decks and block walls. Desert dust and hard water staining come off without chewing up the surface underneath.</p>
-        <p class="also">Pressure matched to the surface, every time.</p>
-        </div>
-      </div>
+  <div class="svc-row flip rv">
+    <figure class="plate"><img src="assets/photos/lawn-side.webp" alt="The side elevation of a Phoenix home after a pressure wash" loading="lazy"></figure>
+    <div class="svc-copy">
+      <h2>Pressure washing</h2>
+      <p>Driveways, walkways, patios, pool decks and block walls. Desert dust and hard water staining come off without chewing up the surface underneath.</p>
+      <p class="also">Pressure matched to the surface, every time.</p>
     </div>
   </div>
 
-  <div class="band band-c">
-    <div class="band-bg"><img src="assets/photos/adobe-sky.webp" alt="Roofline and gutters against the sky on an Arizona adobe home" loading="lazy"></div>
-    <div class="band-in wrap">
-      <div class="band-card pane rv">
-        <div class="core">
-        <h2>Gutter cleaning</h2>
-        <p>Debris cleared, downspouts flushed, and the run checked for sag and separation while we are up there. Monsoon season is a bad time to find out a gutter is packed.</p>
-        <p class="also">Checked and reported before we leave.</p>
-        </div>
+  <div class="svc-lap rv">
+    <figure class="plate"><img src="assets/photos/adobe-sky.webp" alt="Roofline and gutters against the sky on an Arizona adobe home" loading="lazy"></figure>
+    <div class="svc-card pane">
+      <div class="core">
+      <h2>Gutter cleaning</h2>
+      <p>Debris cleared, downspouts flushed, and the run checked for sag and separation while we are up there. Monsoon season is a bad time to find out a gutter is packed.</p>
+      <p class="also">Checked and reported before we leave.</p>
       </div>
     </div>
   </div>

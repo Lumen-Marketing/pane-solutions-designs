@@ -240,11 +240,30 @@ The per page rhythm:
 | | Daylight | Facade | Reach |
 |---|---|---|---|
 | hero | image | image, over the fixed ground | image |
-| services | image bands | image, sticky split | image, sticky panels |
-| work | **plain** | fixed ground | **plain** with a hairline rake |
-| reels | **colour block**, brand blue | fixed ground | image |
+| services | plain with a dot field | fixed ground, sticky split | plain with a rake, sticky panels |
+| work | plain | fixed ground | plain with a rake |
+| reels | **colour block**, brand blue | fixed ground | plain with a rake |
 | reviews | plain with a dot field | fixed ground | **colour block**, deep blue |
 | contact | image | image | image |
+
+**Two photographic grounds per page is the budget, and the hero and the contact
+spend both.** The count is the thing that went wrong first: the services section
+on each page was built as three full screen photographic bands, which on its own
+put five of eight scroll moments on a photograph and made the whole page read as
+one long wash. The chooser reads calmer than the pages did for exactly one
+reason: it has ONE background photograph and everything else floats on it.
+
+The distinction that was missing is **a photograph as a GROUND versus a
+photograph as an OBJECT.** The chooser is full of imagery, all of it held inside
+cards, and its ground never changes. Both services sections are now photographs
+held in a section rather than behind it: contained plates on Daylight, a
+square edged plate inside each sticky panel on Reach.
+
+A second thing falls out of that. Daylight's first two service rows are type
+beside a photograph with no card at all, because a glass card on flat paper is a
+white rectangle for the same reason a dark pane on flat near-black is a dark
+one. Only the third row laps a card across a photograph, where the material has
+something to do. Cards where elevation means something, and nowhere else.
 
 Facade is the exception on purpose: it carries one fixed photograph behind the
 entire document, which is its whole depth device, so it does not need a
